@@ -53,7 +53,9 @@ only key is `plan_version` is valid and means "nothing is decided yet".
 
 Unknown keys are **invalid at every level**. A key a consumer does not understand is a decision that
 was not made, and a plan that drifts silently from what was agreed is the failure this format exists
-to expose.
+to expose. That is the rule for the file, and for the producer that writes and checks it; what a
+*consumer* may do with an unknown key — carry it, and report it as not checked — is rule 6 below.
+The two are not in conflict: the file stays invalid, and the consumer says so.
 
 Each object admits exactly the keys named for it, and nothing else. Nesting stops at the second
 level:
@@ -101,9 +103,10 @@ of the format, not a convention to be inferred:
 
 ### `plan_version`
 
-An integer, and it must be exactly `1`. A consumer that reads a version it does not implement must
-refuse the file rather than guess: an unknown version means the contract is not the one it knows.
-The producer's `check` rejects anything but `1`, with the expected and actual values in the message.
+An integer, and it must be exactly `1`. The producer's `check` rejects anything else — absent, of
+another type, or a different integer — with the expected and actual values in the message. **This
+requirement is the producer's**: what a consumer may and must do with a version it does not
+implement is rule 4 below, which permits reading it and forbids pretending it was checked.
 
 ### `site`
 
@@ -251,9 +254,12 @@ convenience:
    branches on those values and an older one would treat a new value as a fault.
 4. **A consumer must not guess, and must not pretend.** It may read a `plan_version` it does not
    implement — the two tools release independently, and a consumer that refuses an unfamiliar
-   version puts both repositories into lockstep — but it must report the version it read, and it
-   must not present its result as a check against a version it does not know. The producer's
-   `check` implements version 1 only and rejects any other value.
+   version puts both repositories into lockstep — but it must report the version it read, or that
+   the file declared none, and it must not present its result as a check against a version it does
+   not know. For such a file it applies what it knows of version 1 to the keys it recognises and
+   reports the rest as not checked. An absent or mistyped `plan_version` is a fault in the file: a
+   consumer reports it as one and does not call the file valid. The producer's `check` implements
+   version 1 only and rejects every other value.
 5. **Every change carries a dated entry in the change log below, naming the consumer-side effect.**
    A change that breaks a consumer is the principal's decision, because it costs work in another
    repository.
@@ -284,12 +290,13 @@ plans, and for each invalid one the key that must be named in the finding. Its s
 }
 ```
 
-A consumer can run the cases through its own validation: a `valid` case must produce no finding, and
-an invalid case must produce a finding naming each key in `invalid_keys`. `expect` is a
-producer-side regression check, not a requirement on a consumer's wording. The cases are not inlined
-in this document: the file is the artifact a consumer's tests load, and this section is the contract
-it keeps. The fixtures are exercised by this repository's tests on every `make ci`, so they cannot
-rot unnoticed.
+A consumer can run the cases through its own validation. A `valid` case must raise no fault. An
+invalid case must produce a finding naming each key in `invalid_keys`; a consumer that reads plans
+rather than validating them may report such a key as a note instead of a fault, but it must name it
+and must not report the case as met. `expect` is a producer-side regression check, not a requirement
+on a consumer's wording. The cases are not inlined in this document: the file is the artifact a
+consumer's tests load, and this section is the contract it keeps. The fixtures are exercised by this
+repository's tests on every `make ci`, so they cannot rot unnoticed.
 
 ## For the consumer
 
@@ -298,19 +305,20 @@ The stable parts are the nine keys, the shapes above, the closed vocabularies, a
 consumer reports what it did not check. The parts expected to grow without a version bump are the
 Schema.org vocabularies in `identity` and `offering`, which move independently of this project.
 
-**A worked consumer already exists.** `sitewalk --plan` implements this format in a separate
-repository with no shared code. It reads the nine keys; it **enforces** `required_surfaces` against
-the files the site publishes and `identity.schema_types` against the home page's JSON-LD; it names
-`offering`, `url_rules`, `crawler_stance`, `pages` and `identity.fields` in its output as *not
-checked*, with the reason for each; it reports the `plan_version` it read, and treats a version or a
-key it does not know as a note rather than a fault; and it exits non-zero when a plan cannot be read
-at all, because a gate that cannot read its own plan must not report a pass. Its behaviour is
-compatible with this document as written, and it is the reference reading of the rules above.
+**A worked consumer already exists**, and this paragraph is a worked case, not a second authority:
+the rules above stand on their own, and a reader who never opens another repository's code can
+implement from them. `sitewalk --plan` implements this format in a separate repository with no
+shared code. It reads all nine keys: it **enforces** `required_surfaces` against the files the site
+publishes and `identity.schema_types` against the home page's JSON-LD, while `site` and `kind` are
+read and reported; it names `offering`, `url_rules`, `crawler_stance`, `pages` and `identity.fields`
+in its output as *not checked*, with the reason for each; it reports the `plan_version` it read and
+treats a version or a key it does not know as a note rather than a fault; and it exits non-zero when
+a plan cannot be read at all, because a gate that cannot read its own plan must not report a pass.
 
 Two things follow for anyone writing another consumer. It is conforming to read a version or a key
-you do not implement and report it; it is not conforming to present an unchecked key as met, or to
-report a pass on a plan you could not read. And the fixture file above exists so your tests can
-check your reading against this document without reading either implementation.
+you do not implement and report it as not checked; it is not conforming to present an unchecked key
+as met, or to report a pass on a plan you could not read. And the fixture file above exists so your
+tests can check your reading against this document without reading either implementation.
 
 Questions about this format, and any change to it, are recorded in `RECORD.md` in this repository —
 that is the durable channel. A change that would break a consumer is a decision for the project's
