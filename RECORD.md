@@ -1,22 +1,22 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 2
+revision: 3
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-21T12:26:00-06:00"
+updated_at: "2026-09-21T13:24:00-06:00"
 record_status: open
-work_status: waiting
+work_status: active
 ---
 
 # Siteplan
 
-The project record and, at this revision, the **Statement of Work** for the first increment. It is
-the parent of every record in this repository.
+The project record: the parent of every record in this repository, and the continuing account of
+the basis, the plan and the result. Revision 2 is the Statement of Work; at this revision the
+principal has selected a course and granted the first unit, so the record carries U1 to its return.
 
-**This revision recommends; it does not select.** David ratifies. No unit below is granted, and
-nothing in the working tree is ratified by being described here.
+**U1 is granted. U2–U4 are not.** Nothing in the working tree is ratified by appearing in Act.
 
 ## Current position
 
@@ -24,51 +24,50 @@ Principal and decider: David.
 
 Work owner: Heron (coordinator).
 
-Mode: `Plan`, changed from `Run` at 2026-09-21T12:20:00-06:00 on the principal's instruction of
-2026-09-21: the deliverable is a Statement of Work, and the run stops when the plan is registered
-and the grant is requested. `Run` was correct for revision 1, which carried a settled scope: the
-principal's earlier instruction named three deliverables and the record registered the units for
-them. The principal has since reserved the selection, so this revision prepares the basis and
-recommends, and does not select. The earlier mode and its grant are preserved in revision 1
-(commit `df09827`).
+Mode: `Run`, changed from `Plan` at 2026-09-21T13:12:00-06:00 on the principal's ratification:
+U1 is granted, and this run carries that unit to its return and stops there. `Plan` was correct
+between 12:20 and 13:12, when the deliverable was the Statement of Work and the selection was
+reserved; revision 2 holds that basis and is not superseded as a record of it.
 
-Decision: `recommended` — course A1, the format-first two-file tool, at revision 2 of this record.
-The recommendation and the reasoning are in "Recommendation"; the selection is David's.
+Decision: `selected` — course A1, the format-first two-file tool, at basis revision 2 of this
+record. Selected by David on 2026-09-21; the selection, the answers he gave with it and the grant
+he registered are in "Selection" and "Answers to the open questions". Recommendation and selection
+are separate entries below, as the method requires.
 
-Work scope: the Statement of Work for the first increment of `siteplan`, ending at the principal's
-ratification of the recommendation and of a grant for U1. The work it authorises has not started.
+Work scope: U1 only — `docs/PLAN-FORMAT.md` as the authoritative, frozen format, its conformance
+fixtures, `siteplan check` and its tests brought to the document, real checks in
+`scripts/check-project.sh`, and an independent implementability assessment. The return stops there;
+U2–U4 need their own grants at pickup.
 
-Work: revision 1 registered the frame, the design alternatives and a selection made under an
-earlier grant; it is preserved in commit `df09827`. Between that commit and this revision, a draft
-package and test suite were written and left uncommitted, ahead of the plan that would have
-authorised them. This revision measures that draft, records it as unratified work in Act, and
-builds the plan that must be able to reject it. Measurements taken 2026-09-21 at 12:22.
+Work: revision 3 registers the selection and the grant before the work. Nothing of U1 is done at
+this revision: the document, the fixtures and the check script are untouched, and the draft package
+in the tree is still unratified. See "What already exists" in Act for the state U1 starts from.
 
-Outcome: nothing observed about the world. The draft generates files; no project has used one, and
-no consumer has read one. The unit table is an intended result, not a result.
+Outcome: nothing observed about the world. No project has used a plan and no consumer has read one.
+The units are intended results, not results.
 
-Next: David ratifies or amends course A1 and the grant for U1, answering the open questions that
-change the plan. As a separate pending move, Heron picks up U1 once that grant is registered.
+Next: Heron picks up U1 under the pickup plan registered at revision 2, records that pickup, does
+the work, and returns it against the acceptance criteria. The move after the return is David's
+acceptance, which is not part of this run.
 
-Blocked: no unit may start. The missing input is the principal's ratification, and behind it the
-answers to OQ1–OQ4, which change U1's acceptance criteria.
+Blocked: nothing. Every input U1 needs is present now that OQ2–OQ5 are answered.
 
-Waiting on: David.
+Waiting on: no one. The principal's answers arrived at 13:12 and are recorded below.
 
-Dependency: David's ratification of the recommendation and the U1 grant — owner David, resolving
-step: his reply to this record. Nothing else is missing.
+Dependency: none blocking. U1's grant, inputs and acceptance criteria are all registered.
 
 Review due: no timed obligation. R5–R7 are trigger-based and are stated in Review.
 
-Authority: at this revision, none to act. Revision 1's grant (`df09827`) authorised the naming, the
-record and the tool as instructed then; the principal has changed the mode, which supersedes it for
-work not yet accepted. This revision asks for a new grant. The principal retains spending, outbound
-messages, external agreements and the release word, and now also the selection among courses.
+Authority: the grant registered beside U1 in Act, from the principal's ratification of
+2026-09-21 — U1 only, inside the fences the Statement of Work registered. Revision 1's grant
+(`df09827`) authorised the earlier naming, record and draft, none of which is ratified by it. The
+principal retains spending, outbound messages, external agreements, the release word, and the
+selection of courses and of later units.
 
 | Stage | began_at | registered_at / exact basis revision | finished_at |
 | --- | --- | --- | --- |
-| Frame and Decide | 2026-09-21T11:52:00-06:00 | [`CONTEXT.md`](CONTEXT.md) as supplied 2026-09-21; principal's instructions of 2026-09-21 | 2026-09-21T12:26:00-06:00 |
-| Act | 2026-09-21T12:26:00-06:00 | revision 2 of this record: units U1–U4, estimates, U1 pickup plan | pending — no unit is granted |
+| Frame and Decide | 2026-09-21T11:52:00-06:00 | [`CONTEXT.md`](CONTEXT.md) as supplied 2026-09-21; principal's instructions and answers of 2026-09-21 | 2026-09-21T13:24:00-06:00 |
+| Act | 2026-09-21T13:24:00-06:00 | revision 3 of this record: U1 granted, U2–U4 planned | pending |
 | Review | 2026-09-21T12:26:00-06:00 | revision 2 of this record: criteria R1–R8 | pending |
 
 ## Frame and Decide
@@ -127,9 +126,9 @@ coupling it creates is material enough to carry an objective of its own.
 | C8 | A draft `siteplan/` package and `tests/` suite exist uncommitted, written ahead of this plan and reviewed by nobody | Given | The working tree, measured 2026-09-21T12:22 | U1, U3, U4: they judge it. Its measurements are usable; its decisions are not ratified |
 | C9 | A 15-item fact-check of the catalogue's citations was run on 2026-09-21 against primary sources; it found four claims materially wrong or too strong in the tree, and two needing qualification. None is corrected | Given | The delegated fact-check of 2026-09-21, sources fetched live; the defects are listed in Act | U2, and O3: a catalogue whose citations are wrong cannot carry evidence labels |
 | U1 | Whether the remaining catalogue claims hold up: the checked sample was chosen by me, not at random | Uncertainty | Only the checked items are verified | U2's estimate and O3. Resolved by: auditing the remaining labelled claims and recording the date each source was read |
-| U2 | Whether any consumer reads `llms.txt`. The proposal claims platform adoption; Google's documentation says such files are not needed for Search and do not affect visibility | Uncertainty | Two conflicting claims, and no measurement either way | Whether `llms.txt` is recommended as a requirement or as a labelled bet; OQ8. Resolved by: evidence of a consumer, or by demoting it to a stated judgement |
+| U2 | Whether any consumer reads `llms.txt`. The proposal claims platform adoption; Google's documentation says such files are not needed for Search and do not affect visibility | Uncertainty | Two conflicting claims, and no measurement either way | Whether `llms.txt` is recommended as a requirement or as a labelled bet; OQ8. Resolved by: evidence of a consumer, or by demoting it to a stated judgement. Unresolved at revision 3; U2 carries it |
 | U3 | Whether the six kinds cover the projects the principal will start | Uncertainty | The six come from the principal's instruction, not from an inventory of planned sites | U3's scope; OQ8 |
-| U4 | When `sitewalk` will exist, and who owns it, so that the format is exercised by a real consumer | Uncertainty | No record of sitewalk's staffing or timing beyond its own `CONTEXT.md` | O2, O5, R6. Resolved by: OQ6 |
+| U4 | When `sitewalk` will exist, and who owns it, so that the format is exercised by a real consumer | Uncertainty | Resolved at revision 3: `sitewalk` exists, is owned by Moss, and is at its own ratified SOW stage (OQ6) | O2, O5, R6. Now a dependency to coordinate, not an unknown: R6's owner is Moss |
 | U5 | Whether anyone reads the brief. This is the objective the tool exists for and the one no artifact can demonstrate | Uncertainty | No project has run this tool | O1, R5, R7. Resolved only by the first project that uses a plan, and by what it does next |
 | A1 | Four intent flags (`sells`, `local`, `publishes`, `takes-bookings`) carry enough of a site's intent to shape the recommendations | Assumption | Our reading; unverified | U3's flag set. Challenged by a plan that proves wrong at build time in a way traceable to a missing input; the response would be a flag, never a configuration file (`CONTEXT.md` scope cap) |
 | A2 | A reader can tell a published claim from a judgement from the label alone | Assumption | Unverified; it is the whole basis of the claim boundary | O3. Challenged by a reader who could not. Cheap test: ask one reader of a generated brief |
@@ -221,6 +220,33 @@ catalogue that has been checked.
 the draft stay valid and U1–U4 are replaced by a one-file change in the template repository — which
 would require amending this record.
 
+### Selection
+
+`selected_at` 2026-09-21T13:12:00-06:00. Decider: David, the principal. Basis: revision 2 of this
+record — the frame, objectives O1–O6, conditions C1–C9, the five courses and the comparison above.
+
+**Course A1 is selected**, as recommended, with two qualifications the principal added: v1 ships
+only the kinds whose citations pass the audit (OQ8), and the CLI contract is fixed as exit 0 clean,
+1 for findings or an invalid plan, 2 for a usage error, with no `--force` (OQ5). U1 is granted; U2,
+U3 and U4 are not, and each comes back for its own grant at pickup.
+
+The reason recorded for the selection is the one recommended: the format is the artifact another
+repository must implement against, and the brief's value rests on labels that the fact-check has
+already shown cannot yet be trusted, so the format is settled and the catalogue audited before the
+generator is completed. The tradeoff accepted is the same one: no visible tool until U3.
+
+Two consequences follow that this record must carry, because they were not in the recommendation:
+
+1. **The format's kind vocabulary and the generator's coverage are different questions.** The
+   format defines the closed set of kind names a plan may carry; the generator offers a profile for
+   a kind. OQ8 reduces the second, not the first: a kind whose profile fails the audit stops being
+   offered by `new`, and stays a valid name in a plan. Removing a name from the format's closed set
+   would be a breaking change under rule 3 below, which is a cost the audit should not have to pay.
+2. **The `check` command changes with the format.** `plan_version` is required and the closed
+   vocabularies are closed (OQ3, OQ4). The draft already behaves this way, so U1 confirms rather
+   than rewrites that behaviour — but the document is the authority from here, and where the two
+   differ the document wins and the code changes.
+
 ### How the plan format stays stable (the sitewalk coupling)
 
 A format owned by one repository and consumed by another is a coupling, and the coupling is the
@@ -274,7 +300,7 @@ must be free to reject. **Nothing here is ratified by being described.**
 | `tests/`, 7 files, 1,008 lines, 80 tests | Uncommitted. 80 run, 2 fail; both failures are in test expectations written minutes earlier (a suggestion message and an allowed-value ordering), not in observed tool behaviour | Not evidence of correctness; evidence about where the work is |
 | `docs/PLAN-FORMAT.md` | Absent | U1 exists because the authoritative document does not |
 | `README.md` | Absent | U4 |
-| `scripts/check-project.sh` | Still the template's stub, so `make ci` exits 0 *without looking at the code* | The green check establishes nothing about the draft; U4 |
+| `scripts/check-project.sh` | At 12:22 it was the template stub that exited 0 without looking at the code; commit `55dbada` replaced it with a stub that fails, so `make ci` now fails until real checks exist | U1 fills it in. The earlier green `make ci` established nothing, which is the point the stub now makes for itself |
 | Generated output | All 6 kinds and 60 kind/flag combinations produce a plan the in-tree validator accepts. A `local-business` brief is 9,091 bytes / 125 lines; its plan is 1,360 bytes / 69 lines. Output is deterministic and needs no network | Feasibility evidence for U3, and part of why the estimates are as low as they are |
 | Catalogue citations | Four claims materially wrong or too strong: `OnlineStore` described as a subtype of `Store` (it sits under `Organization > OnlineBusiness`); Google's local-business guidance described as "asking for" `telephone` (recommended; only `name` and `address` are required); merchant-listing guidance described as requiring `availability` (recommended, not required); `llms.txt` described as having no consumer (the proposal claims platform adoption, and Google states the files are not needed for Search). Two further claims need qualification: `robots.txt` is a Proposed Standard whose compliance is voluntary, and `/sitemap.xml` is a recommended location rather than a mandated name | C9. The strongest argument for putting U2 ahead of U3 |
 
@@ -288,10 +314,26 @@ a ratified design that differs discards them.
 
 | # | State | Result | Inputs / dependencies | Owner | Done when | Estimate |
 | --- | --- | --- | --- | --- | --- | --- |
-| U1 | planned — not granted | `docs/PLAN-FORMAT.md` and its conformance fixtures: the authoritative format and stability rules, a minimal valid plan, a malformed one | `CONTEXT.md` §The plan file; OQ3, OQ4, OQ5 answered; the draft validator as evidence only | Heron | The U1 pickup plan below | 1 session; 2 if the strictness model changes |
-| U2 | planned — not granted | Citation audit of every labelled recommendation in the catalogue, corrections applied, unverifiable claims demoted to `our judgement` | OQ2 answered (network for sources, not for the tool); the fact-check method of 2026-09-21 | Heron | Every `published practice` label names a source that was read, with the date; the method and the unverified remainder are recorded | 1–2 sessions; wide |
-| U3 | planned — not granted | `siteplan new` and `check` completed against the audited catalogue: six kinds, four flags and interactive mode, `BRIEF.md` and `site.json`, the unstated rule | U1, U2 | Heron | R3 and R4 pass; tests run offline; `make ci` exits 0 through real checks | 1 session |
-| U4 | planned — not granted | Project surfaces: `README.md` (what it does, how to run it, what it does not do), real `scripts/check-project.sh`, coherent local commits | U1–U3 | Heron | `make ci` and `make records` exit 0 at the delivered commit, and the record carries the evidence | 0.5 session |
+| U1 | **granted** — pickup registered, work in progress | `docs/PLAN-FORMAT.md` and its conformance fixtures: the authoritative format and stability rules, a minimal valid plan, a malformed one, and `check` brought to the document | Selection at revision 3; OQ2–OQ5 answered; the draft validator as evidence only | Heron | The U1 pickup plan below | 1 session; 2 if the strictness model changes |
+| U2 | planned — not granted | Citation audit of every labelled recommendation in the catalogue, corrections applied, unverifiable claims demoted to `our judgement`; v1 ships only the kinds and surfaces whose citations pass | OQ2 answered (network for sources, not for the tool); the fact-check method of 2026-09-21; the grant, at pickup | Heron | Every `published practice` label names a source that was read, with the date; the method and the unverified remainder are recorded; the shipped kind set is named | 1–2 sessions; wide |
+| U3 | planned — not granted | `siteplan new` completed against the audited catalogue and the ratified CLI contract: the audited kinds, four flags and interactive mode, `BRIEF.md` and `site.json`, the unstated rule, and `--force` removed | U1, U2 | Heron | R3 and R4 pass; tests run offline; `make ci` exits 0 through real checks | 1 session |
+| U4 | planned — not granted | Project surfaces: `README.md` (what it does, how to run it, what it does not do), coherent local commits | U1–U3 | Heron | `make ci` and `make records` exit 0 at the delivered commit, and the record carries the evidence | 0.5 session |
+
+**Grant, registered at revision 3 and before any U1 work.** Decider: David, 2026-09-21; basis
+revision 2. **Heron** is granted **U1 only**. Included: `docs/PLAN-FORMAT.md`; the conformance
+fixtures; bringing `siteplan check` and the tests that cover the format to the document; filling in
+`scripts/check-project.sh` with the real checks; an independent implementability assessment by a
+worker who did not write the document; and local commits. Excluded: the citation audit (U2), any
+change to `siteplan new`'s behaviour or flags (U3), `README.md` (U4), any new dependency, any
+network use by the tool, publishing, deploying, spending or outbound messages, and changes to
+`CONTEXT.md` or to another repository. Stop condition: U1 is returned for acceptance, or it needs
+something outside this grant.
+
+**Two items the grant excludes, recorded so they are not lost.** The ratified CLI contract (OQ5)
+contradicts the draft in `new`: it still offers `--force` and still exits 3 on an internal defect.
+Bringing `new` to the contract is U3's work, and this record carries both as proposals rather than
+fixing them inside U1. The draft's overwrite behaviour also has to be decided at U3 — the
+recommendation there will be to refuse and exit 2, since with no `--force` there is no way to force.
 
 **Estimates and their basis.** One "session" is a focused worker session, not a working day. The
 basis is weak, and stated so it can be discounted: the draft's 3,158 lines and 80 tests were
@@ -303,12 +345,16 @@ was not random, so the true defect rate in the catalogue is unknown.
 
 ### Pickup plan, U1 (registered at planning time)
 
-Route: (1) answer OQ3–OQ5, since each changes the document; (2) write `docs/PLAN-FORMAT.md` — the
-nine keys, the one required key and its reason, the nested shapes, the closed vocabularies, the
-stability rules above, the exit codes and the change log; (3) write the two conformance fixtures;
-(4) bring `siteplan check` and its tests to the document; (5) have an assessor who did not write it
-read the document and try to write the consumer's validation from it alone, and record what they
-could not determine.
+Route: (1) apply the principal's answers (OQ3–OQ5), since each changes the document; (2) write
+`docs/PLAN-FORMAT.md` — the nine keys, the one required key and its reason, the nested shapes, the
+open/closed rule, the stability rules above, the exit codes and the change log; (3) write the
+conformance fixtures; (4) bring `siteplan check` and its tests to the document; (5) fill in
+`scripts/check-project.sh`; (6) have an assessor who did not write it read the document and try to
+write the consumer's validation from it alone, and record what they could not determine.
+
+`picked_up_at` 2026-09-21T13:26:00-06:00, actor Heron, immediately after the grant was registered
+at revision 3: the pickup plan was registered at revision 2, before the work, and this line records
+who started it and when.
 
 Acceptance criteria, registered before the work:
 
@@ -329,10 +375,12 @@ Not in U1: the catalogue audit (U2), the generator (U3), the project surfaces (U
 
 Confirmed at their own pickup, per the 0.5.0 rule that a later pickup plan depends on what the
 earlier unit found. U2: audit by source, not by memory; record the date each source was read;
-demote anything unverifiable. U3: a flag that changes nothing must not claim a change, and the
-unstated table stays computed by diffing rather than written by hand. U4: the check script must fail
-when the package does not byte-compile or a test fails, because `make ci` currently passes without
-looking at the code.
+demote anything unverifiable; name the kinds and surfaces that pass, because that set is what v1
+ships. U3: a flag that changes nothing must not claim a change; the unstated table stays computed by
+diffing rather than written by hand; and `new` comes to the ratified CLI contract, which means
+removing `--force` and the exit code 3, and deciding what an existing output file means (proposal:
+refuse with a clear message and exit 2). U4: `README.md` states what the tool does not do, and the
+unratified parts of the draft are either ratified by then or removed.
 
 ## Out of scope
 
@@ -362,6 +410,25 @@ looking at the code.
 | OQ7 | Which project will first be gated on a plan, so R5 has a trigger? | David | R5, and the success test in `CONTEXT.md` |
 | OQ8 | Are the six kinds the right coverage for the first version? This record recommends shipping fewer, audited, over six unaudited | David | U3's scope and U2's size |
 
+### Answers received, 2026-09-21T13:12:00-06:00
+
+Recorded verbatim in substance, with the effect each has on the plan. The questions above stay as
+they were registered; these answers are the current state.
+
+| # | Answer | Effect |
+| --- | --- | --- |
+| OQ1 | **A1 is selected**, and U1 is granted | The selection is above; U2–U4 return for their own grants |
+| OQ2 | **Yes** — workers may read published sources; the tool itself stays offline | U2 may cite sources it actually read. The constraint in C2 is about the tool's run time, not about research |
+| OQ3 | **`plan_version` is required.** "Every key optional" applies to content keys, not the version gate, because the consumer cannot otherwise tell which contract it validates | U1 writes it as the format's single required key |
+| OQ4 | **Closed where the consumer acts, open elsewhere.** `kind` and `required_surfaces` are closed lists — `sitewalk` branches on their values, so an unknown value is a bug. Schema.org vocabulary stays open: unknown values are ignored, not rejected. The rule must be stated in the document | U1 states the rule as a property of the format. Fields and types follow the Schema.org half: open, shape-checked. The other closed vocabularies the consumer branches on — `crawler_stance`, `url_rules.trailing_slash` — follow the closed half |
+| OQ5 | **Exit 0 clean, 1 for findings or an invalid plan, 2 for a usage error. No `--force`.** Keep `--not-local` | U1 states the contract and keeps `check` to three codes; the draft's exit 3 and `--force` are U3 proposals, recorded in Act |
+| OQ6 | **`sitewalk` exists, owned by Moss, ratified at its own SOW stage.** Tell Moss what is being frozen before the format hardens | R6's owner is Moss; this record carries the freeze notice to be relayed, since a worker here cannot message another repository's session |
+| OQ7 | **Open, and it is the principal's.** It does not block U1 | R5 stays trigger-based with no date |
+| OQ8 | **Only kinds whose citations pass the audit ship in v1.** Four wrong claims in fifteen is not a rate to publish under a `published practice` label; two audited kinds beat six unaudited | U2's result sets the shipped kind set; U3 implements it. The format's kind vocabulary stays the six names (see Selection, consequence 1) |
+
+Two answers create work this record must keep visible rather than absorb silently: the freeze notice
+to Moss (OQ6), and the kind-coverage split between the format and the generator (OQ8).
+
 ## Review criteria
 
 Registered before any work. Delivery acceptance (R1–R4) is separate from benefit (R5–R7); R8 is the
@@ -382,45 +449,49 @@ Delivery is not benefit. R1–R4 can be settled at the return by reading artifac
 checks; R5–R7 are observations about the world and cannot be settled here. Recording them now is
 what stops a passing check from being reported as a working product.
 
-## The grant requested
+## The grant, as registered
 
-Ratify course **A1** and register a grant for **U1** only. U2–U4 each need their own grant at
-pickup, under the 0.5.0 rule that a grant permits its own unit; the principal can say now whether
-he expects to grant them in sequence.
+The request at revision 2 asked for exactly this and was granted on 2026-09-21; the grant is
+recorded beside U1 in Act, which is where it governs the work. In summary: **U1 only**, inside the
+fences the Statement of Work registered, with U2–U4 to return for their own grants at pickup.
 
-**Included in the U1 grant**: writing `docs/PLAN-FORMAT.md`; writing the two conformance fixtures;
-bringing `siteplan check` and its tests to the document; having an independent assessor read the
-document for implementability; committing those locally in this repository.
+What the principal retains, unchanged: spending, outbound messages, external agreements, the release
+word, the selection of courses, and the grant of every later unit. What revision 2 explicitly did
+not request, and this record still does not hold: any new dependency; any network use by the tool;
+publishing, deploying, spending or outbound messages; changes to `CONTEXT.md` or to another
+repository; implementing `sitewalk`; and ratification of the draft package in the working tree.
 
-**Explicitly not requested**: any new dependency; any network use by the tool; publishing,
-deploying, spending or outbound messages; changes to `CONTEXT.md` or to the template repository;
-implementing `sitewalk`; authority to select among the courses in this record; and ratification of
-the work already in the working tree, which this grant does not cover and which the plan is free to
-reject.
+## Process-document propagation, 2026-09-21
 
-**Stop condition**: U1 is returned for acceptance, or it needs something outside this grant —
-including an answer to OQ3, OQ4 or OQ5 that the principal has not given.
+Commit `55dbada` ("Bring the process documents to Perspicuity 0.5.0", by the principal) replaced
+`AGENTS.md`, `docs/RECORDS.md` and `docs/records/README.md` with the template's 0.5.0 versions. It
+touched no record of mine. Three things in it change this project's conditions:
 
-## Template deviations reported, not fixed
-
-The process documents came from a template written against Perspicuity 0.4.0; the installed skill
-is 0.5.0. Reported rather than repaired, because the template is a different repository:
-
-- `AGENTS.md` and `docs/KICKOFF.md` point at `/home/david/.codex/skills/perspicuity/SKILL.md`,
-  which resolves today only through an undocumented symlink; the installed skill is under
-  `/home/david/.dsh/`.
-- The process documents describe the 0.4.0 record shape: no working mode in `Current position`, no
-  `in_review` in the work-status set, and no `Blocked`/`Waiting on` fields.
-- `AGENTS.md`'s standing-constraints section is still the template's placeholder: one real rule and
-  an instruction to fill in the rest.
-- `docs/RECORDS.md` lists the project code `sp` as belonging to "this template" rather than to this
-  project.
-- `AGENTS.md` §Your first task and `docs/KICKOFF.md` direct the first worker to revise three
-  process documents and file `docs/records/<date>-process-record-conventions.md` before feature
-  work. The principal's instructions of 2026-09-21 scoped the sessions differently, so that record
-  is not filed. It remains the missing worked example for `docs/records/`.
+- **`scripts/check-project.sh` now fails as a stub**, so `make ci` fails until it holds real checks.
+  This is the right failure: the previous stub let `make ci` pass while tests failed. Filling it in
+  is part of U1, which is where this record's earlier note about U4 was overtaken.
+- **`scripts/check_records.sh` probes the known skill locations** rather than one hard-coded path, so
+  the record check no longer skips silently. `make records` currently passes with no mechanical
+  errors.
+- **The deviations this record reported at revision 2 are resolved**: the stale skill path, the
+  0.4.0 field set, the placeholder standing constraints, the mis-assigned project code, and the
+  process-record requirement in `docs/records/README.md` are all gone. The report of them stands as
+  the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 3, 2026-09-21T13:24:00-06:00. Changed: the mode, from `Plan` to `Run`, on the principal's
+ratification — U1 is granted, so this run carries it to its return; and the record, which now
+records the selection (David, `selected_at` 2026-09-21T13:12:00-06:00, basis revision 2), the grant
+registered beside U1, the registration of U1's pickup, the principal's answers to OQ1–OQ8 and their
+effects, the two consequences of the selection (the format's kind vocabulary is not the generator's
+coverage; `check` changes with the format), the resolved material conditions, and the
+process-document propagation at `55dbada`. Source: the principal's ratification of 2026-09-21 and
+the answers given with it; commit `55dbada`. Reason: register the choice and the grant before the
+work that depends on them. Preserved: revision 2 holds the Statement of Work, its five courses, its
+comparison, its recommendation and the estimates; revision 1 (`df09827`) holds the earlier frame
+and the D1–D9 selections. Neither is deleted; both remain the basis of record for how this
+increment was chosen. Affects: U1 (granted), U2–U4 (planned), R1–R8, and the format being frozen.
 
 Revision 2, 2026-09-21T12:26:00-06:00. Changed: the mode, from `Run` to `Plan`, on the principal's
 instruction of 2026-09-21 — the deliverable became a Statement of Work and the selection was
