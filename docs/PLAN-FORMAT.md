@@ -66,9 +66,13 @@ level:
 | each element of `pages` | `path`, `purpose` |
 
 A validator reports **one fault per problem**, each naming the offending key's own path — `kind`,
-`identity.schemaTypes`, `url_rules.max_depth`, `pages[2].path` — followed by what is wrong with it.
-It does not stop at the first fault, so one run lists everything that is wrong. A missing required
-key is one fault; a value of the wrong type is one fault.
+`url_rules.max_depth`, `pages[2].path`, or `identity.schemaTypes` for the camelCase misspelling of
+the key `schema_types` — followed by what is wrong with it. It does not stop at the first fault, so
+one run lists everything that is wrong, and one problem yields exactly one fault: a missing required
+key, a value of the wrong type, a key that does not belong, a duplicate entry, a value outside a
+closed vocabulary, or a page deeper than `max_depth`. A `plan_version` that is absent, of the wrong
+type, or a different integer is one fault, never several. Where a list holds a repeated value, the
+first occurrence stands and each later one is a fault.
 
 Values are read **exactly as written**. Nothing is trimmed, normalised or case-folded: `" example.com"`
 and `"sitemap.XML"` are faults, not values to be tidied. Closed-vocabulary values are
@@ -249,10 +253,12 @@ convenience:
 5. **Every change carries a dated entry in the change log below, naming the consumer-side effect.**
    A change that breaks a consumer is the principal's decision, because it costs work in another
    repository.
-6. **Unknown keys are invalid, and the producer rejects them.** A consumer that chooses to warn and
-   continue instead is making a deliberate deviation from this specification, and should record it
-   in its own repository; the format does not require a consumer to fail, but it does not call a
-   file with an unknown key valid either.
+6. **Unknown keys are invalid, and the producer rejects them.** A consumer that warns and continues
+   is making a deliberate deviation from this specification and should record it in its own
+   repository. A consumer's process exit status is its own policy and is outside this specification
+   — the producer's `check` is the exception, with its three codes fixed above. What the format
+   fixes is the finding, not the process: a file with an unknown key is invalid, and a consumer must
+   not describe it as valid.
 7. **Conformance fixtures are published with the format** — see below — so a consumer can test
    itself against this document without reading this project's code.
 
@@ -275,8 +281,10 @@ plans, and for each invalid one the key that must be named in the finding. Its s
 
 A consumer can run the cases through its own validation: a `valid` case must produce no finding, and
 an invalid case must produce a finding naming each key in `invalid_keys`. `expect` is a
-producer-side regression check, not a requirement on a consumer's wording. The fixtures are
-exercised by this repository's tests on every `make ci`, so they cannot rot unnoticed.
+producer-side regression check, not a requirement on a consumer's wording. The cases are not inlined
+in this document: the file is the artifact a consumer's tests load, and this section is the contract
+it keeps. The fixtures are exercised by this repository's tests on every `make ci`, so they cannot
+rot unnoticed.
 
 ## For the consumer
 
