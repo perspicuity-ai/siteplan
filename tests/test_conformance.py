@@ -119,7 +119,8 @@ class DocumentCoversTheImplementation(unittest.TestCase):
         for rule in (
             "Additive optional keys keep `plan_version`",
             "requires a\n   `plan_version` bump",
-            "must refuse, not guess",
+            "A consumer must not guess",
+            "must never present an unchecked\n   key as met",
         ):
             with self.subTest(rule=rule):
                 self.assertIn(rule, self.document)

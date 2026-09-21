@@ -249,16 +249,21 @@ convenience:
 3. **Removing a key, changing a key's meaning, or changing a closed vocabulary requires a
    `plan_version` bump.** Adding a value to a closed vocabulary does too, because a consumer
    branches on those values and an older one would treat a new value as a fault.
-4. **A consumer that does not implement the version it reads must refuse, not guess.**
+4. **A consumer must not guess, and must not pretend.** It may read a `plan_version` it does not
+   implement — the two tools release independently, and a consumer that refuses an unfamiliar
+   version puts both repositories into lockstep — but it must report the version it read, and it
+   must not present its result as a check against a version it does not know. The producer's
+   `check` implements version 1 only and rejects any other value.
 5. **Every change carries a dated entry in the change log below, naming the consumer-side effect.**
    A change that breaks a consumer is the principal's decision, because it costs work in another
    repository.
-6. **Unknown keys are invalid, and the producer rejects them.** A consumer that warns and continues
-   is making a deliberate deviation from this specification and should record it in its own
-   repository. A consumer's process exit status is its own policy and is outside this specification
-   — the producer's `check` is the exception, with its three codes fixed above. What the format
-   fixes is the finding, not the process: a file with an unknown key is invalid, and a consumer must
-   not describe it as valid.
+6. **Unknown keys are invalid, and the producer rejects them.** A consumer may carry an unknown key
+   and report it as *not checked*, naming the key and the reason; it must never present an unchecked
+   key as met. This is not a deviation: the format is expected to grow, and a consumer that refused
+   to read a file because it had grown would force the two repositories into lockstep. The format
+   fixes the finding — a file with an unknown key is invalid — and leaves the consumer's process,
+   including its exit status, to that consumer. The producer's `check` is the exception: its three
+   codes are fixed above.
 7. **Conformance fixtures are published with the format** — see below — so a consumer can test
    itself against this document without reading this project's code.
 
@@ -289,9 +294,23 @@ rot unnoticed.
 ## For the consumer
 
 `plan_version` **1** was first frozen on 2026-09-21 and is the version a consumer should implement.
-The stable parts are the nine keys, the shapes above, the closed vocabularies, and the refusal rule
-for unknown versions. The parts expected to grow without a version bump are the Schema.org
-vocabularies in `identity` and `offering`, which move independently of this project.
+The stable parts are the nine keys, the shapes above, the closed vocabularies, and the rule that a
+consumer reports what it did not check. The parts expected to grow without a version bump are the
+Schema.org vocabularies in `identity` and `offering`, which move independently of this project.
+
+**A worked consumer already exists.** `sitewalk --plan` implements this format in a separate
+repository with no shared code. It reads the nine keys; it **enforces** `required_surfaces` against
+the files the site publishes and `identity.schema_types` against the home page's JSON-LD; it names
+`offering`, `url_rules`, `crawler_stance`, `pages` and `identity.fields` in its output as *not
+checked*, with the reason for each; it reports the `plan_version` it read, and treats a version or a
+key it does not know as a note rather than a fault; and it exits non-zero when a plan cannot be read
+at all, because a gate that cannot read its own plan must not report a pass. Its behaviour is
+compatible with this document as written, and it is the reference reading of the rules above.
+
+Two things follow for anyone writing another consumer. It is conforming to read a version or a key
+you do not implement and report it; it is not conforming to present an unchecked key as met, or to
+report a pass on a plan you could not read. And the fixture file above exists so your tests can
+check your reading against this document without reading either implementation.
 
 Questions about this format, and any change to it, are recorded in `RECORD.md` in this repository —
 that is the durable channel. A change that would break a consumer is a decision for the project's
@@ -302,3 +321,4 @@ principal, not for the producer's worker.
 | Date | `plan_version` | Change | Consumer-side effect |
 | --- | --- | --- | --- |
 | 2026-09-21 | 1 | First freeze. The nine keys, the open/closed rule, the versioning rules and the conformance fixtures are published as `plan_version` 1. | None: this is the first published version. |
+| 2026-09-21 | 1 | Rules 4 and 6 corrected after reading the consumer that already exists: a consumer may read a version or a key it does not implement, must report it, and must not present it as checked or as a pass. The producer's rules are unchanged — `plan_version` is still required and `check` still rejects any other value or unknown key. | None to what a valid plan is. It removes an instruction that would have contradicted `sitewalk --plan`, which the principal had already ratified as tolerant of unknown versions and keys. |
