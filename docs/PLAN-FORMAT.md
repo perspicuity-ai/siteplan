@@ -225,6 +225,21 @@ something.
 part a consumer can compare against a page's actual content. Its wording is not validated beyond
 being a non-empty string: whether it is one sentence is a matter for its reader, not the checker.
 
+### What this document chose rather than found
+
+Three rules in it are this project's decisions, not findings about how a plan must work. A reader is
+entitled to disagree with any of them, and they are listed here so that a later reader can tell a
+judgement from a finding:
+
+| Rule | The choice | What reversing it would cost |
+| --- | --- | --- |
+| A `path` never carries a trailing slash, even when `trailing_slash` is `always` | the page's canonical name is written one way, so `/a` and `/a/` cannot both appear and "paths are unique" means something | a `plan_version` bump under rule 3, because it changes what a valid plan is |
+| Path segments are ASCII, with a defined character set | one spelling per path, and `lowercase` has something to mean | the same |
+| `site` is a host name, so a non-ASCII name must be punycode | one spelling per host, matching DNS itself | the same |
+
+Each is defensible; none is proved, and no source settles them. They are stated so that a consumer
+knows what to implement, and marked as choices so that nobody later mistakes them for evidence.
+
 ## Validation summary
 
 `siteplan check FILE` applies every rule above and reports **one line per fault**, each naming the
@@ -252,24 +267,38 @@ convenience:
 3. **Removing a key, changing a key's meaning, or changing a closed vocabulary requires a
    `plan_version` bump.** Adding a value to a closed vocabulary does too, because a consumer
    branches on those values and an older one would treat a new value as a fault.
-4. **A consumer must not guess, and must not pretend.** It may read a `plan_version` it does not
-   implement — the two tools release independently, and a consumer that refuses an unfamiliar
-   version puts both repositories into lockstep — but it must report the version it read, or that
-   the file declared none, and it must not present its result as a check against a version it does
-   not know. For such a file it applies what it knows of version 1 to the keys it recognises and
-   reports the rest as not checked. An absent or mistyped `plan_version` is a fault in the file: a
-   consumer reports it as one and does not call the file valid. The producer's `check` implements
-   version 1 only and rejects every other value.
+4. **Keys grow; versions announce.** An unknown key and an unknown version are not the same kind of
+   change, and a consumer treats them differently. This rule is the reason for the difference, and
+   it is here so that a later reader does not "simplify" the version check away as redundant with
+   the key check:
+
+   - **An unknown key is additive growth.** A consumer may carry it and report it as *not checked*,
+     naming every key it did not check, so that no reader can reach a "met" without knowing that
+     something was left unchecked. That disclosure is the condition that makes tolerance
+     permissible — not advice about it — and it is why rule 6 permits what the producer rejects.
+   - **An unknown version is the format announcing that a key's meaning may have moved**, which is
+     the only thing a version is for; ignoring it defeats the announcement. So the verdict depends
+     on the version: a **known or older** `plan_version` is read normally, because an older plan is
+     fully specified by its own version, and that is exactly why accepting older versions is safe;
+     an **unknown or newer** version makes the verdict **conditional**, and it must not be presented
+     as a clean result. In the default mode the summary carries the condition; under the strict gate
+     — `sitewalk --strict` — it is an error finding and exits non-zero. A gate that certifies a plan
+     whose semantics it cannot know is the failure this rule prevents.
+
+   An absent or mistyped `plan_version` is a fault in the file: a consumer reports it as one and
+   does not call the file valid. The producer's `check` implements version 1 only and rejects every
+   other value.
 5. **Every change carries a dated entry in the change log below, naming the consumer-side effect.**
    A change that breaks a consumer is the principal's decision, because it costs work in another
    repository.
 6. **Unknown keys are invalid, and the producer rejects them.** A consumer may carry an unknown key
    and report it as *not checked*, naming the key and the reason; it must never present an unchecked
-   key as met. This is not a deviation: the format is expected to grow, and a consumer that refused
-   to read a file because it had grown would force the two repositories into lockstep. The format
-   fixes the finding — a file with an unknown key is invalid — and leaves the consumer's process,
-   including its exit status, to that consumer. The producer's `check` is the exception: its three
-   codes are fixed above.
+   key as met, and **naming every key it ignored is the condition of that permission, not advice**.
+   This is not a deviation: the format is expected to grow, and a consumer that refused to read a
+   file because it had grown would force the two repositories into lockstep. The format fixes the
+   finding — a file with an unknown key is invalid — and leaves the consumer's process, including
+   its exit status, to that consumer. The producer's `check` is the exception: its three codes are
+   fixed above.
 7. **Conformance fixtures are published with the format** — see below — so a consumer can test
    itself against this document without reading this project's code.
 
@@ -314,6 +343,11 @@ read and reported; it names `offering`, `url_rules`, `crawler_stance`, `pages` a
 in its output as *not checked*, with the reason for each; it reports the `plan_version` it read and
 treats a version or a key it does not know as a note rather than a fault; and it exits non-zero when
 a plan cannot be read at all, because a gate that cannot read its own plan must not report a pass.
+**One part of that is behind this document rather than ahead of it**: rule 4 now requires an unknown
+or newer version to make the verdict conditional, carried in the summary and treated as an error by
+the strict gate (`sitewalk --strict`). `sitewalk` still records it as a note, and carrying that
+requirement into its gate is recorded as its own unit in that repository. The document states the
+rule; it does not claim the consumer has it yet.
 
 Two things follow for anyone writing another consumer. It is conforming to read a version or a key
 you do not implement and report it as not checked; it is not conforming to present an unchecked key
@@ -330,3 +364,4 @@ principal, not for the producer's worker.
 | --- | --- | --- | --- |
 | 2026-09-21 | 1 | First freeze. The nine keys, the open/closed rule, the versioning rules and the conformance fixtures are published as `plan_version` 1. | None: this is the first published version. |
 | 2026-09-21 | 1 | Rules 4 and 6 corrected after reading the consumer that already exists: a consumer may read a version or a key it does not implement, must report it, and must not present it as checked or as a pass. The producer's rules are unchanged — `plan_version` is still required and `check` still rejects any other value or unknown key. | None to what a valid plan is. It removes an instruction that would have contradicted `sitewalk --plan`, which the principal had already ratified as tolerant of unknown versions and keys. |
+| 2026-09-21 | 1 | Rule 4 sharpened, at the principal's direction, to separate an unknown key from an unknown version: keys grow, versions announce. An unknown key stays tolerable when every ignored key is named; an unknown or newer version makes the verdict conditional, carried in the summary and an error under the strict gate. The three judgement-based choices (trailing slash, ASCII segments, punycode hosts) are now listed as choices rather than findings. | **`sitewalk --strict` must treat an unknown or newer `plan_version` as an error, and the default summary must carry the condition.** That is a change in the consumer, recorded as its own unit there; it is not a change to what a valid plan is, so `plan_version` stays 1. |

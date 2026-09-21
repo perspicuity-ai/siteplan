@@ -1,11 +1,11 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 5
+revision: 6
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-21T13:33:00-06:00"
+updated_at: "2026-09-21T13:34:00-06:00"
 record_status: open
 work_status: submitted
 ---
@@ -423,9 +423,41 @@ for acceptance criterion 2:
    either codebase.
 
 The fourth read is of the revision that was delivered, which the second was not: `f19dbdf` and
-`fe8433b` changed the two consumer rules and their scope after the second reading. A sign-off is a
-reading, not an implementation: no consumer has been written from the document alone, and Moss has
-not read it.
+`fe8433b` changed the two consumer rules and their scope after the second reading. **A sign-off is
+evidence that the document is legible, not that it is implementable**: it establishes that a
+competent reader can implement from the text, and it establishes nothing about whether any consumer
+does, whether the choices in the document are the right ones, or whether Moss's reading matches
+Tern's. Those stay open, and the principal has said the same.
+
+### The version rule sharpened, at the principal's direction, 2026-09-21T13:34:00-06:00
+
+The principal confirmed the producer-strict, consumer-tolerant asymmetry and then drew a distinction
+this record had missed: **keys grow, versions announce.** The two are not the same kind of change.
+
+- An unknown **key** is additive growth. Tolerating it is safe only because the consumer must name
+  every key it did not check, so no reader reaches a "met" without knowing something was skipped.
+  That disclosure is the *condition* of the permission, and `PLAN-FORMAT.md` now states it as a
+  condition rather than as advice.
+- An unknown **version** is the format announcing that a key's meaning may have moved, which is the
+  only thing a version is for; treating it as a note defeats the announcement. A known or older
+  version is read normally — an older plan is fully specified by its own version, which is why
+  accepting one is safe. An unknown or newer version makes the verdict **conditional**: the default
+  summary carries the condition, and under the strict gate — `sitewalk --strict` — it is an error
+  finding and exits non-zero. A gate that certifies a plan whose semantics it cannot know is the
+  failure the rule prevents.
+
+Amended accordingly at `PLAN-FORMAT.md`, with the reasoning recorded in rule 4 rather than only the
+rule, because a later reader would otherwise simplify the version check away as redundant with the
+key check. **The behaviour change belongs to Moss**, who owns `sitewalk`: the principal is relaying
+the notice, and carrying the requirement into `--strict` is a unit there, not work in this
+repository. No conformance fixture changed and no valid plan changed, so `plan_version` stays 1; the
+change-log row names the consumer-side effect, as rule 5 requires.
+
+The same direction settled how this document holds its own choices. The trailing-slash rule, the
+ASCII path charset and the punycode host rule are **judgements, not findings**: nobody has shown
+they are right, and rule 3 makes them costly to reverse. The document now says so in a section of
+its own — "What this document chose rather than found" — because "we chose this and changing it is
+costly" is a stronger and more honest position than implying it is correct.
 
 **What U1 exposed in the draft.** Six defects, none of which the draft's own tests caught:
 
@@ -442,6 +474,16 @@ not read it.
 5. Faults in a path said only what was wrong, never what a valid path is.
 6. Two test expectations were themselves wrong — a "did you mean" suggestion the code never made,
    and an allowed-value ordering. U1 fixed the tests, not the code: the document requires neither.
+
+**These six are the case for the fixture set, not only the history of a bug hunt.** Every one of
+them is a plan that the draft's 80 tests passed and the document calls invalid, and five of the six
+are exactly the kind of near-miss a hand-written check forgets: a doubled slash, a query string, a
+trailing slash, a second placeholder, a wrong-case placeholder, a labelled host with an empty label.
+The fixture file exists so that these cases are counted, named and re-run, in this repository and in
+any other that reads the format — and so that the next reader can tell which readings are pinned and
+which are still only prose. The seventh kind of near-miss, `" example.com"` trimmed into validity,
+is a reminder that a validator's convenience can hide a fault: the document forbids trimming, and
+the fixture set pins that too.
 
 **Deviations from the plan as registered.**
 
@@ -615,6 +657,23 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 6, 2026-09-21T13:34:00-06:00. Changed: the format, at the principal's direction, to separate
+an unknown key from an unknown version — keys grow, versions announce. Rule 4 now reads a known or
+older version normally and makes an unknown or newer one a conditional verdict, carried in the
+summary and an error under the strict gate, with the reasoning recorded in the rule so a later
+reader cannot simplify the version check away; rule 6 states that naming every ignored key is the
+condition of tolerance rather than advice about it; and a new section, "What this document chose
+rather than found", marks the trailing-slash rule, the ASCII path charset and the punycode host rule
+as judgements rather than findings, which the principal declined to overrule and asked to have said
+plainly. The record also gains what those three sections imply: the six draft defects are recorded
+as the case for the fixture set and not only as history; and Tern's sign-off is recorded as evidence
+of legibility, not of implementability. Source: the principal's message of 2026-09-21, confirming
+the asymmetry and sharpening the version rule. Reason: an unknown version is not additive growth, and
+treating it as a note defeats the only purpose a version has. Preserved: revision 5 and earlier stand
+as written. Affects: `PLAN-FORMAT.md` rules 4 and 6, its change log, and one unit owed by Moss in
+`sitewalk` — the `--strict` behaviour, which is his to implement when his freeze lifts and is not
+work in this repository. No fixture changed and no valid plan changed: `plan_version` stays 1.
 
 Revision 5, 2026-09-21T13:33:00-06:00. Changed: two amendments to the delivered format, both after
 the U1 return and both inside U1's grant, and the record that carries them. `f19dbdf` reconciled the
