@@ -76,8 +76,12 @@ class RejectsMalformedPlans(unittest.TestCase):
         self.assert_rejected({"plan_version": True}, "expected the integer 1")
 
     def test_unknown_top_level_key(self) -> None:
+        self.assert_rejected({"plan_version": 1, "sites": "example.com"}, 'unknown key "sites"')
+
+    def test_a_mistyped_key_is_suggested(self) -> None:
+        """A near miss on case or separators gets the right key named in the message."""
         problems = self.assert_rejected(
-            {"plan_version": 1, "sites": "example.com"}, 'unknown key "sites"'
+            {"plan_version": 1, "Site": "example.com"}, 'unknown key "Site"'
         )
         self.assertTrue(any('did you mean "site"' in problem for problem in problems))
 
@@ -147,7 +151,7 @@ class RejectsMalformedPlans(unittest.TestCase):
         self.assert_rejected({"plan_version": 1, "url_rules": {}}, "no recognized keys")
         self.assert_rejected(
             {"plan_version": 1, "url_rules": {"trailing_slash": "sometimes"}},
-            'expected "never" or "always"',
+            'expected "always" or "never"',
         )
         self.assert_rejected(
             {"plan_version": 1, "url_rules": {"max_depth": 0}}, "positive integer"
@@ -172,7 +176,7 @@ class RejectsMalformedPlans(unittest.TestCase):
         )
         self.assert_rejected(
             {"plan_version": 1, "pages": [{"path": "about", "purpose": "x"}]},
-            'expected a path beginning with "/"',
+            'slash-separated ASCII segments beginning with "/"',
         )
         self.assert_rejected(
             {"plan_version": 1, "pages": [{"path": "/a", "purpose": "x", "title": "y"}]},
@@ -192,8 +196,8 @@ class RejectsMalformedPlans(unittest.TestCase):
 
 class ReadsFiles(unittest.TestCase):
     def test_missing_file(self) -> None:
-        directory = Path(temp_dir().name)
-        data, problems = plan_format.read_plan(directory / "nope.json")
+        with temp_dir() as name:
+            data, problems = plan_format.read_plan(Path(name) / "nope.json")
         self.assertIsNone(data)
         self.assertIn("cannot read", problems[0])
 

@@ -1,22 +1,40 @@
 #!/bin/sh
-# Project-specific checks.
+# Project checks. Everything that must be true before a commit belongs here.
 #
-# Everything that must be true before a commit belongs here: the test suite, the linter, the
-# build, link checks. `make ci` runs this after the record check, so a failure here fails the
-# build.
+# `make ci` runs this after the record check, so a failure here fails the build. What it
+# establishes, and what it does not:
 #
-# THIS STUB DELIBERATELY FAILS. It used to print a note and exit 0, which meant a project could
-# have failing tests and a green `make ci` at the same time. A check that establishes nothing is
-# worse than no check, because it is believed. Replace the body with the real checks.
+#   * the package and the tests byte-compile;
+#   * the test suite passes with no network -- including the plan-format conformance fixtures in
+#     docs/fixtures/, which pin what `siteplan check` accepts and rejects;
+#   * `python3 -m siteplan` is runnable as the documented entry point.
+#
+# It does not establish that the format is a good format, that the recommendations are right, or
+# that any site follows its plan. Those are review findings, not checks.
 set -eu
 
 cd "$(dirname "$0")/.."
 
-echo "error: no project checks are defined." >&2
-echo "       scripts/check-project.sh is still the template stub, so 'make ci' would" >&2
-echo "       report success without verifying anything." >&2
-echo "" >&2
-echo "       Replace the body with the real checks -- at minimum the test suite -- and" >&2
-echo "       run 'make ci' again. If there is genuinely nothing to check yet, make this" >&2
-echo "       script say so and exit 0 deliberately, in a sentence a reader can judge." >&2
-exit 1
+PYTHON="${PYTHON:-python3}"
+
+echo "== byte-compile =="
+"$PYTHON" -m compileall -q siteplan tests
+
+echo "== plan format: the conformance fixtures parse =="
+"$PYTHON" -c '
+import json, pathlib
+path = pathlib.Path("docs/fixtures/plan-conformance.json")
+document = json.loads(path.read_text(encoding="utf-8"))
+version = document["plan_version"]
+count = len(document["cases"])
+assert version == 1, "the fixtures describe another plan_version"
+print(f"{path}: {count} cases for plan_version {version}")
+'
+
+echo "== tests: offline, including the fixtures =="
+"$PYTHON" -m unittest discover -s tests -t .
+
+echo "== entry point =="
+"$PYTHON" -m siteplan --version
+
+echo "project checks passed"

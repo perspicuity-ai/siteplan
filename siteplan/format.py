@@ -66,11 +66,19 @@ PAGE_KEYS: tuple[str, ...] = ("path", "purpose")
 SCHEMA_TYPE_NAME = re.compile(r"^[A-Z][A-Za-z0-9]*$")
 #: A Schema.org property name, e.g. ``name`` or ``openingHoursSpecification``.
 FIELD_NAME = re.compile(r"^[a-z][A-Za-z0-9]*$")
-#: A site-relative path, beginning with ``/`` and holding no whitespace. A path may carry one
-#: ``<placeholder>`` segment for a family of pages, e.g. ``/product/<slug>``.
-PAGE_PATH = re.compile(r"^/[^\s]*$")
-#: A bare domain: no scheme, no path, no whitespace.
-SITE_NAME = re.compile(r"^[^\s/:]+$")
+
+#: A bare host name: dot-separated DNS labels, optionally with the root dot. Host names are
+#: case-insensitive, so upper case is accepted; a non-ASCII name must be punycode.
+_DNS_LABEL = r"[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?"
+SITE_NAME = re.compile(rf"^{_DNS_LABEL}(?:\.{_DNS_LABEL})*\.?$")
+
+#: One path segment: ASCII path characters, or a single ``<placeholder>`` segment naming a family
+#: of pages. Whitespace, ``?``, ``#`` and non-ASCII characters are not path characters here.
+PATH_SEGMENT = r"(?:[A-Za-z0-9\-._~%!$&'()*+,;=:@]+|<[a-z][a-z0-9_-]*>)"
+#: A site-relative path: ``/`` alone, or slash-separated non-empty segments. No empty segment, so
+#: ``//a`` is invalid; at most one placeholder is enforced separately.
+PAGE_PATH = re.compile(rf"^/(?:{PATH_SEGMENT})(?:/{PATH_SEGMENT})*$")
+PLACEHOLDER = re.compile(r"<[a-z][a-z0-9_-]*>")
 
 
 def _show(value: Any) -> str:
@@ -91,7 +99,9 @@ def _suggestion(key: str, allowed: tuple[str, ...]) -> str:
     return ""
 
 
-def _unknown_key(key: str, allowed: tuple[str, ...], where: str) -> str:
+def _unknown_key(key: str, allowed: tuple[str, ...], prefix: str) -> str:
+    """One fault naming the offending key's own path, so a reader can find it in the file."""
+    where = f"{prefix}.{key}" if prefix else "top level"
     return (
         f'{where}: unknown key "{key}" (allowed: {", ".join(allowed)})'
         f"{_suggestion(key, allowed)}"
@@ -205,7 +215,12 @@ def _validate_url_rules(value: Any) -> list[str]:
     return problems
 
 
-def _validate_pages(value: Any) -> list[str]:
+def _depth(path: str) -> int:
+    """The path depth: ``/`` is 0, ``/a`` is 1, ``/a/b`` is 2. A placeholder is one segment."""
+    return len([segment for segment in path.split("/") if segment])
+
+
+def _validate_pages(value: Any, max_depth: int | None = None) -> list[str]:
     if not isinstance(value, list):
         return [f"pages: expected a list of page objects, got {_show(value)}"]
     if not value:
@@ -228,14 +243,25 @@ def _validate_pages(value: Any) -> list[str]:
                 problems.append(f"{where}.{key}: required")
         path = page.get("path")
         if isinstance(path, str):
-            if not PAGE_PATH.fullmatch(path):
+            if path != "/" and not PAGE_PATH.fullmatch(path):
                 problems.append(
-                    f'{where}.path: expected a path beginning with "/", got {_show(path)}'
+                    f'{where}.path: expected "/" or slash-separated ASCII segments beginning '
+                    f'with "/", got {_show(path)}'
+                )
+            elif len(PLACEHOLDER.findall(path)) > 1:
+                problems.append(
+                    f'{where}.path: at most one <placeholder> segment per path, got '
+                    f"{_show(path)}"
                 )
             elif path in seen:
                 problems.append(f'{where}.path: duplicate path "{path}"')
             else:
                 seen.append(path)
+                if max_depth is not None and _depth(path) > max_depth:
+                    problems.append(
+                        f"{where}.path: depth {_depth(path)} exceeds url_rules.max_depth "
+                        f"{max_depth}; a page may not be deeper than the plan's own URL rules"
+                    )
         elif path is not None:
             problems.append(f"{where}.path: expected a string, got {_show(path)}")
         purpose = page.get("purpose")
@@ -254,7 +280,7 @@ def validate(data: Any) -> list[str]:
     problems: list[str] = []
     for key in data:
         if key not in TOP_LEVEL_KEYS:
-            problems.append(_unknown_key(key, TOP_LEVEL_KEYS, "top level"))
+            problems.append(_unknown_key(key, TOP_LEVEL_KEYS, ""))
 
     if "plan_version" not in data:
         problems.append(
@@ -275,12 +301,12 @@ def validate(data: Any) -> list[str]:
 
     if "site" in data:
         site = data["site"]
-        if not isinstance(site, str) or not site.strip():
+        if not isinstance(site, str) or not site:
             problems.append(f"site: expected a non-empty string, got {_show(site)}")
-        elif not SITE_NAME.fullmatch(site.strip()):
+        elif not SITE_NAME.fullmatch(site):
             problems.append(
-                f'site: expected a bare domain such as "example.com" (no scheme, no path, no '
-                f"whitespace), got {_show(site)}"
+                f'site: expected a bare domain such as "example.com" (dot-separated host labels, '
+                f"no scheme, no path, no port, no whitespace), got {_show(site)}"
             )
 
     if "kind" in data:
@@ -300,8 +326,14 @@ def validate(data: Any) -> list[str]:
         if section in data:
             problems.extend(_validate_section(section, data[section]))
 
+    max_depth: int | None = None
     if "url_rules" in data:
         problems.extend(_validate_url_rules(data["url_rules"]))
+        rules = data["url_rules"]
+        if isinstance(rules, dict):
+            depth = rules.get("max_depth")
+            if isinstance(depth, int) and not isinstance(depth, bool) and depth >= 1:
+                max_depth = depth
 
     if "crawler_stance" in data:
         stance = data["crawler_stance"]
@@ -312,7 +344,7 @@ def validate(data: Any) -> list[str]:
             )
 
     if "pages" in data:
-        problems.extend(_validate_pages(data["pages"]))
+        problems.extend(_validate_pages(data["pages"], max_depth))
 
     return problems
 
