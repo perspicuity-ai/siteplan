@@ -1,11 +1,11 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 15
+revision: 16
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-21T22:01:55-06:00"
+updated_at: "2026-09-21T22:04:45-06:00"
 record_status: open
 work_status: submitted
 ---
@@ -60,16 +60,17 @@ of the audit changes the catalogue and requires U3's and U4's tests to be re-run
 Blocked: nothing. The increment's units are all delivered.
 
 Waiting on: David, for his acceptance of the units Act records as returned. A second input is
-pending and is not this worker's to fetch: **Moss's answer to the clarity question the principal put
-to him**, which lands in R6's finding either as the evidence its closure lacks or as a defect in the
-frozen format.
+pending and is not this worker's to fetch: **Moss must apply two changes to `sitewalk` that the routed
+clarifications created** — the home-page rule for `json-ld` (G1) and the machine-readable disclosure
+of unchecked keys (G5) — both named in the format's change log, which is the durable channel for
+them.
 
 Dependency: none blocking, with two conditions each owned by someone else. David's acceptance: **if
 he rejects any part of the audit, the catalogue changes and both U3's and U4's tests must be re-run
-against it.** Moss's answer: **if he names something he had to infer from the format, it is a defect
-in a frozen document**, and R6 already fixes its route — a clarification keeps `plan_version` 1,
-anything that changes what a valid plan is needs a version bump and the principal's decision.
-Resolving steps: David's acceptance, and the principal's relay of Moss's answer.
+against it.** Moss's work: **G1 and G5 are
+changes in the consumer**, routed through the format's change log; and any answer of his that names
+something further is a defect in a frozen document, for which R6 fixes the route. Resolving steps:
+David's acceptance, and Moss's implementation of the two consumer changes.
 
 Review due: no timed obligation. R5–R7 are trigger-based and are stated in Review.
 
@@ -838,6 +839,28 @@ settled the direction of the label: the evidence is against the benefit, so the 
 `our judgement` and the surface stays in the vocabulary — silence would leave a site owner needing to
 know the convention already in order to decide about it.
 
+### The consumer's clarity review, routed, 2026-09-21T22:04:45-06:00
+
+R6's clarity question came back as five findings, and each was routed through the rule registered
+with R6's closure: a clarification keeps `plan_version` 1 under rule 2, and anything that changes
+what a valid plan *is* takes a version bump under rule 3 and the principal's decision. Delivered at
+`7d47a92`, in the format document, its change log, its fixtures and `check`.
+
+| # | Finding | Routing | Consumer-side effect |
+| --- | --- | --- | --- |
+| G1 | What satisfies `json-ld` is undefined — the one surface with no file behind it | **Clarification, mine to make, and it changes a verdict.** The document now requires JSON-LD on the **home page**, names markup elsewhere as information rather than the verdict, and requires a consumer to say which page it looked at. The alternative — any crawled page — would pass a site no machine can identify from its front door, which contradicts the guidance the catalogue itself cites | **Work for Moss**: `sitewalk`'s `json-ld` check reads any crawled page today |
+| G2 | Rule 4 does not say whether reading continues past an unknown version | **Clarification**: reading continues, the condition is reported, and the keys the consumer recognises are still checked | None to a valid plan |
+| G3 | No exit prescribed for an absent or mistyped `plan_version`, and "below 1" is not distinguished from "known or older" | **Clarification of the principal's ruling** of 2026-09-21: a positive integer, 1 defined; anything else is a fault rather than a condition, and a gate that cannot place the plan against any known version must exit non-zero. Written in because a second implementer cannot reach a ruling from the document | None to a valid plan |
+| G4 | Duplicate keys delegated to the parser, so two readers take different plans from the same bytes | **Clarification that narrows**: a repeated key in one JSON object makes the file invalid, and `check` now detects it with a duplicate-aware parse. `sitewalk` had already implemented the refusal, so without this the two implementations disagreed on the same bytes today. The rule-2-versus-rule-3 argument is written beside the change log: no valid plan is affected, because the document already forbade producers from emitting one, and defining an undefined file is not among rule 3's bump triggers | **Both implementations agree.** Exit codes differ by tool (theirs 2, ours 1), which the document leaves to each consumer |
+| G5 | "Carry" an unknown key is undefined, and a prose-only note leaves a machine reader unable to see what was skipped | **Clarification**: the disclosure must survive into whatever structured output the consumer produces, since it is the condition that makes tolerance permissible | **Work for Moss**: `sitewalk` names unchecked keys in human-readable notes today |
+
+**What he did not have to infer** is recorded beside the findings, because it is the other half of
+the answer: the four version cases, closed-vocabulary behaviour, the open Schema.org handling, the
+nine keys, and the no-shared-code boundary. And the fixture gap he flagged is closed — a valid case
+for `json-ld` presence, which no case exercised, and that is why the fixtures could not have caught
+G1. Duplicate keys deliberately have no case: a JSON fixture cannot express a repeated key in one
+object, so the fixture note says so and the producer's tests cover it instead.
+
 ### Provisional notes for U2–U4
 
 Confirmed at their own pickup, per the 0.5.0 rule that a later pickup plan depends on what the
@@ -908,7 +931,7 @@ format's own obligation.
 | R3 | Delivery: `new` and `check` behave as the format document says, for every kind and flag combination, offline | The test suite, and a run from a clean checkout | Heron, at the U3 return; `make ci` exits 0 through real checks | **Delivered, awaiting acceptance.** `check` conforms to the format document and `new` now conforms to the ratified CLI contract: three exit codes, no `--force`, an existing output refused. 101 tests pass offline at `952892f`; `make ci` exits 0 | Awaiting David's acceptance |
 | R4 | Delivery: unstated intent is never filled in, and the unstated table matches what the catalogue would change | Generated output checked against the catalogue by test | Heron, at the U3 return | **Delivered, awaiting acceptance.** `tests/test_unstated.py` asserts that each unstated input appears as unstated, that a missing site or name is never invented, that an unstated flag changes nothing in the plan, and that the "what changes if you state it" table equals what the catalogue would change | Awaiting David's acceptance |
 | R5 | Benefit: a new project's build is gated on a plan file committed before the build | That project's git history | David, trigger: the first project started after ratification (OQ7); no date | Not observable: no project has started from a plan | — |
-| R6 | Benefit: `sitewalk --plan` consumes a siteplan-produced file unchanged, with no shared code | The consumer's own units, built against this repository's artifacts | Moss, owner of `sitewalk` (OQ6) | **Closed 2026-09-21, and the evidence arrived after this record's U1 note said it did not exist.** Moss built `sitewalk`'s **U7** (`d0131d0`: the version gate — a known or older `plan_version` reads unqualified, an unknown or newer one is conditional in default mode and non-zero under `--strict`, an absent or mistyped one an error, and a surface the consumer cannot check reported as *unverified* rather than absent) and **U8** (`9dfb88e`: `json-ld` and `rss.xml` checked, with four distinguishable states in the JSON) against [`docs/PLAN-FORMAT.md`](docs/PLAN-FORMAT.md) at `fe8433b` **read-only**, with U7's tests loading the seven valid plans from [`docs/fixtures/plan-conformance.json`](docs/fixtures/plan-conformance.json). The interface worked: a separate repository implemented the consumer from the document and the fixtures, with no shared code | Closed. **What the closure does not establish:** that the document is *clear* rather than merely implementable — one successful implementation by one reader can absorb ambiguity in silence, and no one has asked Moss what he had to infer; and that a plan produced by `siteplan new` has been through `sitewalk --plan` end to end, since what was consumed is the published fixture, not a generated plan. That end-to-end run stays worth doing when a project first gates a build on a plan (R5). **The clarity question is no longer a hedge: the principal put it to Moss on 2026-09-21 — what did he have to infer from the document, if anything — and his answer is the evidence this closure lacks.** A "nothing" closes it; anything else arrives as a defect in `docs/PLAN-FORMAT.md` and is recorded here, with the route already fixed: a clarification keeps `plan_version` 1 under rule 2, while anything that changes what a valid plan is takes a version bump under rule 3, which is the principal's decision because it costs work in another repository |
+| R6 | Benefit: `sitewalk --plan` consumes a siteplan-produced file unchanged, with no shared code | The consumer's own units, built against this repository's artifacts | Moss, owner of `sitewalk` (OQ6) | **Closed 2026-09-21, and the evidence arrived after this record's U1 note said it did not exist.** Moss built `sitewalk`'s **U7** (`d0131d0`: the version gate — a known or older `plan_version` reads unqualified, an unknown or newer one is conditional in default mode and non-zero under `--strict`, an absent or mistyped one an error, and a surface the consumer cannot check reported as *unverified* rather than absent) and **U8** (`9dfb88e`: `json-ld` and `rss.xml` checked, with four distinguishable states in the JSON) against [`docs/PLAN-FORMAT.md`](docs/PLAN-FORMAT.md) at `fe8433b` **read-only**, with U7's tests loading the seven valid plans from [`docs/fixtures/plan-conformance.json`](docs/fixtures/plan-conformance.json). The interface worked: a separate repository implemented the consumer from the document and the fixtures, with no shared code | Closed. **What the closure does not establish:** that the document is *clear* rather than merely implementable — one successful implementation by one reader can absorb ambiguity in silence, and no one has asked Moss what he had to infer; and that a plan produced by `siteplan new` has been through `sitewalk --plan` end to end, since what was consumed is the published fixture, not a generated plan. That end-to-end run stays worth doing when a project first gates a build on a plan (R5). **The clarity question was put to Moss and answered on 2026-09-21: the document is implementable but not unambiguous.** He implemented it successfully and had to decide five things the prose does not settle — registered G1–G5, each with its consequence for a second implementer: **G1**, "the pages it describes" is undefined for `json-ld`, the one surface that is not a URL, so a consumer reading it as any crawled page passes a site whose only markup sits on a deep page and returns a different verdict from one reading it as the home page; **G2**, rule 4 does not say whether reading continues past a version the consumer does not implement; **G3**, no exit is prescribed for an absent or mistyped `plan_version`, and "below 1" is not distinguished from "known or older" — that behaviour was the principal's ruling, not the document's; **G4**, duplicate JSON keys are delegated to the parser, so a consumer keeping the first value reads a different plan from the same bytes as one keeping the last; **G5**, "carry" an unknown key is undefined, and naming ignored keys in prose alone leaves a machine reader unable to see them, which weakens the disclosure rule 6 makes the condition of tolerance. He did **not** have to infer the four version cases, closed-vocabulary behaviour, the open Schema.org handling, the nine keys, or the no-shared-code boundary. He also flagged that no valid conformance case exercised `json-ld` presence, which is why the fixtures could not have caught G1. **All five are routed at `7d47a92`** — the four clarifications under rule 2 keeping `plan_version` 1, with G4's rule-2-versus-rule-3 argument written beside the change log, and the change log naming each consumer-side effect |
 | R7 | Disconfirming: the brief is written once and never read, or the built site contradicts its plan | The first gated project's history, and its `sitewalk` run | David, trigger: that project's first deploy | Pending; no project has used a brief | If it holds, reconsider the tool's existence rather than maintain the document (`CONTEXT.md` §Success, and what would stop us) |
 | R8 | The format does not break its consumer without a version bump | The change log in `docs/PLAN-FORMAT.md`, against `plan_version` and the consumer's releases | Heron at each format change; David for a breaking change | Satisfied so far, trivially: `plan_version` 1 is the first freeze, with one change-log entry and no later change | — |
 
@@ -946,6 +969,20 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 16, 2026-09-21T22:04:45-06:00. Changed: Moss's answer to the clarity question is recorded in R6's finding —
+**implementable but not unambiguous**, with five registered inferences and what he did *not* have to
+infer — and Act now carries the routing: each finding classified under the rule registered with R6's
+closure, the changes delivered at `7d47a92`, and the consumer-side effect of each named. Four are
+clarifications keeping `plan_version` 1; G4 (duplicate keys) is the one that narrows what is accepted,
+and the rule-2-versus-rule-3 argument for keeping the version is written beside the format's change
+log rather than left to inference. G1 changes a verdict on an ordinary site and is the first item
+this project has routed that requires work in the other repository: the home-page rule for `json-ld`.
+Source: the principal's two messages of 2026-09-21 carrying Moss's clarity review and the note that
+`sitewalk` had already implemented the G4 refusal. Reason: findings from the consumer are defects in
+the document when the document left the case undefined, and the route for each was registered before
+the answer arrived. Affects: `docs/PLAN-FORMAT.md` and its change log, the conformance fixtures (46
+cases), `siteplan/format.py` and `check`, R6's finding, and two pieces of work owned by Moss.
 
 Revision 15, 2026-09-21T22:02:28-06:00. Changed: one line in Authority. The principal settled on 2026-09-21 that keeping
 this record current — including correcting its own summary when the sections below it disagree with
