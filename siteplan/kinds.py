@@ -242,6 +242,12 @@ TRANSACTIONAL_FIELDS: tuple[str, ...] = ("offers", "price", "priceCurrency", "av
 BOOKING_FIELDS: tuple[str, ...] = ("potentialAction",)
 
 
+#: Where a kind's offering markup lives, said once so two notes cannot drift.
+WHERE_PRODUCT = (
+    "That markup belongs on each product page rather than on the entry page, so the `json-ld` surface - which checks the entry page - does not cover it; the requirement is this advice and the purpose of each product page."
+)
+
+
 LOCAL_BUSINESS = Profile(
     kind="local-business",
     headline="a business that serves people in a place: a shop, a bakery, a restaurant, a tradesperson",
@@ -402,7 +408,7 @@ ONLINE_STORE = Profile(
     ),
     crawler_stance="selective",
     pages=(
-        ("/", "What the store sells, who runs it and how buying works."),
+        ("/", "What the store sells, who runs it and how buying works, with the identity markup."),
         ("/products", "The catalogue, in a form a visitor or a crawler can enumerate."),
         ("/product/<slug>", "One product: what it is, what it costs and whether it is available."),
         ("/about", "Who runs the store and what they promise about an order."),
@@ -423,11 +429,11 @@ ONLINE_STORE = Profile(
     offering_types_note=(
         "`Product` is the documented type for the thing sold. With nothing stated about selling "
         "there is no `Offer` here, and a store that does not sell is a contradiction worth "
-        "settling before the build."
+        "settling before the build." + WHERE_PRODUCT
     ),
     offering_types_note_selling=(
         "`Product` with an `Offer` is the published pattern for a product page, and Google's "
-        "structured data documentation for merchant listings is written against it."
+        "structured data documentation for merchant listings is written against it." + WHERE_PRODUCT
     ),
     offering_fields_basis=BASIS_PRACTICE,
     offering_fields_note=(
@@ -520,7 +526,10 @@ CONTENT_SITE = Profile(
     offering_types_basis=BASIS_PRACTICE,
     offering_types_note=(
         "Schema.org defines `Article` and `BlogPosting` for published writing, and Google's "
-        "structured data documentation for articles is written against them."
+        "structured data documentation for articles is written against them. That markup belongs "
+        "on each article rather than on the entry page, so the `json-ld` surface - which checks "
+        "the entry page for the identity markup - does not cover it; the requirement is this "
+        "advice and the purpose of each article page."
     ),
     offering_types_note_selling=(
         "`Article` and `BlogPosting` describe the writing; `Offer` is the published way to state "
@@ -596,7 +605,7 @@ SAAS = Profile(
     ),
     crawler_stance="selective",
     pages=(
-        ("/", "What the product does and who it is for."),
+        ("/", "What the product does and who it is for, with the identity markup."),
         ("/pricing", "What it costs and what each plan includes, in one comparable place."),
         ("/docs", "How to use it, starting here."),
         ("/docs/<page>", "One task or concept, with the version it applies to."),
@@ -699,7 +708,7 @@ DIRECTORY = Profile(
     ),
     crawler_stance="selective",
     pages=(
-        ("/", "What the directory covers, who keeps it and how an entry gets in."),
+        ("/", "What the directory covers, who keeps it and how an entry gets in, with the identity markup."),
         ("/listings", "The index of entries, in a form a machine can enumerate."),
         ("/listings/<slug>", "One entry and its facts, attributed to its source."),
         ("/categories/<slug>", "One category of entries, with the list markup."),
@@ -723,7 +732,9 @@ DIRECTORY = Profile(
         "structured data documentation documents a carousel built on an `ItemList` of at least "
         "two `ListItem`s. Its documented host types are narrow - course list, movie, recipe and "
         "restaurant - so for a general directory the list markup is our reading of those types, "
-        "not a documented feature for it."
+        "not a documented feature for it. That markup belongs on the listing and category pages "
+        "rather than on the entry page, so the `json-ld` surface - which checks the entry page - "
+        "does not cover it; the requirement is this advice and those pages' purposes."
     ),
     offering_types_note_selling=(
         "`ItemList` and `ListItem` describe the list; `Offer` states what a paid placement costs. "

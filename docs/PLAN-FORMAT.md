@@ -252,11 +252,20 @@ knows what to implement, and marked as choices so that nobody later mistakes the
 satisfies it has to be stated rather than inferred — and until this section existed, two compliant
 consumers could return different verdicts for the same site:
 
-- **A site satisfies `json-ld` when its home page carries Schema.org JSON-LD.** That is where the
-  identity markup belongs, and Google's organization guidance says so in as many words: "We recommend
-  placing this information on your home page, or a single page that describes your organization."
-  A site whose only JSON-LD sits on a deep page does **not** satisfy the surface; a check that accepts
-  it would pass a site no machine can identify from its front door.
+- **A site satisfies `json-ld` when its home page — the page whose path is `/` — carries Schema.org
+  JSON-LD.** That is where the identity markup belongs, and Google's organization guidance says so in
+  as many words: "We recommend placing this information on your home page, or a single page that
+  describes your organization." A site whose only JSON-LD sits on a deep page does **not** satisfy
+  the surface; a check that accepts it would pass a site no machine can identify from its front door.
+  A plan that names no `/` page cannot have this surface verified: a consumer reports it as
+  **unverified**, not as met.
+- **Which kinds require the surface is the catalogue's decision, per kind, and it is written there.**
+  A kind whose *identity* markup belongs on its entry page requires it; a kind whose *offering*
+  markup belongs on its content pages — an article, a product, an entry — cannot have that markup
+  checked by an entry-page rule, so the requirement for those pages is stated as advice and as those
+  pages' purposes rather than as this surface. Every kind in the catalogue requires it, and each says
+  in the purpose of its `/` page that the identity markup belongs there; there is no kind whose
+  exception is left unwritten.
 - **Markup on other pages is described by that page's `purpose`, and is information rather than the
   verdict.** A consumer may report the types it found elsewhere — an `Article` on an article page, a
   `Product` on a product page — and doing so is useful. It does not change whether the surface is met,
@@ -418,7 +427,7 @@ cost of being wrong is a `plan_version` 2 that both repositories must handle.
 | --- | --- | --- | --- |
 | 2026-09-21 | 1 | First freeze. The nine keys, the open/closed rule, the versioning rules and the conformance fixtures are published as `plan_version` 1. | None: this is the first published version. |
 | 2026-09-21 | 1 | Rules 4 and 6 corrected after reading the consumer that already exists: a consumer may read a version or a key it does not implement, must report it, and must not present it as checked or as a pass. The producer's rules are unchanged — `plan_version` is still required and `check` still rejects any other value or unknown key. | None to what a valid plan is. It removes an instruction that would have contradicted `sitewalk --plan`, which the principal had already ratified as tolerant of unknown versions and keys. |
-| 2026-09-21 | 1 | **What satisfies `json-ld` is defined** (G1 in the consumer's clarity review): the home page must carry Schema.org JSON-LD, markup elsewhere is information rather than the verdict, and a consumer says which page it looked at. This was the one surface that is not a file, so nothing defined it by fetching; two compliant consumers could return different verdicts for the same site. | **A consumer that accepted JSON-LD on any page must change.** `sitewalk`'s `json-ld` check reads any crawled page today, so this rule is work for it. A plan-level clarification: no key, shape or vocabulary changed. |
+| 2026-09-21 | 1 | **What satisfies `json-ld` is defined** (G1 in the consumer's clarity review): the **home page, path `/`**, must carry Schema.org JSON-LD; a plan with no `/` page leaves it unverified rather than met; markup elsewhere is information rather than the verdict; and a consumer says which page it looked at. Kind coverage is settled per kind in the catalogue, where every kind's `/` page purpose now says the identity markup belongs there, and where the kinds whose offering markup lives on inner pages say so and place the requirement in that advice rather than in this surface. This was the one surface that is not a file, so nothing defined it by fetching; two compliant consumers could return different verdicts for the same site. | **A consumer that accepted JSON-LD on any page must change.** `sitewalk`'s `json-ld` check reads any crawled page today, so this rule is work for it. A plan-level clarification: no key, shape or vocabulary changed. |
 | 2026-09-21 | 1 | **Reading continues past a version the consumer does not implement, "older" means an older version of this format rather than a smaller number, and an absent or mistyped `plan_version` is a fault rather than a condition** (G2 and G3). The absent-or-mistyped behaviour is the principal's ruling of 2026-09-21, given when the consumer asked whether a missing version should gate; it is written here because a second implementer cannot reach it from the document otherwise. | None to what a valid plan is. A consumer must keep checking the keys it recognises, and must refuse to certify a plan it cannot place against any known version. |
 | 2026-09-21 | 1 | **A JSON object in a plan must not repeat a key** (G4), and a validator detects it with a duplicate-aware parse. JSON leaves the outcome to the implementation, so two compliant readers could take different plans from the same bytes; the file is now invalid rather than undefined. | **Both implementations now refuse it.** `sitewalk` already does, with tests covering a top-level duplicate, a nested one, the legitimate repeat of a key in different objects, and that all fixture cases still load; `siteplan check` does from this revision and exits `1`. This is the one item here that narrows what is accepted — see the note below on rule 2 versus rule 3. |
 | 2026-09-21 | 1 | **The disclosure of ignored keys must survive into machine-readable output** (G5): naming them only in prose does not meet the condition that makes tolerance permissible. | **A consumer that names unchecked keys only in human-readable notes must carry them into its structured output.** Work for `sitewalk`; nothing changes for a valid plan. |

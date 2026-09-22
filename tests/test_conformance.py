@@ -12,6 +12,7 @@ import unittest
 from pathlib import Path
 
 from siteplan import format as plan_format
+from siteplan import kinds
 
 FIXTURES = Path(__file__).resolve().parent.parent / "docs" / "fixtures" / "plan-conformance.json"
 
@@ -114,8 +115,24 @@ class DocumentCoversTheImplementation(unittest.TestCase):
 
     def test_the_json_ld_rule_is_stated(self) -> None:
         """The one surface with no file behind it: if this section goes, two consumers can differ."""
-        self.assertIn("## What satisfies `json-ld`", self.document)
-        self.assertIn("home page carries Schema.org JSON-LD", self.document)
+        # assertTrue with a message, not assertIn: a failure should name the missing rule rather
+        # than print the whole specification into the test output.
+        self.assertTrue(
+            "## What satisfies `json-ld`" in self.document, "the json-ld rule section is missing"
+        )
+        self.assertTrue(
+            "A site satisfies `json-ld` when its home page" in self.document,
+            "the home-page rule is missing",
+        )
+        self.assertTrue(
+            "Which kinds require the surface is the catalogue's decision" in self.document,
+            "the per-kind coverage rule is missing",
+        )
+        # And the catalogue must actually say it, per kind: no unwritten exception.
+        for kind, profile in kinds.PROFILES.items():
+            with self.subTest(kind=kind):
+                entry_purpose = profile.pages[0][1]
+                self.assertIn("identity markup", entry_purpose)
 
     def test_the_repeated_key_rule_is_stated(self) -> None:
         self.assertIn("must not repeat a key", self.document)
