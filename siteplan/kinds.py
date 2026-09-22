@@ -244,7 +244,7 @@ BOOKING_FIELDS: tuple[str, ...] = ("potentialAction",)
 
 #: Where a kind's offering markup lives, said once so two notes cannot drift.
 WHERE_PRODUCT = (
-    "That markup belongs on each product page rather than on the entry page, so the `json-ld` surface - which checks the entry page - does not cover it; the requirement is this advice and the purpose of each product page."
+    "That markup belongs on each product page rather than on the entry page - which is where it satisfies the `json-ld` surface - and it is `identity.schema_types` that a consumer checks on the home page."
 )
 
 
@@ -527,9 +527,8 @@ CONTENT_SITE = Profile(
     offering_types_note=(
         "Schema.org defines `Article` and `BlogPosting` for published writing, and Google's "
         "structured data documentation for articles is written against them. That markup belongs "
-        "on each article rather than on the entry page, so the `json-ld` surface - which checks "
-        "the entry page for the identity markup - does not cover it; the requirement is this "
-        "advice and the purpose of each article page."
+        "on each article, which is where it satisfies the `json-ld` surface; what a consumer "
+        "checks on the home page is `identity.schema_types`, the site's front-door claim."
     ),
     offering_types_note_selling=(
         "`Article` and `BlogPosting` describe the writing; `Offer` is the published way to state "
@@ -732,9 +731,9 @@ DIRECTORY = Profile(
         "structured data documentation documents a carousel built on an `ItemList` of at least "
         "two `ListItem`s. Its documented host types are narrow - course list, movie, recipe and "
         "restaurant - so for a general directory the list markup is our reading of those types, "
-        "not a documented feature for it. That markup belongs on the listing and category pages "
-        "rather than on the entry page, so the `json-ld` surface - which checks the entry page - "
-        "does not cover it; the requirement is this advice and those pages' purposes."
+        "not a documented feature for it. That markup belongs on the listing and category pages, "
+        "which is where it satisfies the `json-ld` surface; what a consumer checks on the home "
+        "page is `identity.schema_types`, the site's front-door claim."
     ),
     offering_types_note_selling=(
         "`ItemList` and `ListItem` describe the list; `Offer` states what a paid placement costs. "
@@ -962,7 +961,8 @@ def advice_for(profile: Profile) -> tuple[Advice, ...]:
         Advice(
             "identity_types",
             profile.identity_types_basis,
-            f"Schema.org defines {_joined(profile.identity_types)}. {profile.identity_types_note}",
+            f"Schema.org defines {_joined(profile.identity_types)}; a consumer checks these types on "
+            f"the home page. {profile.identity_types_note}",
         ),
         Advice(
             "identity_fields",

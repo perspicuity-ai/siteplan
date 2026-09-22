@@ -121,18 +121,27 @@ class DocumentCoversTheImplementation(unittest.TestCase):
             "## What satisfies `json-ld`" in self.document, "the json-ld rule section is missing"
         )
         self.assertTrue(
-            "A site satisfies `json-ld` when its home page" in self.document,
-            "the home-page rule is missing",
+            "A site satisfies `json-ld` when Schema.org JSON-LD appears in the HTML of any page it "
+            "serves" in self.document,
+            "the json-ld rule is missing",
         )
         self.assertTrue(
-            "Which kinds require the surface is the catalogue's decision" in self.document,
-            "the per-kind coverage rule is missing",
+            "`identity.schema_types` is the front-door requirement" in self.document,
+            "the front-door rule that json-ld does not carry is missing",
         )
-        # And the catalogue must actually say it, per kind: no unwritten exception.
+        self.assertTrue(
+            "must not branch on `kind`" in self.document,
+            "the rule against consumer branching on kind is missing",
+        )
+        # And the catalogue must put the front-door claim where the rule says it is checked: every
+        # kind's entry-page purpose names the identity markup, and its identity advice says so too.
         for kind, profile in kinds.PROFILES.items():
             with self.subTest(kind=kind):
-                entry_purpose = profile.pages[0][1]
-                self.assertIn("identity markup", entry_purpose)
+                self.assertIn("identity markup", profile.pages[0][1])
+                identity_advice = [
+                    item.why for item in kinds.advice_for(profile) if item.group == "identity_types"
+                ][0]
+                self.assertIn("checks these types on the home page", identity_advice)
 
     def test_the_repeated_key_rule_is_stated(self) -> None:
         self.assertIn("must not repeat a key", self.document)

@@ -150,7 +150,7 @@ site **must** publish; the plan is what a consumer checks them against.
 
 | Value | The surface |
 | --- | --- |
-| `json-ld` | Schema.org JSON-LD in the HTML of the site's pages, and on the **home page** in particular: see "What satisfies `json-ld`" below. |
+| `json-ld` | Schema.org JSON-LD in the HTML of the site's pages: anywhere the site's markup belongs, with the consumer naming the page it found it on. See "What satisfies `json-ld`" below. |
 | `llms.txt` | A plain-text map of the site at `/llms.txt`, as proposed at llmstxt.org. Not a standard, and no major search engine or AI vendor states that it reads one; Google's guidance says Search ignores such files. |
 | `robots.txt` | Crawler access rules at `/robots.txt`, per RFC 9309. |
 | `rss.xml` | A dated feed, RSS 2.0 or Atom. |
@@ -170,6 +170,12 @@ not `opening_hours` — so that a consumer can pass them to a Schema.org-aware r
 translation table. Presence of the object means the site claims something about it; an object with
 neither key is invalid, and an empty array is invalid: omit the key instead, because an empty list
 requires nothing and so says something different from an absent one.
+
+**`identity.schema_types` is the front-door requirement, and a consumer checks it on the home page.**
+That is the key that says what the site's entry page must declare about what the site *is*; it is
+not a claim about markup anywhere else. A plan that wants its front door to declare something says
+so here, and a plan that does not care simply omits `identity` — which is why the surface below does
+not need to carry the front-door rule as well.
 
 The producer's catalogue carries the field lists it recommends; the format does not require any
 particular set, and a plan with `fields: ["servesCuisine"]` is valid even though no catalogue in
@@ -252,30 +258,24 @@ knows what to implement, and marked as choices so that nobody later mistakes the
 satisfies it has to be stated rather than inferred — and until this section existed, two compliant
 consumers could return different verdicts for the same site:
 
-- **A site satisfies `json-ld` when its home page — the page whose path is `/` — carries Schema.org
-  JSON-LD.** That is where the identity markup belongs, and Google's organization guidance says so in
-  as many words: "We recommend placing this information on your home page, or a single page that
-  describes your organization." A site whose only JSON-LD sits on a deep page does **not** satisfy
-  the surface; a check that accepts it would pass a site no machine can identify from its front door.
-  A plan that names no `/` page cannot have this surface verified: a consumer reports it as
-  **unverified**, not as met.
-- **Which kinds require the surface is the catalogue's decision, per kind, and it is written there.**
-  A kind whose *identity* markup belongs on its entry page requires it; a kind whose *offering*
-  markup belongs on its content pages — an article, a product, an entry — cannot have that markup
-  checked by an entry-page rule, so the requirement for those pages is stated as advice and as those
-  pages' purposes rather than as this surface. Every kind in the catalogue requires it, and each says
-  in the purpose of its `/` page that the identity markup belongs there; there is no kind whose
-  exception is left unwritten.
-- **Markup on other pages is described by that page's `purpose`, and is information rather than the
-  verdict.** A consumer may report the types it found elsewhere — an `Article` on an article page, a
-  `Product` on a product page — and doing so is useful. It does not change whether the surface is met,
-  because the plan does not say which types belong on which page and the format does not invent one.
-- **A consumer checking this surface says which page it looked at.** "json-ld: met" without the page
-  is the same class of claim as a verdict on a version the consumer does not know.
-
-A plan that wants markup on a particular page says so in that page's `purpose`, in the principal's
-words. A consumer that checks a purpose against the page is making a judgement, not applying a rule,
-and must say which it is doing.
+- **A site satisfies `json-ld` when Schema.org JSON-LD appears in the HTML of any page it serves.**
+  The surface says the site publishes markup, not where: for a `content-site` the markup belongs on
+  its articles, for an `online-store` on its product pages, for a `directory` on its listings, and
+  requiring it on the home page would fail a site that is doing exactly the right thing.
+- **The front-door requirement is a different key, and it already exists.** `identity.schema_types`
+  is checked against the home page: a plan that wants its entry page to declare what the site is
+  says so there. The two keys do two jobs, and neither has to know the plan's `kind`.
+- **A consumer checking this surface names the page it found the markup on.** "json-ld: met" without
+  the page is the same class of claim as a verdict on a version the consumer does not know, and a
+  consumer that found no markup anywhere reports the surface unmet, naming the pages it read.
+- **What the markup must be about is the plan's business, not this surface's.** `identity` and
+  `offering` name the types; the surface says only that markup is published. A consumer may report
+  the types it found, and where, as information.
+- **A consumer must not branch on `kind` to check this or any surface.** The closed vocabularies are
+  what a consumer branches on, and `kind` is one — but a surface whose verdict depends on the kind
+  would make every consumer re-implement this catalogue, which is what the plan file exists to
+  prevent. If a kind ever needs a surface checked differently, that belongs in the plan, not in
+  consumer code.
 
 ## Validation summary
 
@@ -431,5 +431,6 @@ cost of being wrong is a `plan_version` 2 that both repositories must handle.
 | 2026-09-21 | 1 | **Reading continues past a version the consumer does not implement, "older" means an older version of this format rather than a smaller number, and an absent or mistyped `plan_version` is a fault rather than a condition** (G2 and G3). The absent-or-mistyped behaviour is the principal's ruling of 2026-09-21, given when the consumer asked whether a missing version should gate; it is written here because a second implementer cannot reach it from the document otherwise. | None to what a valid plan is. A consumer must keep checking the keys it recognises, and must refuse to certify a plan it cannot place against any known version. |
 | 2026-09-21 | 1 | **A JSON object in a plan must not repeat a key** (G4), and a validator detects it with a duplicate-aware parse. JSON leaves the outcome to the implementation, so two compliant readers could take different plans from the same bytes; the file is now invalid rather than undefined. | **Both implementations now refuse it.** `sitewalk` already does, with tests covering a top-level duplicate, a nested one, the legitimate repeat of a key in different objects, and that all fixture cases still load; `siteplan check` does from this revision and exits `1`. This is the one item here that narrows what is accepted — see the note below on rule 2 versus rule 3. |
 | 2026-09-21 | 1 | **The disclosure of ignored keys must survive into machine-readable output** (G5): naming them only in prose does not meet the condition that makes tolerance permissible. | **A consumer that names unchecked keys only in human-readable notes must carry them into its structured output.** Work for `sitewalk`; nothing changes for a valid plan. |
+| 2026-09-21 | 1 | **The `json-ld` rule above is superseded before any consumer built to it**: the surface means the site publishes JSON-LD on some page and the consumer names that page; the front-door requirement moves to `identity.schema_types`, which a consumer checks on the home page — behaviour the existing consumer already had. Adopted on the principal's proposal, which is better than the rule it replaces: the home-page-only reading would have failed a `content-site` whose markup belongs on its articles, and the fix for that would have been a consumer branching on `kind`, which is the defect shape the clarity review found in the first place. | **Less work for `sitewalk`, not more**: what it does today — `json-ld` anywhere, `identity.schema_types` on the home page — is now what the document says. No key, shape or vocabulary changed. |
 | 2026-09-21 | 1 | A valid conformance case was added for `json-ld` presence, because no case exercised the one surface with no file behind it — which is why the fixture set could not have caught G1. | None: a new case for consumers to run. |
 | 2026-09-21 | 1 | Rule 4 sharpened, at the principal's direction, to separate an unknown key from an unknown version: keys grow, versions announce. An unknown key stays tolerable when every ignored key is named; an unknown or newer version makes the verdict conditional, carried in the summary and an error under the strict gate. The three judgement-based choices (trailing slash, ASCII segments, punycode hosts) are now listed as choices rather than findings. | **`sitewalk --strict` must treat an unknown or newer `plan_version` as an error, and the default summary must carry the condition.** That is a change in the consumer, recorded as its own unit there; it is not a change to what a valid plan is, so `plan_version` stays 1. |
