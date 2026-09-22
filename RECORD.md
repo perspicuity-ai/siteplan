@@ -1,11 +1,11 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 16
+revision: 17
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-21T22:04:45-06:00"
+updated_at: "2026-09-21T22:07:45-06:00"
 record_status: open
 work_status: submitted
 ---
@@ -59,18 +59,15 @@ of the audit changes the catalogue and requires U3's and U4's tests to be re-run
 
 Blocked: nothing. The increment's units are all delivered.
 
-Waiting on: David, for his acceptance of the units Act records as returned. A second input is
-pending and is not this worker's to fetch: **Moss must apply two changes to `sitewalk` that the routed
-clarifications created** — the home-page rule for `json-ld` (G1) and the machine-readable disclosure
-of unchecked keys (G5) — both named in the format's change log, which is the durable channel for
-them.
+Waiting on: David, for his acceptance of the units Act records as returned. The consumer work the
+clarifications created is discharged: **G5 was delivered by Moss as his U11**, and **G1 needs no
+consumer change** after the adopted rule — `sitewalk`'s existing behaviour is what the document now
+says. What remains outstanding for this record is David's acceptance of U2, U3 and U4 alone.
 
 Dependency: none blocking, with two conditions each owned by someone else. David's acceptance: **if
 he rejects any part of the audit, the catalogue changes and both U3's and U4's tests must be re-run
-against it.** Moss's work: **G1 and G5 are
-changes in the consumer**, routed through the format's change log; and any answer of his that names
-something further is a defect in a frozen document, for which R6 fixes the route. Resolving steps:
-David's acceptance, and Moss's implementation of the two consumer changes.
+against it.** Any further finding of Moss's is
+a defect in a frozen document, for which R6 fixes the route. Resolving step: David's acceptance.
 
 Review due: no timed obligation. R5–R7 are trigger-based and are stated in Review.
 
@@ -848,11 +845,11 @@ what a valid plan *is* takes a version bump under rule 3 and the principal's dec
 
 | # | Finding | Routing | Consumer-side effect |
 | --- | --- | --- | --- |
-| G1 | What satisfies `json-ld` is undefined — the one surface with no file behind it | **Clarification, settled per kind at the principal's direction, and it changes a verdict.** The surface means the **home page, path `/`**; a plan with no `/` page leaves it **unverified** rather than met; markup elsewhere is information rather than the verdict; and a consumer says which page it looked at. The principal's objection was that a `content-site`'s markup lives on its articles, so a blanket home-page rule would fail a site doing the right thing — **so the answer is that no kind carries an unwritten exception**: every kind requires the surface, every kind's `/` page purpose now says the identity markup belongs there (made explicit for `online-store`, `saas` and `directory`, which had left it implicit), and the kinds whose *offering* markup lives on inner pages — `online-store`, `content-site`, `directory` — say in that advice that the surface does not cover it and that the requirement is the advice plus those pages' purposes. **Rejected alternative**: a kind-aware rule checking content pages for content kinds; it cannot be stated checkably without the plan saying which types belong on which page, and the catalogue's page sets already place identity markup on the entry page for every kind. **Proposal, not taken**: an additive per-page `markup` list (rule 2, so no bump) would restore a checkable requirement for offering markup on inner pages, at the cost of a format extension and consumer work that has not been granted | **Work for Moss, narrowed**: `sitewalk`'s `json-ld` check reads any crawled page today and must read the home page |
+| G1 | What satisfies `json-ld` is undefined — the one surface with no file behind it | **Settled at `7e77be1`, on the principal's proposal, after my first rule was wrong.** I first defined the surface as the **home page**, per kind, to stop a deep-page-only site passing; the principal pointed out that **`identity.schema_types` is already the front-door key** — a consumer checks it on the home page — so `json-ld` need not carry that requirement at all. The adopted rule: **`json-ld` means the site publishes Schema.org JSON-LD on some page it serves, and the consumer names the page it found it on**; **`identity.schema_types` is the front-door requirement**, checked on the home page; and **a consumer must not branch on `kind`** to check a surface, because every consumer would then re-implement this catalogue. The sequence is in the format's change log, with the superseded home-page rule named rather than deleted. **Rejected**: kind-awareness (a consumer branching on `kind`), and my per-kind home-page rule — both would have failed a `content-site` whose markup belongs on its articles. **Proposed, not taken**: an additive per-page `markup` list, which the adopted rule makes unnecessary | **No work for `sitewalk`**: what it does today — `json-ld` anywhere, `identity.schema_types` on the home page — is now what the document says. The work item I had sent to Moss is withdrawn rather than deferred |
 | G2 | Rule 4 does not say whether reading continues past an unknown version | **Clarification**: reading continues, the condition is reported, and the keys the consumer recognises are still checked | None to a valid plan |
 | G3 | No exit prescribed for an absent or mistyped `plan_version`, and "below 1" is not distinguished from "known or older" | **Clarification of the principal's ruling** of 2026-09-21: a positive integer, 1 defined; anything else is a fault rather than a condition, and a gate that cannot place the plan against any known version must exit non-zero. Written in because a second implementer cannot reach a ruling from the document | None to a valid plan |
 | G4 | Duplicate keys delegated to the parser, so two readers take different plans from the same bytes | **Clarification that narrows**: a repeated key in one JSON object makes the file invalid, and `check` now detects it with a duplicate-aware parse. `sitewalk` had already implemented the refusal, so without this the two implementations disagreed on the same bytes today. The rule-2-versus-rule-3 argument is written beside the change log: no valid plan is affected, because the document already forbade producers from emitting one, and defining an undefined file is not among rule 3's bump triggers | **Both implementations agree.** Exit codes differ by tool (theirs 2, ours 1), which the document leaves to each consumer |
-| G5 | "Carry" an unknown key is undefined, and a prose-only note leaves a machine reader unable to see what was skipped | **Clarification**: the disclosure must survive into whatever structured output the consumer produces, since it is the condition that makes tolerance permissible | **Work for Moss**: `sitewalk` names unchecked keys in human-readable notes today |
+| G5 | "Carry" an unknown key is undefined, and a prose-only note leaves a machine reader unable to see what was skipped | **Clarification**: the disclosure must survive into whatever structured output the consumer produces, since it is the condition that makes tolerance permissible | **Delivered by Moss as his unit U11**: ignored keys now reach the JSON as an `info` finding and as `plan.ignored_keys`, the audit of the other eight tolerated cases returned a nil that was recorded with its table rather than left as an absence, and every row of that table is asserted on the JSON. That is the requirement met, and it is evidence the condition of tolerance is implementable in a consumer's output rather than only in its prose |
 
 **What he did not have to infer** is recorded beside the findings, because it is the other half of
 the answer: the four version cases, closed-vocabulary behaviour, the open Schema.org handling, the
@@ -969,6 +966,20 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 17, 2026-09-21T22:07:45-06:00. Changed: G1's decision of record is the rule adopted at `7e77be1`, which
+supersedes the per-kind home-page rule this record carried for one revision. The principal's proposal
+was better than my rule and the reason is recorded rather than the outcome alone: `identity.schema_types`
+is already the front-door key, so `json-ld` need not carry the front-door requirement, and a
+consumer that branched on `kind` would have to re-implement this catalogue — which is the defect shape
+the clarity review found in the first place. The format's change log keeps the superseded rule as a
+named supersession rather than deleting it. Moss's U11 is recorded as the delivery of G5, with what it
+proves — the disclosure condition is implementable in a consumer's structured output — and the
+consumer-side work this record was carrying is now discharged: G5 delivered, G1 withdrawn because
+`sitewalk`'s existing behaviour is what the adopted rule says. Source: the principal's message of
+2026-09-21 proposing the third option and reporting U11. Reason: the record keeps the decision of
+record and the route by which it changed; a superseded rule that vanishes teaches nothing. Affects:
+G1 and G5, the consumer-side work list, and `docs/PLAN-FORMAT.md`'s change log.
 
 Revision 16, 2026-09-21T22:04:45-06:00. Changed: Moss's answer to the clarity question is recorded in R6's finding —
 **implementable but not unambiguous**, with five registered inferences and what he did *not* have to
