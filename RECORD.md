@@ -1,11 +1,11 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 7
+revision: 8
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-21T21:48:00-06:00"
+updated_at: "2026-09-21T21:54:00-06:00"
 record_status: open
 work_status: submitted
 ---
@@ -36,10 +36,9 @@ record. Selected by David on 2026-09-21; the selection, the answers he gave with
 he registered are in "Selection" and "Answers to the open questions". Recommendation and selection
 are separate entries below, as the method requires.
 
-Work scope: U2 — the citation audit of every labelled recommendation in the catalogue, granted
-2026-09-21 and picked up under the plan registered below. U1 was accepted by the principal against
-`d1f7098` and is closed; its benefit criteria (R5–R7) remain unobserved and are not part of this
-scope.
+Work scope: U2 — delivered at `9ad893f` and now awaiting the principal's acceptance. U1 was
+accepted against `d1f7098` and is closed; its benefit criteria (R5–R7) remain unobserved. U3 and U4
+are not granted, and the shipped kind set is now named for U3 to enforce.
 
 Work: revision 3 registered the grant at 13:23:14. U1 was carried out between then and 13:28:49,
 when the return was committed: `docs/PLAN-FORMAT.md` frozen as `plan_version` 1; 45 conformance
@@ -48,37 +47,36 @@ fixtures published;
 `scripts/check-project.sh` replaced with the real checks. The return, with its evidence and the gaps
 it leaves, is in Act.
 
-Outcome: U1 was accepted as delivered; no benefit is observed. No project has used a plan, no
-consumer has read one, and the format's implementability remains an assessor's reading rather than
-an implementation. U2 has not started at this revision.
+Outcome: U2 is delivered — every labelled claim in the catalogue is now either supported by a
+source that was read on 2026-09-21 or labelled a judgement naming the fact it rests on, and all six
+kinds ship on that basis. No benefit is observed: no project has used a plan, no consumer has read
+one, and nothing has been published.
 
-Next: Heron carries U2 — enumerate every labelled claim in the catalogue, read each named source,
-correct or demote what the source does not support, and publish the audit — then returns it for
-acceptance. The freeze notice to Moss, who owns `sitewalk`, remains with the principal to relay; a
-worker here cannot message another repository's session.
+Next: David accepts U2 or returns it with findings, and separately grants or refuses U3 — the
+generator, which now also enforces the shipped kind set and the ratified CLI contract. The freeze
+notice to Moss, who owns `sitewalk`, remains with the principal to relay; a worker here cannot
+message another repository's session.
 
-Blocked: nothing. U1 is closed and U2's grant, inputs and acceptance criteria are registered.
+Blocked: nothing in the U2 return. U3 cannot start until its grant is registered.
 
-Waiting on: no one for U2. The principal's acceptance of U2 is the move after its return.
+Waiting on: David — acceptance of U2, and the grant of U3.
 
-Dependency: none blocking. The one input U2 needs that this repository cannot supply — reading
-published sources on the network — was granted on 2026-09-21 as OQ2, and the tool itself stays
-offline.
+Dependency: David's acceptance of U2 and his grant for U3. Owner David; resolving step: his reply to
+this record.
 
 Review due: no timed obligation. R5–R7 are trigger-based and are stated in Review.
 
-Authority: the grant registered beside U2 in Act, from the principal's acceptance and grant of
-2026-09-21 — U2 only, inside the fences the Statement of Work registered. No authority is held for
-U3 or U4; for any change to the format (versioning rule 5 makes a consumer-breaking change the
-principal's decision); or for contacting another repository. Nothing is published: publication is
-the principal's release word, and he has not given it. The principal retains spending, outbound
+Authority: U2's grant, registered at revision 7 and now complete. No authority is held for U3 or
+U4; for any change to the format (versioning rule 5 makes a consumer-breaking change the principal's
+decision); or for contacting another repository. Nothing is published: publication is the
+principal's release word, and he has not given it. The principal retains spending, outbound
 messages, external agreements, the release word, and the selection of courses and units.
 
 | Stage | began_at | registered_at / exact basis revision | finished_at |
 | --- | --- | --- | --- |
 | Frame and Decide | 2026-09-21T11:52:23-06:00 | [`CONTEXT.md`](CONTEXT.md) as supplied 2026-09-21; principal's instructions and answers of 2026-09-21 | 2026-09-21T13:23:14-06:00 |
-| Act | 2026-09-21T13:23:14-06:00 | revision 3 granted U1; revision 7 grants U2 and registers its pickup plan | U1 finished 13:28:49; U2 in progress |
-| Review | 2026-09-21T13:28:49-06:00 | criteria R1–R8, registered at revision 2 before the work | U1 accepted; U2's review pending its return |
+| Act | 2026-09-21T13:23:14-06:00 | revision 3 granted U1; revision 7 granted U2 and registered its pickup plan | U1 finished 13:28:49; U2 finished 21:53:00 |
+| Review | 2026-09-21T13:28:49-06:00 | criteria R1–R8, registered at revision 2 before the work | U1 accepted; U2's review pending its acceptance |
 
 ## Frame and Decide
 
@@ -325,7 +323,7 @@ a ratified design that differs discards them.
 | # | State | Result | Inputs / dependencies | Owner | Done when | Estimate |
 | --- | --- | --- | --- | --- | --- | --- |
 | U1 | **accepted** — delivered `757eef3`, `7db7c03`; accepted by David 2026-09-21 against `d1f7098` | `docs/PLAN-FORMAT.md` and its conformance fixtures: the authoritative format and stability rules, a minimal valid plan, a malformed one, and `check` brought to the document | Selection at revision 3; OQ2–OQ5 answered; the draft validator as evidence only | Heron | Met, on the evidence in "U1 return" below | Actual: 1 session, as estimated |
-| U2 | **granted** — pickup registered at revision 7 | Citation audit of every labelled recommendation in the catalogue, corrections applied, unverifiable claims demoted to `our judgement`; the shipped kind and surface set named | OQ2 answered (network for sources, not for the tool); the fact-check of 2026-09-21; the grant at revision 7 | Heron | The acceptance criteria in the U2 pickup plan below | 1–2 sessions; wide |
+| U2 | **returned** — delivered `9ad893f`; awaits acceptance | Citation audit of every labelled recommendation in the catalogue, corrections applied, unsupported claims demoted to `our judgement`; the shipped kind and surface set named | OQ2 answered (network for sources, not for the tool); the first fact-check of 2026-09-21; the grant at revision 7 | Heron | Met, on the evidence in the U2 return below | Actual: about one session, inside the estimate |
 | U3 | planned — not granted | `siteplan new` completed against the audited catalogue and the ratified CLI contract: the audited kinds, four flags and interactive mode, `BRIEF.md` and `site.json`, the unstated rule, and `--force` removed | U1, U2 | Heron | R3 and R4 pass; tests run offline; `make ci` exits 0 through real checks | 1 session |
 | U4 | planned — not granted | Project surfaces: `README.md` (what it does, how to run it, what it does not do), coherent local commits | U1–U3 | Heron | `make ci` and `make records` exit 0 at the delivered commit, and the record carries the evidence | 0.5 session |
 
@@ -604,6 +602,55 @@ Acceptance criteria, registered before the work:
 
 `picked_up_at` 2026-09-21T21:48:00-06:00, actor Heron, immediately after the grant was registered.
 
+### U2 return, 2026-09-21T21:53:00-06:00
+
+**Delivered.** `docs/CITATIONS.md` — the method, the counts, every `published practice` verdict with
+its source URL and the date read, the judgement claims with the fact each names, and the limits of
+what a rate from it means. `siteplan/kinds.py` corrected and re-labelled. `tests/test_catalogue_evidence.py`
+added, which fails a `published practice` claim that names no source. Exact revision: `9ad893f`.
+
+**The audit, in numbers.** 47 labelled claims were enumerated mechanically from the catalogue — the
+five surface bases, the advice for all six kinds, and the shared claims — so the scope is complete
+rather than sampled. Each named source was read on 2026-09-21 by two workers who did not write the
+catalogue: **Plover** (Schema.org and vendor documentation) and **Sanderling** (specifications and
+standards). Of the 15 claims carrying `published practice` before the audit:
+
+| Finding | Count |
+| --- | --- |
+| materially wrong | 2 — `OnlineStore` described as a subtype of `Store`; `availability` described as required by the merchant-listing guidance |
+| overstated | 2 — `robots.txt` without its Proposed-Standard and non-binding status; `/sitemap.xml` as a defined location rather than a recommended one |
+| labelled as practice although the source recommends nothing for that kind of site | 5 — the identity types for `content-site`, `saas`, `directory` and `personal`, and the offering types for `directory` |
+| supported as written | 6 |
+| judgement-labelled claims the evidence does settle, now `published practice` | 2 — the offering fields for `content-site` and `saas` |
+| further wrong claims found inside judgement-labelled reasons | 2 — the local-business note claiming the vendor guidance "asks for" `telephone`; the `llms.txt` note claiming no consumer exists |
+
+After the audit: **12 practice labels**, each naming a source that was read, and **35 judgements**,
+each naming the fact it rests on. Four of the six defects the first check found were confirmed; the
+other two were the wrong facts inside judgement-labelled prose.
+
+**The finding worth carrying forward.** Three of the four wrong claims were not borrowed authority —
+they were wrong facts inside honest-looking prose, and no label check can catch that. The label
+discipline catches a claim that names no source; only reading the source catches a claim the source
+does not support. That is why `docs/CITATIONS.md` is a reading with dates and named readers rather
+than a check, and why the pre-existing test can only assert the weaker half.
+
+**The shipped set.** All six kinds ship. Every claim in every kind is now either supported by a
+source that was read or labelled `our judgement` with the fact it rests on named, which is the
+condition OQ8 set: nothing is published under a `published practice` label that the evidence does
+not carry. This is a reading of OQ8 as "no kind ships with a dishonest claim" rather than as "no
+kind ships whose recommendation is a judgement" — the second reading would cut four more
+recommendations, and would also cut the honest judgements the format exists to permit. The
+principal may overrule that reading, and U3 is where the set is enforced in `new`.
+
+**What U2 did not establish.** That the sources are right, or that they will still say it next year:
+each verdict is one reader's finding on 2026-09-21. That the recommendations work — nothing here is
+evidence that a site following a plan is found, understood or recommended. That the reading is the
+only possible one: three sources were read at the page that states the rule rather than in full
+normative text, and the Schema.org property verdicts came from the published vocabulary dump rather
+than each property's page. That a future claim is honest: the new test enforces that a practice
+label names a source, not that the source agrees. And nothing about the free-text prose of the
+*format* document beyond the claims it makes about the same sources, which the audit did cover.
+
 ### Provisional notes for U2–U4
 
 Confirmed at their own pickup, per the 0.5.0 rule that a later pickup plan depends on what the
@@ -670,7 +717,7 @@ format's own obligation.
 | # | Criterion | Evidence source | Owner, window or trigger | Finding | Response |
 | --- | --- | --- | --- | --- | --- |
 | R1 | Delivery: the format document is complete enough for an implementer who cannot read our code | An assessor who did not write it, against acceptance criterion 2 | David or a named independent assessor, at the U1 return | **Accepted by David, 2026-09-21, against basis revision `d1f7098` (record revision 6): the format document and the conformance fixtures are accepted as delivered.** The evidence he accepted was Tern's four readings, ending `SIGN-OFF: yes` on the delivered revision, with one residual tension recorded; Tern's sign-off is evidence of legibility, not of implementability, and David recorded that distinction. Assessor: David, the principal | Closed. The one check left is a read by Moss as the actual consumer, and it does not hold up the acceptance |
-| R2 | Delivery: every `published practice` label cites a source that was read, with the date; nothing unverified is labelled as practice | The audit record, and a sample re-read of the sources | Heron returns; the assessor samples at the U2 return | Not started: U2 is not granted | — |
+| R2 | Delivery: every `published practice` label cites a source that was read, with the date; nothing unverified is labelled as practice | The audit record, and a sample re-read of the sources | Heron returns; the assessor samples at the U2 return | **Delivered, awaiting acceptance.** All 12 remaining practice labels name a source read on 2026-09-21, recorded with its URL and verdict in `docs/CITATIONS.md`; 5 labels moved to `our judgement` and 2 moved up to practice; the test fails a practice label with no source. The audit is the author's reading, and a re-read by an assessor who did not write it has not been done | Awaiting David's acceptance. A sample re-read by a second reader is the check available and is not required for acceptance |
 | R3 | Delivery: `new` and `check` behave as the format document says, for every kind and flag combination, offline | The test suite, and a run from a clean checkout | Heron, at the U3 return; `make ci` exits 0 through real checks | Partly settled at U1: `check` conforms and `make ci` now exits 0 through real checks. `new` is unchanged and still contradicts the ratified contract (`--force`, exit 3) | Carry to U3, where `new` is brought to the contract |
 | R4 | Delivery: unstated intent is never filled in, and the unstated table matches what the catalogue would change | Generated output checked against the catalogue by test | Heron, at the U3 return | Not started; the draft's implementation is unratified | — |
 | R5 | Benefit: a new project's build is gated on a plan file committed before the build | That project's git history | David, trigger: the first project started after ratification (OQ7); no date | Not observable: no project has started from a plan | — |
@@ -712,6 +759,18 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 8, 2026-09-21T21:54:00-06:00. Changed: the record carries the U2 return — the delivered
+artifacts with their revision (`9ad893f`), the audit's counts, the six findings, the shipped set,
+and what the unit does not establish; R2's finding; the unit table (U2 returned); and the current
+position (delivery complete, awaiting acceptance, with U3 ungranted). One inaccuracy is corrected
+rather than smoothed over: **revision 7 left `work_status` at `submitted` while U2 was granted and in
+progress, when the delivery named in Work scope was U2 and the accurate value was `active`.** It is
+`submitted` again here, which is correct for a return; the interval it was wrong is recorded so a
+reader of the queue is not misled about when work was running. Source: the audit at `9ad893f`, the
+two source reads of 2026-09-21, and the principal's grant of U2. Reason: a return records what was
+delivered against the criteria registered before it. Preserved: revisions 7 and earlier stand as
+written. Affects: U2 (returned), R2, the shipped kind set, and the grant of U3 now pending.
 
 Revision 7, 2026-09-21T21:48:00-06:00. Changed: David accepted U1 and granted U2. The Review records
 the acceptance — assessor David, 2026-09-21, basis revision `d1f7098` (record revision 6), finding
