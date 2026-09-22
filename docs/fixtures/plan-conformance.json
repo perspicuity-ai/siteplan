@@ -1,7 +1,7 @@
 {
   "format": "siteplan-plan-conformance/1",
   "plan_version": 1,
-  "note": "Conformance cases for docs/PLAN-FORMAT.md. A conforming validator must accept every case with \"valid\": true and reject every case with \"valid\": false, naming each key in invalid_keys. \"expect\" is a substring this project's own check must emit; it is a producer-side regression check, not a requirement on another implementation's wording.",
+  "note": "Conformance cases for docs/PLAN-FORMAT.md. A conforming validator must accept every case with \"valid\": true and reject every case with \"valid\": false, naming each key in invalid_keys. \"expect\" is a substring this project's own check must emit; it is a producer-side regression check, not a requirement on another implementation's wording. Duplicate keys deliberately have no case here: a JSON fixture cannot express a repeated key in one object, so that rule is covered by the producer's own tests and written in the format document instead.",
   "cases": [
     {
       "name": "minimal-valid",
@@ -29,14 +29,33 @@
         "plan_version": 1,
         "site": "example.com",
         "kind": "online-store",
-        "required_surfaces": ["robots.txt", "sitemap.xml", "json-ld"],
+        "required_surfaces": [
+          "robots.txt",
+          "sitemap.xml",
+          "json-ld"
+        ],
         "identity": {
-          "schema_types": ["OnlineStore"],
-          "fields": ["name", "url", "description"]
+          "schema_types": [
+            "OnlineStore"
+          ],
+          "fields": [
+            "name",
+            "url",
+            "description"
+          ]
         },
         "offering": {
-          "schema_types": ["Product", "Offer"],
-          "fields": ["name", "image", "offers", "price", "priceCurrency"]
+          "schema_types": [
+            "Product",
+            "Offer"
+          ],
+          "fields": [
+            "name",
+            "image",
+            "offers",
+            "price",
+            "priceCurrency"
+          ]
         },
         "url_rules": {
           "lowercase": true,
@@ -45,8 +64,14 @@
         },
         "crawler_stance": "selective",
         "pages": [
-          {"path": "/", "purpose": "what the store sells and how buying works"},
-          {"path": "/product/<slug>", "purpose": "one product, its price and its availability"}
+          {
+            "path": "/",
+            "purpose": "what the store sells and how buying works"
+          },
+          {
+            "path": "/product/<slug>",
+            "purpose": "one product, its price and its availability"
+          }
         ]
       }
     },
@@ -58,8 +83,14 @@
         "plan_version": 1,
         "kind": "local-business",
         "identity": {
-          "schema_types": ["Bakery"],
-          "fields": ["servesCuisine", "hasMenu", "openingHoursSpecification"]
+          "schema_types": [
+            "Bakery"
+          ],
+          "fields": [
+            "servesCuisine",
+            "hasMenu",
+            "openingHoursSpecification"
+          ]
         }
       }
     },
@@ -69,21 +100,45 @@
       "valid": true,
       "plan": {
         "plan_version": 1,
-        "url_rules": {"max_depth": 2},
-        "pages": [{"path": "/a/b", "purpose": "at the boundary"}]
+        "url_rules": {
+          "max_depth": 2
+        },
+        "pages": [
+          {
+            "path": "/a/b",
+            "purpose": "at the boundary"
+          }
+        ]
+      }
+    },
+    {
+      "name": "json-ld-required-valid",
+      "covers": "the one surface that is not a file: requiring it is a valid plan, and what satisfies it is defined in the format document ('What satisfies json-ld')",
+      "valid": true,
+      "plan": {
+        "plan_version": 1,
+        "required_surfaces": [
+          "json-ld"
+        ]
       }
     },
     {
       "name": "host-name-case-valid",
       "covers": "host names are case-insensitive, so upper case is accepted",
       "valid": true,
-      "plan": {"plan_version": 1, "site": "Example.COM"}
+      "plan": {
+        "plan_version": 1,
+        "site": "Example.COM"
+      }
     },
     {
       "name": "host-name-root-dot-valid",
       "covers": "the root form of a domain is accepted",
       "valid": true,
-      "plan": {"plan_version": 1, "site": "example.com."}
+      "plan": {
+        "plan_version": 1,
+        "site": "example.com."
+      }
     },
     {
       "name": "not-an-object",
@@ -91,259 +146,490 @@
       "valid": false,
       "invalid_keys": [],
       "expect": "must be a JSON object",
-      "plan": [{"plan_version": 1}]
+      "plan": [
+        {
+          "plan_version": 1
+        }
+      ]
     },
     {
       "name": "missing-plan-version",
       "covers": "the one required key",
       "valid": false,
-      "invalid_keys": ["plan_version"],
+      "invalid_keys": [
+        "plan_version"
+      ],
       "expect": "plan_version: required",
-      "plan": {"kind": "saas"}
+      "plan": {
+        "kind": "saas"
+      }
     },
     {
       "name": "unknown-version",
       "covers": "a consumer refuses a version it does not implement",
       "valid": false,
-      "invalid_keys": ["plan_version"],
+      "invalid_keys": [
+        "plan_version"
+      ],
       "expect": "expected 1, got 2",
-      "plan": {"plan_version": 2}
+      "plan": {
+        "plan_version": 2
+      }
     },
     {
       "name": "version-not-an-integer",
       "covers": "plan_version is an integer, not a string that looks like one",
       "valid": false,
-      "invalid_keys": ["plan_version"],
+      "invalid_keys": [
+        "plan_version"
+      ],
       "expect": "expected the integer 1",
-      "plan": {"plan_version": "1"}
+      "plan": {
+        "plan_version": "1"
+      }
     },
     {
       "name": "unknown-top-level-key",
       "covers": "unknown keys are invalid at every level",
       "valid": false,
-      "invalid_keys": ["sites"],
+      "invalid_keys": [
+        "sites"
+      ],
       "expect": "unknown key \"sites\"",
-      "plan": {"plan_version": 1, "sites": "example.com"}
+      "plan": {
+        "plan_version": 1,
+        "sites": "example.com"
+      }
     },
     {
       "name": "unknown-kind",
       "covers": "kind is a closed vocabulary",
       "valid": false,
-      "invalid_keys": ["kind"],
+      "invalid_keys": [
+        "kind"
+      ],
       "expect": "kind: expected one of",
-      "plan": {"plan_version": 1, "kind": "shop"}
+      "plan": {
+        "plan_version": 1,
+        "kind": "shop"
+      }
     },
     {
       "name": "unknown-surface",
       "covers": "required_surfaces is a closed vocabulary",
       "valid": false,
-      "invalid_keys": ["required_surfaces[1]"],
+      "invalid_keys": [
+        "required_surfaces[1]"
+      ],
       "expect": "unknown name",
-      "plan": {"plan_version": 1, "required_surfaces": ["robots.txt", "humans.txt"]}
+      "plan": {
+        "plan_version": 1,
+        "required_surfaces": [
+          "robots.txt",
+          "humans.txt"
+        ]
+      }
     },
     {
       "name": "surface-name-case",
       "covers": "closed vocabulary values match exactly, including case",
       "valid": false,
-      "invalid_keys": ["required_surfaces[0]"],
+      "invalid_keys": [
+        "required_surfaces[0]"
+      ],
       "expect": "unknown name \"SITEMAP.XML\"",
-      "plan": {"plan_version": 1, "required_surfaces": ["SITEMAP.XML"]}
+      "plan": {
+        "plan_version": 1,
+        "required_surfaces": [
+          "SITEMAP.XML"
+        ]
+      }
     },
     {
       "name": "duplicate-surface",
       "covers": "a surface may be required once",
       "valid": false,
-      "invalid_keys": ["required_surfaces[1]"],
+      "invalid_keys": [
+        "required_surfaces[1]"
+      ],
       "expect": "duplicate",
-      "plan": {"plan_version": 1, "required_surfaces": ["robots.txt", "robots.txt"]}
+      "plan": {
+        "plan_version": 1,
+        "required_surfaces": [
+          "robots.txt",
+          "robots.txt"
+        ]
+      }
     },
     {
       "name": "empty-surface-list",
       "covers": "an empty list requires nothing, so the key is omitted instead",
       "valid": false,
-      "invalid_keys": ["required_surfaces"],
+      "invalid_keys": [
+        "required_surfaces"
+      ],
       "expect": "empty list",
-      "plan": {"plan_version": 1, "required_surfaces": []}
+      "plan": {
+        "plan_version": 1,
+        "required_surfaces": []
+      }
     },
     {
       "name": "identity-not-an-object",
       "covers": "identity and offering are objects",
       "valid": false,
-      "invalid_keys": ["identity"],
+      "invalid_keys": [
+        "identity"
+      ],
       "expect": "identity: expected an object",
-      "plan": {"plan_version": 1, "identity": ["LocalBusiness"]}
+      "plan": {
+        "plan_version": 1,
+        "identity": [
+          "LocalBusiness"
+        ]
+      }
     },
     {
       "name": "identity-empty-object",
       "covers": "an object with neither schema_types nor fields says nothing",
       "valid": false,
-      "invalid_keys": ["identity"],
+      "invalid_keys": [
+        "identity"
+      ],
       "expect": "no recognized keys",
-      "plan": {"plan_version": 1, "identity": {}}
+      "plan": {
+        "plan_version": 1,
+        "identity": {}
+      }
     },
     {
       "name": "identity-unknown-key",
       "covers": "the nested keys are schema_types and fields, exactly",
       "valid": false,
-      "invalid_keys": ["identity.schemaTypes"],
+      "invalid_keys": [
+        "identity.schemaTypes"
+      ],
       "expect": "unknown key \"schemaTypes\"",
-      "plan": {"plan_version": 1, "identity": {"schemaTypes": ["LocalBusiness"]}}
+      "plan": {
+        "plan_version": 1,
+        "identity": {
+          "schemaTypes": [
+            "LocalBusiness"
+          ]
+        }
+      }
     },
     {
       "name": "offering-empty-fields",
       "covers": "an empty field list is invalid rather than a no-op",
       "valid": false,
-      "invalid_keys": ["offering.fields"],
+      "invalid_keys": [
+        "offering.fields"
+      ],
       "expect": "empty list",
-      "plan": {"plan_version": 1, "offering": {"fields": []}}
+      "plan": {
+        "plan_version": 1,
+        "offering": {
+          "fields": []
+        }
+      }
     },
     {
       "name": "field-name-shape",
       "covers": "the vocabulary is open but the shape is checked",
       "valid": false,
-      "invalid_keys": ["offering.fields[0]"],
+      "invalid_keys": [
+        "offering.fields[0]"
+      ],
       "expect": "is not a Schema.org name",
-      "plan": {"plan_version": 1, "offering": {"fields": ["opening hours"]}}
+      "plan": {
+        "plan_version": 1,
+        "offering": {
+          "fields": [
+            "opening hours"
+          ]
+        }
+      }
     },
     {
       "name": "type-name-shape",
       "covers": "a type name starts with an upper-case letter",
       "valid": false,
-      "invalid_keys": ["identity.schema_types[0]"],
+      "invalid_keys": [
+        "identity.schema_types[0]"
+      ],
       "expect": "is not a Schema.org name",
-      "plan": {"plan_version": 1, "identity": {"schema_types": ["localBusiness"]}}
+      "plan": {
+        "plan_version": 1,
+        "identity": {
+          "schema_types": [
+            "localBusiness"
+          ]
+        }
+      }
     },
     {
       "name": "url-rules-empty",
       "covers": "url_rules with no recognized key says nothing",
       "valid": false,
-      "invalid_keys": ["url_rules"],
+      "invalid_keys": [
+        "url_rules"
+      ],
       "expect": "no recognized keys",
-      "plan": {"plan_version": 1, "url_rules": {}}
+      "plan": {
+        "plan_version": 1,
+        "url_rules": {}
+      }
     },
     {
       "name": "trailing-slash-invalid",
       "covers": "trailing_slash is closed: a consumer branches on it",
       "valid": false,
-      "invalid_keys": ["url_rules.trailing_slash"],
+      "invalid_keys": [
+        "url_rules.trailing_slash"
+      ],
       "expect": "url_rules.trailing_slash: expected",
-      "plan": {"plan_version": 1, "url_rules": {"trailing_slash": "sometimes"}}
+      "plan": {
+        "plan_version": 1,
+        "url_rules": {
+          "trailing_slash": "sometimes"
+        }
+      }
     },
     {
       "name": "max-depth-not-positive",
       "covers": "max_depth is 1 or more; / is depth 0",
       "valid": false,
-      "invalid_keys": ["url_rules.max_depth"],
+      "invalid_keys": [
+        "url_rules.max_depth"
+      ],
       "expect": "positive integer",
-      "plan": {"plan_version": 1, "url_rules": {"max_depth": 0}}
+      "plan": {
+        "plan_version": 1,
+        "url_rules": {
+          "max_depth": 0
+        }
+      }
     },
     {
       "name": "lowercase-not-boolean",
       "covers": "lowercase is true or false",
       "valid": false,
-      "invalid_keys": ["url_rules.lowercase"],
+      "invalid_keys": [
+        "url_rules.lowercase"
+      ],
       "expect": "expected true or false",
-      "plan": {"plan_version": 1, "url_rules": {"lowercase": "yes"}}
+      "plan": {
+        "plan_version": 1,
+        "url_rules": {
+          "lowercase": "yes"
+        }
+      }
     },
     {
       "name": "crawler-stance-invalid",
       "covers": "crawler_stance is a closed vocabulary",
       "valid": false,
-      "invalid_keys": ["crawler_stance"],
+      "invalid_keys": [
+        "crawler_stance"
+      ],
       "expect": "crawler_stance: expected one of",
-      "plan": {"plan_version": 1, "crawler_stance": "sometimes"}
+      "plan": {
+        "plan_version": 1,
+        "crawler_stance": "sometimes"
+      }
     },
     {
       "name": "pages-empty",
       "covers": "a plan that requires no pages omits the key",
       "valid": false,
-      "invalid_keys": ["pages"],
+      "invalid_keys": [
+        "pages"
+      ],
       "expect": "empty list",
-      "plan": {"plan_version": 1, "pages": []}
+      "plan": {
+        "plan_version": 1,
+        "pages": []
+      }
     },
     {
       "name": "page-not-an-object",
       "covers": "every element of pages is an object; a string element is invalid",
       "valid": false,
-      "invalid_keys": ["pages[0]"],
+      "invalid_keys": [
+        "pages[0]"
+      ],
       "expect": "expected an object with path and purpose",
-      "plan": {"plan_version": 1, "pages": ["/a"]}
+      "plan": {
+        "plan_version": 1,
+        "pages": [
+          "/a"
+        ]
+      }
     },
     {
       "name": "page-missing-purpose",
       "covers": "both page keys are required within a page object",
       "valid": false,
-      "invalid_keys": ["pages[0].purpose"],
+      "invalid_keys": [
+        "pages[0].purpose"
+      ],
       "expect": "pages[0].purpose: required",
-      "plan": {"plan_version": 1, "pages": [{"path": "/"}]}
+      "plan": {
+        "plan_version": 1,
+        "pages": [
+          {
+            "path": "/"
+          }
+        ]
+      }
     },
     {
       "name": "page-path-not-absolute",
       "covers": "a page path begins with a slash",
       "valid": false,
-      "invalid_keys": ["pages[0].path"],
+      "invalid_keys": [
+        "pages[0].path"
+      ],
       "expect": "beginning with \"/\"",
-      "plan": {"plan_version": 1, "pages": [{"path": "about", "purpose": "x"}]}
+      "plan": {
+        "plan_version": 1,
+        "pages": [
+          {
+            "path": "about",
+            "purpose": "x"
+          }
+        ]
+      }
     },
     {
       "name": "page-path-with-query",
       "covers": "a path is a path; a query string is not part of it",
       "valid": false,
-      "invalid_keys": ["pages[0].path"],
+      "invalid_keys": [
+        "pages[0].path"
+      ],
       "expect": "ASCII segments",
-      "plan": {"plan_version": 1, "pages": [{"path": "/pricing?plan=pro", "purpose": "x"}]}
+      "plan": {
+        "plan_version": 1,
+        "pages": [
+          {
+            "path": "/pricing?plan=pro",
+            "purpose": "x"
+          }
+        ]
+      }
     },
     {
       "name": "page-path-empty-segment",
       "covers": "no empty segment, so a doubled slash is invalid",
       "valid": false,
-      "invalid_keys": ["pages[0].path"],
+      "invalid_keys": [
+        "pages[0].path"
+      ],
       "expect": "ASCII segments",
-      "plan": {"plan_version": 1, "pages": [{"path": "/a//b", "purpose": "x"}]}
+      "plan": {
+        "plan_version": 1,
+        "pages": [
+          {
+            "path": "/a//b",
+            "purpose": "x"
+          }
+        ]
+      }
     },
     {
       "name": "page-path-trailing-slash",
       "covers": "a path is written without a trailing slash; trailing_slash describes the built URLs",
       "valid": false,
-      "invalid_keys": ["pages[0].path"],
+      "invalid_keys": [
+        "pages[0].path"
+      ],
       "expect": "ASCII segments",
-      "plan": {"plan_version": 1, "pages": [{"path": "/pricing/", "purpose": "x"}]}
+      "plan": {
+        "plan_version": 1,
+        "pages": [
+          {
+            "path": "/pricing/",
+            "purpose": "x"
+          }
+        ]
+      }
     },
     {
       "name": "page-path-two-placeholders",
       "covers": "at most one placeholder segment per path",
       "valid": false,
-      "invalid_keys": ["pages[0].path"],
+      "invalid_keys": [
+        "pages[0].path"
+      ],
       "expect": "at most one <placeholder>",
-      "plan": {"plan_version": 1, "pages": [{"path": "/a/<x>/<y>", "purpose": "x"}]}
+      "plan": {
+        "plan_version": 1,
+        "pages": [
+          {
+            "path": "/a/<x>/<y>",
+            "purpose": "x"
+          }
+        ]
+      }
     },
     {
       "name": "page-path-malformed-placeholder",
       "covers": "a placeholder names its family in lower case: <slug>, not <Slug>",
       "valid": false,
-      "invalid_keys": ["pages[0].path"],
+      "invalid_keys": [
+        "pages[0].path"
+      ],
       "expect": "ASCII segments",
-      "plan": {"plan_version": 1, "pages": [{"path": "/product/<Slug>", "purpose": "x"}]}
+      "plan": {
+        "plan_version": 1,
+        "pages": [
+          {
+            "path": "/product/<Slug>",
+            "purpose": "x"
+          }
+        ]
+      }
     },
     {
       "name": "page-unknown-key",
       "covers": "a page object has exactly path and purpose",
       "valid": false,
-      "invalid_keys": ["pages[0].title"],
+      "invalid_keys": [
+        "pages[0].title"
+      ],
       "expect": "unknown key \"title\"",
-      "plan": {"plan_version": 1, "pages": [{"path": "/", "purpose": "x", "title": "y"}]}
+      "plan": {
+        "plan_version": 1,
+        "pages": [
+          {
+            "path": "/",
+            "purpose": "x",
+            "title": "y"
+          }
+        ]
+      }
     },
     {
       "name": "duplicate-page-path",
       "covers": "paths are unique",
       "valid": false,
-      "invalid_keys": ["pages[1].path"],
+      "invalid_keys": [
+        "pages[1].path"
+      ],
       "expect": "duplicate path",
       "plan": {
         "plan_version": 1,
         "pages": [
-          {"path": "/a", "purpose": "x"},
-          {"path": "/a", "purpose": "y"}
+          {
+            "path": "/a",
+            "purpose": "x"
+          },
+          {
+            "path": "/a",
+            "purpose": "y"
+          }
         ]
       }
     },
@@ -351,56 +637,94 @@
       "name": "site-with-scheme",
       "covers": "site is a bare domain; paths belong in pages",
       "valid": false,
-      "invalid_keys": ["site"],
+      "invalid_keys": [
+        "site"
+      ],
       "expect": "bare domain",
-      "plan": {"plan_version": 1, "site": "https://example.com/pricing"}
+      "plan": {
+        "plan_version": 1,
+        "site": "https://example.com/pricing"
+      }
     },
     {
       "name": "site-with-port",
       "covers": "site carries no port",
       "valid": false,
-      "invalid_keys": ["site"],
+      "invalid_keys": [
+        "site"
+      ],
       "expect": "bare domain",
-      "plan": {"plan_version": 1, "site": "example.com:8080"}
+      "plan": {
+        "plan_version": 1,
+        "site": "example.com:8080"
+      }
     },
     {
       "name": "site-empty",
       "covers": "an empty string is never a value; omit the key instead",
       "valid": false,
-      "invalid_keys": ["site"],
+      "invalid_keys": [
+        "site"
+      ],
       "expect": "non-empty string",
-      "plan": {"plan_version": 1, "site": ""}
+      "plan": {
+        "plan_version": 1,
+        "site": ""
+      }
     },
     {
       "name": "site-with-space",
       "covers": "values are used as written; a validator does not trim them",
       "valid": false,
-      "invalid_keys": ["site"],
+      "invalid_keys": [
+        "site"
+      ],
       "expect": "bare domain",
-      "plan": {"plan_version": 1, "site": " example.com"}
+      "plan": {
+        "plan_version": 1,
+        "site": " example.com"
+      }
     },
     {
       "name": "pages-exceed-max-depth",
       "covers": "the one rule that spans two keys: pages may not contradict url_rules",
       "valid": false,
-      "invalid_keys": ["pages[0].path"],
+      "invalid_keys": [
+        "pages[0].path"
+      ],
       "expect": "exceeds url_rules.max_depth",
       "plan": {
         "plan_version": 1,
-        "url_rules": {"max_depth": 2},
-        "pages": [{"path": "/a/b/c", "purpose": "deeper than the plan allows"}]
+        "url_rules": {
+          "max_depth": 2
+        },
+        "pages": [
+          {
+            "path": "/a/b/c",
+            "purpose": "deeper than the plan allows"
+          }
+        ]
       }
     },
     {
       "name": "placeholder-counts-as-one-segment",
       "covers": "a placeholder segment contributes one to the depth, not none",
       "valid": false,
-      "invalid_keys": ["pages[0].path"],
+      "invalid_keys": [
+        "pages[0].path"
+      ],
       "expect": "depth 2 exceeds url_rules.max_depth 1",
       "plan": {
         "plan_version": 1,
-        "url_rules": {"max_depth": 1},
-        "pages": [{"path": "/product/<slug>", "purpose": "one page per product"}]
+        "url_rules": {
+          "max_depth": 1
+        },
+        "pages": [
+          {
+            "path": "/product/<slug>",
+            "purpose": "one page per product"
+          }
+        ]
       }
     }
   ]

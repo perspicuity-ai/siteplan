@@ -349,6 +349,33 @@ def validate(data: Any) -> list[str]:
     return problems
 
 
+class RepeatedKey(Exception):
+    """A JSON object in the plan repeated a key, which the format forbids."""
+
+    def __init__(self, keys: list[str]) -> None:
+        super().__init__(", ".join(keys))
+        self.keys = keys
+
+
+def _object_without_repeated_keys(pairs: list[tuple[str, Any]]) -> dict:
+    """Build one JSON object, refusing a repeated key.
+
+    JSON leaves a repeated key to the implementation — one parser keeps the last value, another the
+    first — so two compliant readers could take different plans from the same bytes with no fault on
+    either side. The format closes that by making the file invalid, which is why this hook exists
+    rather than a plain ``json.loads``.
+    """
+    seen: dict[str, Any] = {}
+    repeated: list[str] = []
+    for key, value in pairs:
+        if key in seen and key not in repeated:
+            repeated.append(key)
+        seen[key] = value
+    if repeated:
+        raise RepeatedKey(repeated)
+    return seen
+
+
 def read_plan(path: str | Path) -> tuple[Any, list[str]]:
     """Read and parse a plan file. Returns ``(data, problems)``; data is None when unreadable."""
     file = Path(path)
@@ -357,7 +384,13 @@ def read_plan(path: str | Path) -> tuple[Any, list[str]]:
     except OSError as error:
         return None, [f"cannot read {file}: {error.strerror or error}"]
     try:
-        return json.loads(text), []
+        return json.loads(text, object_pairs_hook=_object_without_repeated_keys), []
+    except RepeatedKey as error:
+        names = ", ".join(f'"{key}"' for key in error.keys)
+        return None, [
+            f"{file}: repeated key {names} in one JSON object; the format forbids it because two "
+            f"readers would otherwise take different plans from the same bytes"
+        ]
     except json.JSONDecodeError as error:
         return None, [f"{file}: not valid JSON: {error.msg} (line {error.lineno}, column {error.colno})"]
 

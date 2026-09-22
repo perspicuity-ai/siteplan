@@ -112,6 +112,14 @@ class DocumentCoversTheImplementation(unittest.TestCase):
             with self.subTest(key=key):
                 self.assertIn(f"`{key}`", self.document)
 
+    def test_the_json_ld_rule_is_stated(self) -> None:
+        """The one surface with no file behind it: if this section goes, two consumers can differ."""
+        self.assertIn("## What satisfies `json-ld`", self.document)
+        self.assertIn("home page carries Schema.org JSON-LD", self.document)
+
+    def test_the_repeated_key_rule_is_stated(self) -> None:
+        self.assertIn("must not repeat a key", self.document)
+
     def test_the_versioning_rules_and_change_log_are_present(self) -> None:
         self.assertIn("## Versioning", self.document)
         self.assertIn("## Change log", self.document)

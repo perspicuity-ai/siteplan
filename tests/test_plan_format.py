@@ -209,6 +209,45 @@ class ReadsFiles(unittest.TestCase):
         self.assertIsNone(data)
         self.assertIn("not valid JSON", problems[0])
 
+    def test_repeated_key_is_rejected(self) -> None:
+        """JSON leaves a repeated key to the parser, so the format has to decide and the check must
+        implement the decision: two readers would otherwise take different plans from one file."""
+        with temp_dir() as name:
+            path = Path(name) / "dupe.json"
+            path.write_text('{"plan_version": 1, "kind": "saas", "kind": "personal"}', encoding="utf-8")
+            data, problems = plan_format.read_plan(path)
+        self.assertIsNone(data)
+        self.assertIn('repeated key "kind"', problems[0])
+
+    def test_repeated_key_at_depth_is_rejected(self) -> None:
+        with temp_dir() as name:
+            path = Path(name) / "dupe.json"
+            path.write_text(
+                '{"plan_version": 1, "identity": {"fields": ["name"], "fields": ["url"]}}',
+                encoding="utf-8",
+            )
+            data, problems = plan_format.read_plan(path)
+        self.assertIsNone(data)
+        self.assertIn('repeated key "fields"', problems[0])
+
+    def test_the_same_key_in_different_objects_is_fine(self) -> None:
+        """The rule is per object, and a hook that refused this would be too strict to use."""
+        with temp_dir() as name:
+            path = Path(name) / "ok.json"
+            path.write_text(
+                '{"plan_version": 1, "identity": {"schema_types": ["Person"]}, '
+                '"offering": {"schema_types": ["Person"]}}',
+                encoding="utf-8",
+            )
+            data, problems = plan_format.read_plan(path)
+        self.assertEqual([], problems)
+        self.assertEqual([], plan_format.validate(data))
+
+    def test_plain_json_loads_would_have_accepted_the_duplicate(self) -> None:
+        """The hook cannot pass by accident: the default parser takes the last value."""
+        text = '{"plan_version": 1, "kind": "saas", "kind": "personal"}'
+        self.assertEqual("personal", json.loads(text)["kind"])
+
     def test_good_file(self) -> None:
         with temp_dir() as name:
             path = Path(name) / "site.json"

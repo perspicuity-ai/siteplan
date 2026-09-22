@@ -78,8 +78,14 @@ first occurrence stands and each later one is a fault.
 
 Values are read **exactly as written**. Nothing is trimmed, normalised or case-folded: `" example.com"`
 and `"sitemap.XML"` are faults, not values to be tidied. Closed-vocabulary values are
-case-sensitive. Two identically-named keys in the same JSON object are a matter for the JSON parser,
-not for this format, and a producer must not emit them.
+case-sensitive.
+
+**A JSON object in a plan must not repeat a key, and that is the format's business rather than the
+parser's.** JSON leaves the outcome to the implementation — one parser keeps the last value, another
+the first — so two compliant readers can take different plans from the same bytes with no fault on
+either side. A plan whose text repeats a key within one object is therefore **invalid**, and a
+validator detects it by parsing with a duplicate-aware reader rather than by trusting a default:
+`siteplan check` reports the repeated key and exits `1`.
 
 ## The open and closed rule
 
@@ -144,7 +150,7 @@ site **must** publish; the plan is what a consumer checks them against.
 
 | Value | The surface |
 | --- | --- |
-| `json-ld` | Schema.org JSON-LD in the HTML of the pages it describes. |
+| `json-ld` | Schema.org JSON-LD in the HTML of the site's pages, and on the **home page** in particular: see "What satisfies `json-ld`" below. |
 | `llms.txt` | A plain-text map of the site at `/llms.txt`, as proposed at llmstxt.org. Not a standard, and no major search engine or AI vendor states that it reads one; Google's guidance says Search ignores such files. |
 | `robots.txt` | Crawler access rules at `/robots.txt`, per RFC 9309. |
 | `rss.xml` | A dated feed, RSS 2.0 or Atom. |
@@ -240,6 +246,28 @@ judgement from a finding:
 Each is defensible; none is proved, and no source settles them. They are stated so that a consumer
 knows what to implement, and marked as choices so that nobody later mistakes them for evidence.
 
+## What satisfies `json-ld`
+
+`json-ld` is the one surface in the vocabulary that is not a file a consumer can fetch, so what
+satisfies it has to be stated rather than inferred — and until this section existed, two compliant
+consumers could return different verdicts for the same site:
+
+- **A site satisfies `json-ld` when its home page carries Schema.org JSON-LD.** That is where the
+  identity markup belongs, and Google's organization guidance says so in as many words: "We recommend
+  placing this information on your home page, or a single page that describes your organization."
+  A site whose only JSON-LD sits on a deep page does **not** satisfy the surface; a check that accepts
+  it would pass a site no machine can identify from its front door.
+- **Markup on other pages is described by that page's `purpose`, and is information rather than the
+  verdict.** A consumer may report the types it found elsewhere — an `Article` on an article page, a
+  `Product` on a product page — and doing so is useful. It does not change whether the surface is met,
+  because the plan does not say which types belong on which page and the format does not invent one.
+- **A consumer checking this surface says which page it looked at.** "json-ld: met" without the page
+  is the same class of claim as a verdict on a version the consumer does not know.
+
+A plan that wants markup on a particular page says so in that page's `purpose`, in the principal's
+words. A consumer that checks a purpose against the page is making a judgement, not applying a rule,
+and must say which it is doing.
+
 ## Validation summary
 
 `siteplan check FILE` applies every rule above and reports **one line per fault**, each naming the
@@ -285,9 +313,18 @@ convenience:
      — `sitewalk --strict` — it is an error finding and exits non-zero. A gate that certifies a plan
      whose semantics it cannot know is the failure this rule prevents.
 
-   An absent or mistyped `plan_version` is a fault in the file: a consumer reports it as one and
-   does not call the file valid. The producer's `check` implements version 1 only and rejects every
-   other value.
+   **Reading continues.** A consumer that meets a version it does not implement reports the condition
+   and goes on checking the keys it recognises; it does not abandon the file because of the version
+   alone, and it does not present what it checked as a verdict on a version it does not know.
+
+   **"Older" means an older version of this format, not an older-looking number.** `plan_version` is a
+   positive integer, and `1` is the only version this document defines. A value of `0`, a negative
+   number, a string, a list, or no value at all is not an older version and is not a newer one: it is
+   **a fault in the file**. A consumer reports it as a fault rather than as a condition — there is no
+   version to be conditional about — and under its strict gate, a plan the consumer cannot place
+   against any version it knows must exit non-zero rather than certify the plan. The producer's
+   `check` implements version 1 only, rejects every other value, and rejects an absent or mistyped one
+   with a message naming `plan_version`.
 5. **Every change carries a dated entry in the change log below, naming the consumer-side effect.**
    A change that breaks a consumer is the principal's decision, because it costs work in another
    repository.
@@ -299,6 +336,12 @@ convenience:
    finding — a file with an unknown key is invalid — and leaves the consumer's process, including
    its exit status, to that consumer. The producer's `check` is the exception: its three codes are
    fixed above.
+
+   **The disclosure must survive into whatever a machine reads.** Naming the ignored keys only in
+   prose is not the condition met: a consumer that emits structured output must carry every key it
+   did not check into that output, so that no automated reader can see a "met" without also seeing
+   what was left unchecked. The condition of tolerance is the disclosure, and a disclosure only a
+   human can see does not satisfy it.
 7. **Conformance fixtures are published with the format** — see below — so a consumer can test
    itself against this document without reading this project's code.
 
@@ -358,10 +401,26 @@ Questions about this format, and any change to it, are recorded in `RECORD.md` i
 that is the durable channel. A change that would break a consumer is a decision for the project's
 principal, not for the producer's worker.
 
+### Why these keep `plan_version` 1
+
+Every entry above clarifies a case the document left undefined rather than changing a case it
+defined, so rule 2 applies and no bump is needed. **G4 is the one worth arguing about**, and the
+reasoning is recorded rather than assumed: the document already said a producer must not emit a
+repeated key, so no valid plan is affected; what changes is that a file which was previously
+*undefined* is now *invalid*. Rule 3 lists removing a key, changing a key's meaning and changing a
+closed vocabulary as the bump-triggering changes, and defining an undefined file is none of those. A
+reader who disagrees should say so before a consumer implements against this revision, because the
+cost of being wrong is a `plan_version` 2 that both repositories must handle.
+
 ## Change log
 
 | Date | `plan_version` | Change | Consumer-side effect |
 | --- | --- | --- | --- |
 | 2026-09-21 | 1 | First freeze. The nine keys, the open/closed rule, the versioning rules and the conformance fixtures are published as `plan_version` 1. | None: this is the first published version. |
 | 2026-09-21 | 1 | Rules 4 and 6 corrected after reading the consumer that already exists: a consumer may read a version or a key it does not implement, must report it, and must not present it as checked or as a pass. The producer's rules are unchanged — `plan_version` is still required and `check` still rejects any other value or unknown key. | None to what a valid plan is. It removes an instruction that would have contradicted `sitewalk --plan`, which the principal had already ratified as tolerant of unknown versions and keys. |
+| 2026-09-21 | 1 | **What satisfies `json-ld` is defined** (G1 in the consumer's clarity review): the home page must carry Schema.org JSON-LD, markup elsewhere is information rather than the verdict, and a consumer says which page it looked at. This was the one surface that is not a file, so nothing defined it by fetching; two compliant consumers could return different verdicts for the same site. | **A consumer that accepted JSON-LD on any page must change.** `sitewalk`'s `json-ld` check reads any crawled page today, so this rule is work for it. A plan-level clarification: no key, shape or vocabulary changed. |
+| 2026-09-21 | 1 | **Reading continues past a version the consumer does not implement, "older" means an older version of this format rather than a smaller number, and an absent or mistyped `plan_version` is a fault rather than a condition** (G2 and G3). The absent-or-mistyped behaviour is the principal's ruling of 2026-09-21, given when the consumer asked whether a missing version should gate; it is written here because a second implementer cannot reach it from the document otherwise. | None to what a valid plan is. A consumer must keep checking the keys it recognises, and must refuse to certify a plan it cannot place against any known version. |
+| 2026-09-21 | 1 | **A JSON object in a plan must not repeat a key** (G4), and a validator detects it with a duplicate-aware parse. JSON leaves the outcome to the implementation, so two compliant readers could take different plans from the same bytes; the file is now invalid rather than undefined. | **Both implementations now refuse it.** `sitewalk` already does, with tests covering a top-level duplicate, a nested one, the legitimate repeat of a key in different objects, and that all fixture cases still load; `siteplan check` does from this revision and exits `1`. This is the one item here that narrows what is accepted — see the note below on rule 2 versus rule 3. |
+| 2026-09-21 | 1 | **The disclosure of ignored keys must survive into machine-readable output** (G5): naming them only in prose does not meet the condition that makes tolerance permissible. | **A consumer that names unchecked keys only in human-readable notes must carry them into its structured output.** Work for `sitewalk`; nothing changes for a valid plan. |
+| 2026-09-21 | 1 | A valid conformance case was added for `json-ld` presence, because no case exercised the one surface with no file behind it — which is why the fixture set could not have caught G1. | None: a new case for consumers to run. |
 | 2026-09-21 | 1 | Rule 4 sharpened, at the principal's direction, to separate an unknown key from an unknown version: keys grow, versions announce. An unknown key stays tolerable when every ignored key is named; an unknown or newer version makes the verdict conditional, carried in the summary and an error under the strict gate. The three judgement-based choices (trailing slash, ASCII segments, punycode hosts) are now listed as choices rather than findings. | **`sitewalk --strict` must treat an unknown or newer `plan_version` as an error, and the default summary must carry the condition.** That is a change in the consumer, recorded as its own unit there; it is not a change to what a valid plan is, so `plan_version` stays 1. |
