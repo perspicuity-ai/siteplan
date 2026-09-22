@@ -44,6 +44,46 @@ class UsageErrors(unittest.TestCase):
         self.assertIn("usage", err)
 
 
+class ExitCodeContract(unittest.TestCase):
+    """Three codes, ratified: 0 clean, 1 findings or an invalid plan, 2 a usage error."""
+
+    def test_success_is_zero(self) -> None:
+        with temp_dir() as name:
+            code, _, err = make_site(name, "--kind", "saas", "--site", "example.com")
+        self.assertEqual(0, code, err)
+
+    def test_a_plan_that_fails_its_own_check_is_one(self) -> None:
+        """The catalogue is the only thing that can produce this, and it is a finding, not a crash."""
+        with temp_dir() as name, mock.patch(
+            "siteplan.cli.plan.build", return_value={"site": "example.com"}
+        ):
+            code, _, err = make_site(name, "--kind", "saas")
+        self.assertEqual(1, code)
+        self.assertIn("fails its own check", err)
+        self.assertIn("defect in the kind catalogue", err)
+
+    def test_every_usage_error_is_two(self) -> None:
+        cases = {
+            "unknown kind": ("--kind", "shop"),
+            "no kind": ("--site", "example.com"),
+            "contradictory answers": ("--kind", "saas", "--sells", "--no-sells"),
+            "unknown flag": ("--kind", "saas", "--force"),
+            "no subcommand": (),
+        }
+        for label, argv in cases.items():
+            with self.subTest(case=label), temp_dir() as name:
+                code, _, _ = make_site(name, *argv) if argv else run_cli()
+                self.assertEqual(2, code)
+
+    def test_no_fourth_code_appears_in_the_module_contract(self) -> None:
+        """The docstring is the contract a reader sees; `return 3` was the old fourth code."""
+        source = (Path(__file__).resolve().parent.parent / "siteplan" / "cli.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertNotIn("return 3", source)
+        self.assertNotIn("--force", source.replace("no ``--force``", "").replace("No --force", ""))
+
+
 class CheckCommand(unittest.TestCase):
     def test_accepts_a_generated_plan(self) -> None:
         with temp_dir() as name:

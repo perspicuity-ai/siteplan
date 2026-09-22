@@ -1,12 +1,14 @@
 """The command line: ``siteplan new`` and ``siteplan check``.
 
-Exit codes, which the format document and the README both state:
+Exit codes, ratified by the principal on 2026-09-21 and stated in the format document:
 
 * ``0`` - success.
-* ``1`` - a plan file that does not follow the format.
-* ``2`` - a usage error, a refused overwrite, or an interactive session that ended early.
-* ``3`` - siteplan produced a plan that fails its own check; that is a defect here, not in the
-  input, and it is reported as one.
+* ``1`` - findings: a plan file that does not follow the format, or a run that produced one.
+* ``2`` - a usage error, including an output file that already exists, or an interactive session
+  that ended early.
+
+There is no fourth code and no ``--force``: the contract is three codes, and an existing plan is
+refused rather than overwritten.
 """
 
 from __future__ import annotations
@@ -77,11 +79,7 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="ask for the answers the flags did not supply",
     )
-    new.add_argument(
-        "--force",
-        action="store_true",
-        help=f"overwrite {BRIEF_NAME} and {PLAN_NAME} if they already exist",
-    )
+    # No --force: the ratified contract is that an existing plan is refused, not replaced.
     answers = new.add_argument_group("intent flags", "each pair states the answer; neither states nothing")
     for dest, positive, negative, meaning in INTENT_FLAGS:
         answers.add_argument(
@@ -175,7 +173,7 @@ def _new(args: argparse.Namespace, parser: argparse.ArgumentParser) -> int:
         for fault in faults:
             print(f"  {fault}", file=sys.stderr)
         print("This is a defect in the kind catalogue, not in your input.", file=sys.stderr)
-        return 3
+        return 1
 
     output_dir = Path(args.out)
     targets = [
@@ -183,11 +181,11 @@ def _new(args: argparse.Namespace, parser: argparse.ArgumentParser) -> int:
         (output_dir / PLAN_NAME, plan.render(document)),
     ]
     existing = [path for path, _ in targets if path.exists()]
-    if existing and not args.force:
+    if existing:
         print(
             "error: refusing to overwrite "
             + ", ".join(str(path) for path in existing)
-            + "; pass --force to replace them",
+            + ". Move them, or write somewhere else with --out DIR.",
             file=sys.stderr,
         )
         return 2

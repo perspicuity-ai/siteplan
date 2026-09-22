@@ -158,21 +158,14 @@ class BriefKeepsTheClaimBoundary(unittest.TestCase):
 
 class OutputIsDeterministic(unittest.TestCase):
     def test_two_runs_with_the_same_inputs_are_byte_identical(self) -> None:
+        """Determinism, checked across two directories: no timestamp, no ordering drift."""
         inputs = ("--site", "example.com", "--kind", "saas", "--sells", "--local")
-        with temp_dir() as name:
-            for _ in range(2):
-                self.assertEqual(0, make_site(name, *inputs, "--force")[0])
-            first = (
-                read_brief(Path(name)),
-                read_plan(Path(name)),
-            )
-        with temp_dir() as name:
-            self.assertEqual(0, make_site(name, *inputs)[0])
-            second = (
-                read_brief(Path(name)),
-                read_plan(Path(name)),
-            )
-        self.assertEqual(first, second)
+        runs = []
+        for _ in range(2):
+            with temp_dir() as name:
+                self.assertEqual(0, make_site(name, *inputs)[0])
+                runs.append((read_brief(Path(name)), read_plan(Path(name))))
+        self.assertEqual(runs[0], runs[1])
 
     def test_plan_key_order_is_the_documented_order(self) -> None:
         with temp_dir() as name:
@@ -195,20 +188,32 @@ class OutputIsDeterministic(unittest.TestCase):
 
 
 class ExistingFilesAreProtected(unittest.TestCase):
-    def test_refuses_to_overwrite_without_force(self) -> None:
+    """The ratified contract: an existing plan is refused, never replaced."""
+
+    def test_refuses_to_overwrite_and_leaves_both_files_untouched(self) -> None:
         with temp_dir() as name:
             self.assertEqual(0, make_site(name, *KIND_ARGS, "--kind", "personal")[0])
-            before = read_brief(Path(name))
+            before = (read_brief(Path(name)), read_plan(Path(name)))
             code, _, err = make_site(name, *KIND_ARGS, "--kind", "saas")
             self.assertEqual(2, code)
             self.assertIn("refusing to overwrite", err)
-            self.assertEqual(before, read_brief(Path(name)))
+            self.assertIn("--out DIR", err)
+            self.assertEqual(before, (read_brief(Path(name)), read_plan(Path(name))))
 
-    def test_force_replaces_them(self) -> None:
+    def test_force_is_not_a_flag(self) -> None:
+        """A flag that could overwrite a plan would defeat the refusal, so it must not exist."""
         with temp_dir() as name:
             self.assertEqual(0, make_site(name, *KIND_ARGS, "--kind", "personal")[0])
-            self.assertEqual(0, make_site(name, *KIND_ARGS, "--kind", "saas", "--force")[0])
-            self.assertEqual("saas", read_plan(Path(name))["kind"])
+            code, _, err = make_site(name, *KIND_ARGS, "--kind", "saas", "--force")
+            self.assertEqual(2, code)
+            self.assertIn("unrecognized arguments", err)
+            self.assertEqual("personal", read_plan(Path(name))["kind"])
+
+    def test_a_different_output_directory_is_the_way_to_write_again(self) -> None:
+        with temp_dir() as name, temp_dir() as other:
+            self.assertEqual(0, make_site(name, *KIND_ARGS, "--kind", "personal")[0])
+            self.assertEqual(0, make_site(other, *KIND_ARGS, "--kind", "saas")[0])
+            self.assertEqual("saas", read_plan(Path(other))["kind"])
 
 
 class PackageSelfCheck(unittest.TestCase):
