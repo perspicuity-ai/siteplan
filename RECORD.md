@@ -1,11 +1,11 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 13
+revision: 14
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-21T22:01:01-06:00"
+updated_at: "2026-09-21T22:01:55-06:00"
 record_status: open
 work_status: submitted
 ---
@@ -36,9 +36,8 @@ record. Selected by David on 2026-09-21; the selection, the answers he gave with
 he registered are in "Selection" and "Answers to the open questions". Recommendation and selection
 are separate entries below, as the method requires.
 
-Work scope: U4 — delivered and awaiting the principal's acceptance. The increment's four units are
-now all delivered: U1 accepted, U2 (`9ad893f`, amended at `bea4e3f`), U3 (`952892f`) and U4, with
-nothing granted beyond them.
+Work scope: U4, returned for acceptance. Each unit's state, revision and evidence is in Act's unit
+table, which is where it is amended; nothing is granted beyond the four units that table records.
 
 Work: revision 3 registered U1's grant at 13:23:14. U1 was carried out between then and 13:28:49,
 when the return was committed: `docs/PLAN-FORMAT.md` frozen as `plan_version` 1; 45 conformance
@@ -47,11 +46,10 @@ fixtures published;
 `scripts/check-project.sh` replaced with the real checks. The return, with its evidence and the gaps
 it leaves, is in Act.
 
-Outcome: the increment is delivered — four units, 107 tests passing offline, `make ci` exiting 0,
-every labelled claim in the catalogue tied to a source that was read or to an explicit judgement, and
-the repository's own surfaces written. No benefit is observed: no project has used a plan, no
-consumer has read one, nothing has been published, and R5–R7 stay open with triggers rather than
-dates.
+Outcome: the increment's units are delivered, and their state is in Act's unit table. `make ci`
+exits 0 at the delivered revision. No benefit is observed, and that is a position rather than a
+count: no project has used a plan, no generated plan has been through the consumer, nothing has been
+published, and the benefit criteria in Review stay open on triggers rather than dates.
 
 Next: David accepts or returns U2 (as amended), U3 and U4; nothing further is granted and this
 worker holds until his answer arrives. The next increment needs a new unit, and after R6's closure
@@ -61,11 +59,17 @@ of the audit changes the catalogue and requires U3's and U4's tests to be re-run
 
 Blocked: nothing. The increment's units are all delivered.
 
-Waiting on: David — acceptance of U2 (as amended), U3 and U4.
+Waiting on: David, for his acceptance of the units Act records as returned. A second input is
+pending and is not this worker's to fetch: **Moss's answer to the clarity question the principal put
+to him**, which lands in R6's finding either as the evidence its closure lacks or as a defect in the
+frozen format.
 
-Dependency: none blocking, with the condition carried from U2's grant: **if David rejects any part of
-the audit, the catalogue changes and both U3's and U4's tests must be re-run against it.** Owner
-David; resolving step: his acceptance of U2.
+Dependency: none blocking, with two conditions each owned by someone else. David's acceptance: **if
+he rejects any part of the audit, the catalogue changes and both U3's and U4's tests must be re-run
+against it.** Moss's answer: **if he names something he had to infer from the format, it is a defect
+in a frozen document**, and R6 already fixes its route — a clarification keeps `plan_version` 1,
+anything that changes what a valid plan is needs a version bump and the principal's decision.
+Resolving steps: David's acceptance, and the principal's relay of Moss's answer.
 
 Review due: no timed obligation. R5–R7 are trigger-based and are stated in Review.
 
@@ -900,7 +904,7 @@ format's own obligation.
 | R3 | Delivery: `new` and `check` behave as the format document says, for every kind and flag combination, offline | The test suite, and a run from a clean checkout | Heron, at the U3 return; `make ci` exits 0 through real checks | **Delivered, awaiting acceptance.** `check` conforms to the format document and `new` now conforms to the ratified CLI contract: three exit codes, no `--force`, an existing output refused. 101 tests pass offline at `952892f`; `make ci` exits 0 | Awaiting David's acceptance |
 | R4 | Delivery: unstated intent is never filled in, and the unstated table matches what the catalogue would change | Generated output checked against the catalogue by test | Heron, at the U3 return | **Delivered, awaiting acceptance.** `tests/test_unstated.py` asserts that each unstated input appears as unstated, that a missing site or name is never invented, that an unstated flag changes nothing in the plan, and that the "what changes if you state it" table equals what the catalogue would change | Awaiting David's acceptance |
 | R5 | Benefit: a new project's build is gated on a plan file committed before the build | That project's git history | David, trigger: the first project started after ratification (OQ7); no date | Not observable: no project has started from a plan | — |
-| R6 | Benefit: `sitewalk --plan` consumes a siteplan-produced file unchanged, with no shared code | The consumer's own units, built against this repository's artifacts | Moss, owner of `sitewalk` (OQ6) | **Closed 2026-09-21, and the evidence arrived after this record's U1 note said it did not exist.** Moss built `sitewalk`'s **U7** (`d0131d0`: the version gate — a known or older `plan_version` reads unqualified, an unknown or newer one is conditional in default mode and non-zero under `--strict`, an absent or mistyped one an error, and a surface the consumer cannot check reported as *unverified* rather than absent) and **U8** (`9dfb88e`: `json-ld` and `rss.xml` checked, with four distinguishable states in the JSON) against [`docs/PLAN-FORMAT.md`](docs/PLAN-FORMAT.md) at `fe8433b` **read-only**, with U7's tests loading the seven valid plans from [`docs/fixtures/plan-conformance.json`](docs/fixtures/plan-conformance.json). The interface worked: a separate repository implemented the consumer from the document and the fixtures, with no shared code | Closed. **What the closure does not establish:** that the document is *clear* rather than merely implementable — one successful implementation by one reader can absorb ambiguity in silence, and no one has asked Moss what he had to infer; and that a plan produced by `siteplan new` has been through `sitewalk --plan` end to end, since what was consumed is the published fixture, not a generated plan. That end-to-end run stays worth doing when a project first gates a build on a plan (R5) |
+| R6 | Benefit: `sitewalk --plan` consumes a siteplan-produced file unchanged, with no shared code | The consumer's own units, built against this repository's artifacts | Moss, owner of `sitewalk` (OQ6) | **Closed 2026-09-21, and the evidence arrived after this record's U1 note said it did not exist.** Moss built `sitewalk`'s **U7** (`d0131d0`: the version gate — a known or older `plan_version` reads unqualified, an unknown or newer one is conditional in default mode and non-zero under `--strict`, an absent or mistyped one an error, and a surface the consumer cannot check reported as *unverified* rather than absent) and **U8** (`9dfb88e`: `json-ld` and `rss.xml` checked, with four distinguishable states in the JSON) against [`docs/PLAN-FORMAT.md`](docs/PLAN-FORMAT.md) at `fe8433b` **read-only**, with U7's tests loading the seven valid plans from [`docs/fixtures/plan-conformance.json`](docs/fixtures/plan-conformance.json). The interface worked: a separate repository implemented the consumer from the document and the fixtures, with no shared code | Closed. **What the closure does not establish:** that the document is *clear* rather than merely implementable — one successful implementation by one reader can absorb ambiguity in silence, and no one has asked Moss what he had to infer; and that a plan produced by `siteplan new` has been through `sitewalk --plan` end to end, since what was consumed is the published fixture, not a generated plan. That end-to-end run stays worth doing when a project first gates a build on a plan (R5). **The clarity question is no longer a hedge: the principal put it to Moss on 2026-09-21 — what did he have to infer from the document, if anything — and his answer is the evidence this closure lacks.** A "nothing" closes it; anything else arrives as a defect in `docs/PLAN-FORMAT.md` and is recorded here, with the route already fixed: a clarification keeps `plan_version` 1 under rule 2, while anything that changes what a valid plan is takes a version bump under rule 3, which is the principal's decision because it costs work in another repository |
 | R7 | Disconfirming: the brief is written once and never read, or the built site contradicts its plan | The first gated project's history, and its `sitewalk` run | David, trigger: that project's first deploy | Pending; no project has used a brief | If it holds, reconsider the tool's existence rather than maintain the document (`CONTEXT.md` §Success, and what would stop us) |
 | R8 | The format does not break its consumer without a version bump | The change log in `docs/PLAN-FORMAT.md`, against `plan_version` and the consumer's releases | Heron at each format change; David for a breaking change | Satisfied so far, trivially: `plan_version` 1 is the first freeze, with one change-log entry and no later change | — |
 
@@ -938,6 +942,21 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 14, 2026-09-21T22:01:55-06:00. Changed: R6's closure gained an owner and a route for the clarity question it
+left open — the principal has asked Moss what he had to infer from `docs/PLAN-FORMAT.md`, and the
+answer is recorded in R6's finding as the evidence the closure lacks, with the route for a defect
+fixed in advance (a clarification keeps `plan_version` 1; anything that changes what a valid plan is
+takes a version bump and the principal's decision, because it costs work in another repository). The
+Dependency line now carries both conditions with their owners and resolving steps. And **the Current
+position was rewritten to point rather than restate**: it named unit states and a test count that Act
+already holds, which is exactly the summary-rot class a sibling project found in its own record on
+this day — `sitewalk`'s `AGENTS.md` now carries the rule that "Current position states position; it
+does not restate facts a table below already holds". The rule is right and this record had the
+defect. Source: the principal's message of 2026-09-21, and the consumer's published convention.
+Reason: an owed review keeps its question, owner and trigger beside the finding; and a summary stays
+current by carrying pointers, while the tables stay current where the work happens. Affects: R6's
+annotation, the Waiting on and Dependency lines, and the shape of Current position.
 
 Revision 13, 2026-09-21T22:01:01-06:00. Changed: **R6 is closed**, on evidence that arrived after the U1 return said it
 did not exist — Moss built `sitewalk`'s U7 (`d0131d0`) and U8 (`9dfb88e`) against
