@@ -1,7 +1,7 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 14
+revision: 15
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
@@ -75,7 +75,11 @@ Review due: no timed obligation. R5–R7 are trigger-based and are stated in Rev
 
 Authority: U4's grant, registered at revision 11 and now complete. No authority is held for
 anything further; for any change to the format (versioning rule 5 makes a consumer-breaking change
-the principal's decision); or for contacting another repository. Nothing is published: publication is
+the principal's decision); or for contacting another repository. **One thing needs no grant, settled
+by the principal on 2026-09-21: keeping this record current is the coordinator's remit rather than a
+unit, including correcting its own summary when the sections below it disagree with it.** The
+boundary is the record: amending it within the registered scope is the coordinator's; changing a
+delivery, the format, `CONTEXT.md` or another repository is not. Nothing is published: publication is
 the principal's release word, and he has not given it. The principal retains spending, outbound
 messages, external agreements, the release word, and the selection of courses and units.
 
@@ -942,6 +946,18 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 15, 2026-09-21T22:02:28-06:00. Changed: one line in Authority. The principal settled on 2026-09-21 that keeping
+this record current — including correcting its own summary when the sections below it disagree with
+it — is the coordinator's remit and not a unit, so it needs no grant; the boundary is the record
+itself, and changing a delivery, the format, `CONTEXT.md` or another repository still does. Recorded
+here rather than split into a sub-record, because it changes no intention and had no alternatives: it
+bounds an existing role, which is what `Authority` in this record is for. One observation belongs
+with it, because it is the reason the rule was available at all: the summary-rot rule reached this
+project through `sitewalk`'s record and `AGENTS.md`, in another repository, without the principal
+relaying it — cross-project learning travelling through the records themselves, which is what this
+corpus is for and the first time it has visibly happened. Source: the principal's message of
+2026-09-21. Affects: the Authority line and what a coordinator may amend without a grant.
 
 Revision 14, 2026-09-21T22:01:55-06:00. Changed: R6's closure gained an owner and a route for the clarity question it
 left open — the principal has asked Moss what he had to infer from `docs/PLAN-FORMAT.md`, and the
