@@ -1,13 +1,13 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 17
+revision: 18
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-21T22:07:45-06:00"
+updated_at: "2026-09-21T23:28:11-06:00"
 record_status: open
-work_status: submitted
+work_status: accepted
 ---
 
 # Siteplan
@@ -36,8 +36,9 @@ record. Selected by David on 2026-09-21; the selection, the answers he gave with
 he registered are in "Selection" and "Answers to the open questions". Recommendation and selection
 are separate entries below, as the method requires.
 
-Work scope: U4, returned for acceptance. Each unit's state, revision and evidence is in Act's unit
-table, which is where it is amended; nothing is granted beyond the four units that table records.
+Work scope: the increment (U1–U4), closed. Each unit's state and revision is in Act's unit table;
+delivery is accepted, and the only obligations left are the two promised observations, R5 and R7,
+whose owners and triggers are in Review. Nothing further is granted.
 
 Work: revision 3 registered U1's grant at 13:23:14. U1 was carried out between then and 13:28:49,
 when the return was committed: `docs/PLAN-FORMAT.md` frozen as `plan_version` 1; 45 conformance
@@ -46,28 +47,27 @@ fixtures published;
 `scripts/check-project.sh` replaced with the real checks. The return, with its evidence and the gaps
 it leaves, is in Act.
 
-Outcome: the increment's units are delivered, and their state is in Act's unit table. `make ci`
-exits 0 at the delivered revision. No benefit is observed, and that is a position rather than a
-count: no project has used a plan, no generated plan has been through the consumer, nothing has been
-published, and the benefit criteria in Review stay open on triggers rather than dates.
+Outcome: delivery accepted, `make ci` exits 0 at the delivered revision, and **no benefit is
+observed** — a position rather than a count: no project has gated a build on a plan, no generated
+plan has been through the consumer end to end, and nothing has been published. R5 and R7 stay open on
+triggers rather than dates, which is why this record stays open with accepted delivery instead of
+closing.
 
-Next: David accepts or returns U2 (as amended), U3 and U4; nothing further is granted and this
-worker holds until his answer arrives. The next increment needs a new unit, and after R6's closure
-the candidate the Review names is R5 — the first project whose build is gated on a plan, which is
-also where the end-to-end run of a generated plan through `sitewalk --plan` belongs. A rejected part
-of the audit changes the catalogue and requires U3's and U4's tests to be re-run.
+Next: David, at the R5 trigger — the first project whose build is gated on a plan, which is also
+where the end-to-end run of a generated plan through `sitewalk --plan` belongs; `sitewalk`'s own U4
+is running against two sites and is the nearest thing to it. Then R7, at that project's first
+deploy, which is the disconfirming check. A new increment needs a new unit, and nothing is granted.
 
 Blocked: nothing. The increment's units are all delivered.
 
-Waiting on: David, for his acceptance of the units Act records as returned. The consumer work the
-clarifications created is discharged: **G5 was delivered by Moss as his U11**, and **G1 needs no
-consumer change** after the adopted rule — `sitewalk`'s existing behaviour is what the document now
-says. What remains outstanding for this record is David's acceptance of U2, U3 and U4 alone.
+Waiting on: no one for the delivery, which is accepted. The two observations belong to David at
+their triggers, and `sitewalk`'s consumer work is discharged — **G5 delivered by Moss as his U11**,
+**G1 withdrawn** after the adopted rule, with one clause of the replacement still costing work there
+(see the closure note below).
 
-Dependency: none blocking, with two conditions each owned by someone else. David's acceptance: **if
-he rejects any part of the audit, the catalogue changes and both U3's and U4's tests must be re-run
-against it.** Any further finding of Moss's is
-a defect in a frozen document, for which R6 fixes the route. Resolving step: David's acceptance.
+Dependency: none blocking. Both conditions this line carried are discharged: the audit was accepted,
+so no re-run is owed, and the consumer changes are settled in `sitewalk`'s own record. What remains
+are the observations in R5 and R7, on triggers rather than dates.
 
 Review due: no timed obligation. R5–R7 are trigger-based and are stated in Review.
 
@@ -332,9 +332,9 @@ a ratified design that differs discards them.
 | # | State | Result | Inputs / dependencies | Owner | Done when | Estimate |
 | --- | --- | --- | --- | --- | --- | --- |
 | U1 | **accepted** — delivered `757eef3`, `7db7c03`; accepted by David 2026-09-21 against `d1f7098` | `docs/PLAN-FORMAT.md` and its conformance fixtures: the authoritative format and stability rules, a minimal valid plan, a malformed one, and `check` brought to the document | Selection at revision 3; OQ2–OQ5 answered; the draft validator as evidence only | Heron | Met, on the evidence in "U1 return" below | Actual: 1 session, as estimated |
-| U2 | **returned** — delivered `9ad893f`; awaits acceptance | Citation audit of every labelled recommendation in the catalogue, corrections applied, unsupported claims demoted to `our judgement`; the shipped kind and surface set named | OQ2 answered (network for sources, not for the tool); the first fact-check of 2026-09-21; the grant at revision 7 | Heron | Met, on the evidence in the U2 return below | Actual: about one session, inside the estimate |
-| U3 | **returned** — delivered `952892f`; awaits acceptance | `siteplan new` completed against the audited catalogue and the ratified CLI contract: all six audited kinds, four answer pairs and interactive mode, `BRIEF.md` and `site.json`, the unstated rule, `--force` removed and an existing output refused | U1, U2 | Heron | Met, on the evidence in the U3 return below | Actual: about half a session, under the estimate |
-| U4 | **returned** — awaits acceptance | The project's remaining surfaces: `README.md`, `docs/ARCHITECTURE.md` and `TODO.md` written, `docs/KICKOFF.md` deleted, and two guards added — the record's time claims, and the required/optional contradiction | U1–U3 | Heron | Met, on the evidence in the U4 return below | Actual: about half a session, as estimated |
+| U2 | **accepted** — delivered `9ad893f`, amended; accepted by David 2026-09-21 | Citation audit of every labelled recommendation in the catalogue, corrections applied, unsupported claims demoted to `our judgement`; the shipped kind and surface set named | OQ2 answered (network for sources, not for the tool); the first fact-check of 2026-09-21; the grant at revision 7 | Heron | Met, on the evidence in the U2 return below | Actual: about one session, inside the estimate |
+| U3 | **accepted** — delivered `952892f`; accepted by David 2026-09-21 | `siteplan new` completed against the audited catalogue and the ratified CLI contract: all six audited kinds, four answer pairs and interactive mode, `BRIEF.md` and `site.json`, the unstated rule, `--force` removed and an existing output refused | U1, U2 | Heron | Met, on the evidence in the U3 return below | Actual: about half a session, under the estimate |
+| U4 | **accepted** — delivered `cf91b16`; accepted by David 2026-09-21 | The project's remaining surfaces: `README.md`, `docs/ARCHITECTURE.md` and `TODO.md` written, `docs/KICKOFF.md` deleted, and two guards added — the record's time claims, and the required/optional contradiction | U1–U3 | Heron | Met, on the evidence in the U4 return below | Actual: about half a session, as estimated |
 
 **Grant, registered at revision 3 and before any U1 work.** Decider: David, 2026-09-21; basis
 revision 2. **Heron** is granted **U1 only**. Included: `docs/PLAN-FORMAT.md`; the conformance
@@ -858,6 +858,39 @@ for `json-ld` presence, which no case exercised, and that is why the fixtures co
 G1. Duplicate keys deliberately have no case: a JSON fixture cannot express a repeated key in one
 object, so the fixture note says so and the producer's tests cover it instead.
 
+### Increment closure, 2026-09-21T23:28:20-06:00
+
+**All four units are accepted**: U1 by David against `d1f7098`, and U2, U3 and U4 by him against
+`9ad893f` (as amended), `952892f` and `cf91b16` — each recorded above with its assessor, date and
+basis revision. Delivery is accepted in the sense the method means it: the criteria registered before
+the work were met and read by the decider. **This is not a finding that the tool works.** R5 and R7
+remain the benefit observations, both on triggers, and O1 and O2 stay unachieved until a project
+gates a build on a plan and the consumer reads one end to end. A record that closed here with
+`accepted` delivery and said nothing about that would be the error this corpus exists to prevent, so
+the record stays **open** with accepted delivery rather than closing.
+
+**Two findings from the tail of the increment, which belong here rather than in a message.**
+
+1. **Keeping rejected alternatives is what removed work from another repository's queue.** The
+   json-ld rule went through three shapes — my home-page rule, per-kind coverage, and the adopted
+   split between the surface and `identity.schema_types` — and the third was visible only because the
+   first two were written down. Moss recorded the same thing from his side: the option that dissolved
+   his unit was legible to him because it was recorded before it was implemented. That is an
+   argument for the corpus doing real work, and it is now evidenced rather than asserted.
+2. **"Withdrawn" is not "nothing happened."** When the principal released the consumer unit as
+   withdrawn, Moss checked this document clause by clause rather than accepting the relay, and found
+   one clause of the replacement live and unmet: the consumer must **name the page** it found the
+   markup on. So the withdrawal was of the rule I had written, and the rule that replaced it still
+   cost work downstream. The record says so because a reader who takes "withdrawn" as "no cost" would
+   be wrong about this increment's actual effect in the other repository.
+
+**What the increment did not establish**, so that closure is not mistaken for success: that a
+generated plan has passed through the consumer end to end (the fixtures have, not a generated plan);
+that the document is clear to a second reader (Moss's review answered for one reader, and five
+findings from one reader is a floor, not a total); that any recommendation makes a site findable,
+understood or recommended; that the README is clear to someone who has never used the tool; and that
+the two new guards catch every instance of their classes rather than the phrasings they name.
+
 ### Provisional notes for U2–U4
 
 Confirmed at their own pickup, per the 0.5.0 rule that a later pickup plan depends on what the
@@ -924,9 +957,9 @@ format's own obligation.
 | # | Criterion | Evidence source | Owner, window or trigger | Finding | Response |
 | --- | --- | --- | --- | --- | --- |
 | R1 | Delivery: the format document is complete enough for an implementer who cannot read our code | An assessor who did not write it, against acceptance criterion 2 | David or a named independent assessor, at the U1 return | **Accepted by David, 2026-09-21, against basis revision `d1f7098` (record revision 6): the format document and the conformance fixtures are accepted as delivered.** The evidence he accepted was Tern's four readings, ending `SIGN-OFF: yes` on the delivered revision, with one residual tension recorded; Tern's sign-off is evidence of legibility, not of implementability, and David recorded that distinction. Assessor: David, the principal | Closed. The one check left is a read by Moss as the actual consumer, and it does not hold up the acceptance |
-| R2 | Delivery: every `published practice` label cites a source that was read, with the date; nothing unverified is labelled as practice | The audit record, and a sample re-read of the sources | Heron returns; the assessor samples at the U2 return | **Delivered, awaiting acceptance.** All 12 remaining practice labels name a source read on 2026-09-21, recorded with its URL and verdict in `docs/CITATIONS.md`; 5 labels moved to `our judgement` and 2 moved up to practice; the test fails a practice label with no source. The audit is the author's reading, and a re-read by an assessor who did not write it has not been done | Awaiting David's acceptance. A sample re-read by a second reader is the check available and is not required for acceptance |
-| R3 | Delivery: `new` and `check` behave as the format document says, for every kind and flag combination, offline | The test suite, and a run from a clean checkout | Heron, at the U3 return; `make ci` exits 0 through real checks | **Delivered, awaiting acceptance.** `check` conforms to the format document and `new` now conforms to the ratified CLI contract: three exit codes, no `--force`, an existing output refused. 101 tests pass offline at `952892f`; `make ci` exits 0 | Awaiting David's acceptance |
-| R4 | Delivery: unstated intent is never filled in, and the unstated table matches what the catalogue would change | Generated output checked against the catalogue by test | Heron, at the U3 return | **Delivered, awaiting acceptance.** `tests/test_unstated.py` asserts that each unstated input appears as unstated, that a missing site or name is never invented, that an unstated flag changes nothing in the plan, and that the "what changes if you state it" table equals what the catalogue would change | Awaiting David's acceptance |
+| R2 | Delivery: every `published practice` label cites a source that was read, with the date; nothing unverified is labelled as practice | The audit record, and a sample re-read of the sources | Heron returns; the assessor samples at the U2 return | **Accepted by David, 2026-09-21, against basis revision `9ad893f` as amended at `bea4e3f`, `7d47a92` and `7e77be1` (record revision 17): the citation audit, its counts, its stored limits and the routed clarifications are accepted as delivered.** Assessor: David, the principal | Closed. The sample re-read a second reader could do was not required for acceptance and has not been done |
+| R3 | Delivery: `new` and `check` behave as the format document says, for every kind and flag combination, offline | The test suite, and a run from a clean checkout | Heron, at the U3 return; `make ci` exits 0 through real checks | **Accepted by David, 2026-09-21, against basis revision `952892f` (record revision 17): the generator and the ratified CLI contract are accepted as delivered.** Three exit codes, no `--force`, an existing output refused, and the format's rules implemented in `check`, including the repeated-key refusal. Assessor: David, the principal | Closed |
+| R4 | Delivery: unstated intent is never filled in, and the unstated table matches what the catalogue would change | Generated output checked against the catalogue by test | Heron, at the U3 return | **Accepted by David, 2026-09-21, against basis revision `cf91b16` (record revision 17): the project surfaces are accepted as delivered** — `README.md`, `docs/ARCHITECTURE.md`, `TODO.md`, the deleted template kickoff, and the two guards, one of which holds shut the required-versus-optional contradiction the principal caught. Assessor: David, the principal | Closed |
 | R5 | Benefit: a new project's build is gated on a plan file committed before the build | That project's git history | David, trigger: the first project started after ratification (OQ7); no date | Not observable: no project has started from a plan | — |
 | R6 | Benefit: `sitewalk --plan` consumes a siteplan-produced file unchanged, with no shared code | The consumer's own units, built against this repository's artifacts | Moss, owner of `sitewalk` (OQ6) | **Closed 2026-09-21, and the evidence arrived after this record's U1 note said it did not exist.** Moss built `sitewalk`'s **U7** (`d0131d0`: the version gate — a known or older `plan_version` reads unqualified, an unknown or newer one is conditional in default mode and non-zero under `--strict`, an absent or mistyped one an error, and a surface the consumer cannot check reported as *unverified* rather than absent) and **U8** (`9dfb88e`: `json-ld` and `rss.xml` checked, with four distinguishable states in the JSON) against [`docs/PLAN-FORMAT.md`](docs/PLAN-FORMAT.md) at `fe8433b` **read-only**, with U7's tests loading the seven valid plans from [`docs/fixtures/plan-conformance.json`](docs/fixtures/plan-conformance.json). The interface worked: a separate repository implemented the consumer from the document and the fixtures, with no shared code | Closed. **What the closure does not establish:** that the document is *clear* rather than merely implementable — one successful implementation by one reader can absorb ambiguity in silence, and no one has asked Moss what he had to infer; and that a plan produced by `siteplan new` has been through `sitewalk --plan` end to end, since what was consumed is the published fixture, not a generated plan. That end-to-end run stays worth doing when a project first gates a build on a plan (R5). **The clarity question was put to Moss and answered on 2026-09-21: the document is implementable but not unambiguous.** He implemented it successfully and had to decide five things the prose does not settle — registered G1–G5, each with its consequence for a second implementer: **G1**, "the pages it describes" is undefined for `json-ld`, the one surface that is not a URL, so a consumer reading it as any crawled page passes a site whose only markup sits on a deep page and returns a different verdict from one reading it as the home page; **G2**, rule 4 does not say whether reading continues past a version the consumer does not implement; **G3**, no exit is prescribed for an absent or mistyped `plan_version`, and "below 1" is not distinguished from "known or older" — that behaviour was the principal's ruling, not the document's; **G4**, duplicate JSON keys are delegated to the parser, so a consumer keeping the first value reads a different plan from the same bytes as one keeping the last; **G5**, "carry" an unknown key is undefined, and naming ignored keys in prose alone leaves a machine reader unable to see them, which weakens the disclosure rule 6 makes the condition of tolerance. He did **not** have to infer the four version cases, closed-vocabulary behaviour, the open Schema.org handling, the nine keys, or the no-shared-code boundary. He also flagged that no valid conformance case exercised `json-ld` presence, which is why the fixtures could not have caught G1. **All five are routed at `7d47a92`** — the four clarifications under rule 2 keeping `plan_version` 1, with G4's rule-2-versus-rule-3 argument written beside the change log, and the change log naming each consumer-side effect |
 | R7 | Disconfirming: the brief is written once and never read, or the built site contradicts its plan | The first gated project's history, and its `sitewalk` run | David, trigger: that project's first deploy | Pending; no project has used a brief | If it holds, reconsider the tool's existence rather than maintain the document (`CONTEXT.md` §Success, and what would stop us) |
@@ -966,6 +999,19 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 18, 2026-09-21T23:28:20-06:00. Changed: **David accepted U2, U3 and U4**, each recorded in Review with its
+assessor, date and basis revision, which closes the increment's delivery; the unit table records all
+four as accepted; and the current position moves to accepted delivery with the record left open for
+R5 and R7, the two promised observations on triggers. An Act subsection carries the closure: what
+acceptance does and does not mean, and the two findings from the tail of the increment — that keeping
+rejected alternatives is what removed work from the other repository's queue, and that a withdrawn
+unit is not a cost-free one, because Moss found a clause of the replacement rule still live and unmet.
+Source: the principal's message of 2026-09-21 conveying the acceptance and both findings. Reason:
+delivery acceptance is not benefit, and the increment's actual effects on the other repository belong
+in the record that a stranger reads. Preserved: revisions 17 and earlier stand as written. Affects:
+R2, R3, R4 (accepted), the unit table, the current position, and the record's status — open, with
+accepted delivery.
 
 Revision 17, 2026-09-21T22:07:45-06:00. Changed: G1's decision of record is the rule adopted at `7e77be1`, which
 supersedes the per-kind home-page rule this record carried for one revision. The principal's proposal
