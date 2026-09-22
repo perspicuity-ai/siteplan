@@ -56,11 +56,12 @@ SURFACE_BASIS: dict[str, tuple[str, str]] = {
     "llms.txt": (
         BASIS_JUDGEMENT,
         "llms.txt is a published proposal (llmstxt.org, 2024) with no standards status: no IETF "
-        "draft, no W3C document. Google's documentation says such files are not needed for "
-        "Search and neither help nor harm visibility, and what consumes the file today is tooling "
-        "that looks for it rather than a major search engine or AI vendor. Its adoption figures "
-        "are the proposer's own. We recommend it as a cheap bet, not as a surface with a "
-        "confirmed reader.",
+        "draft, no W3C document. Server-log data across 137,000 domains reports that 97% "
+        "of the files received no requests at all, that AI retrieval bots accounted for about 1% "
+        "of the requests that did occur, and that audit tooling was the largest requester; Google "
+        "says Search ignores the file and that it neither helps nor harms visibility. We require "
+        "it as a one-file bet on agents that navigate a site - not because anything measurably "
+        "reads it today - and a site owner who would rather not pay that cost can drop it.",
     ),
     "rss.xml": (
         BASIS_PRACTICE,
@@ -80,6 +81,13 @@ SOURCES: tuple[tuple[str, str], ...] = (
     ("RSS 2.0", "https://www.rssboard.org/rss-specification"),
     ("RFC 4287", "Atom Syndication Format, https://www.rfc-editor.org/rfc/rfc4287"),
     ("RFC 3986", "URI syntax, https://www.rfc-editor.org/rfc/rfc3986"),
+    (
+        "Ahrefs llms.txt study",
+        "server-log analysis of 137,000 domains reporting that 97% of llms.txt files received no "
+        "requests: https://ahrefs.com/blog/llmstxt-study/ (fetched 2026-09-21; the page returns "
+        "only its title to a text reader, so the figures here come from two secondary reports of "
+        "it, cited in docs/CITATIONS.md)",
+    ),
     (
         "Google's structured data documentation",
         "the feature guides for Local business, Organization, Merchant listing, Article, "
@@ -275,8 +283,8 @@ LOCAL_BUSINESS = Profile(
         ),
         Surface(
             "llms.txt",
-            "A plain-text map of the site, so a system answering 'where can I get this nearby' "
-            "reads the same facts the pages state.",
+            "For an agent that navigates the site: a plain-text map, so it reads the same facts "
+            "the pages state.",
         ),
     ),
     urls=UrlRules(
@@ -380,7 +388,7 @@ ONLINE_STORE = Profile(
         ),
         Surface(
             "llms.txt",
-            "A map of the catalogue, so a system comparing products reads the same facts a "
+            "For an agent that navigates the catalogue: a map, so it reads the same facts a "
             "shopper does.",
         ),
     ),
@@ -477,8 +485,8 @@ CONTENT_SITE = Profile(
         ),
         Surface(
             "llms.txt",
-            "A map of what the site covers, so a system answering a question can find the article "
-            "that addresses it instead of the home page.",
+            "For an agent that navigates the site: a map of what it covers, so it can find the "
+            "article that addresses a question rather than stopping at the home page.",
         ),
         Surface("rss.xml", "A feed is how a reader or an agent follows the site without polling it."),
     ),
@@ -574,8 +582,8 @@ SAAS = Profile(
         ),
         Surface(
             "llms.txt",
-            "Documentation is what a system reads when someone asks whether this tool does a "
-            "particular thing; a map of it is the cheapest surface a software product can publish.",
+            "For an agent that navigates the documentation: a map of it, which is the cheapest "
+            "surface a software product can publish.",
         ),
     ),
     urls=UrlRules(
@@ -677,8 +685,8 @@ DIRECTORY = Profile(
         ),
         Surface(
             "llms.txt",
-            "A map of what the directory covers and how it is organised, for a system answering "
-            "'is there a list of this'.",
+            "For an agent that navigates the directory: a map of what it covers and how it is "
+            "organised.",
         ),
     ),
     urls=UrlRules(
@@ -765,8 +773,8 @@ PERSONAL = Profile(
         ),
         Surface(
             "llms.txt",
-            "The site is small and the file costs nothing: one text file stating what each page "
-            "is for.",
+            "For an agent that navigates the site: one small text file stating what each page is "
+            "for, at a cost of almost nothing.",
         ),
     ),
     urls=UrlRules(

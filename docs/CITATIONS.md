@@ -37,7 +37,8 @@ which each source was read. `supported` means one reader found the supporting se
 source on the date given. It does not mean the source is correct, current, or the only relevant
 one, and it says nothing about claims in a future catalogue. The earlier convenience sample's rate
 of four wrong out of fifteen should not be read as a property of anything except that sample; this
-audit's own counts are below, with the same limit.
+audit's own counts are below, with the same limit. Findings added after the first pass, such as
+the `llms.txt` study above, are labelled as reported evidence rather than read evidence.
 
 ## What the audit found
 
@@ -63,8 +64,22 @@ catch that. Reading the source can, and only that.
 | `robots.txt` | published practice | [RFC 9309](https://www.rfc-editor.org/rfc/rfc9309) | supported, qualified | The Robots Exclusion Protocol: a **Proposed Standard** (September 2022), not an Internet Standard. It requires the rules at `/robots.txt` in the top-level path. It binds nothing by itself: the RFC asks crawlers to honour the rules, says "these rules are not a form of access authorization", and calls itself no substitute for content security measures. The catalogue text now says all of that rather than calling compliance voluntary. |
 | `sitemap.xml` | published practice | [sitemaps.org protocol](https://www.sitemaps.org/protocol.html) | supported, qualified | Sitemap protocol 0.9, published jointly by the search engines under CC BY-SA — not an IETF, W3C or ISO standard. It defines the XML sitemap and `lastmod`, and it *strongly recommends* the root location: `/sitemap.xml` is a convention, not a mandate. The text now says "recommends". |
 | `json-ld` | published practice | [JSON-LD 1.1](https://www.w3.org/TR/json-ld11/), [Google's intro to structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) | supported | JSON-LD 1.1 is a W3C Recommendation (16 July 2020). Google's documentation lists JSON-LD as "(Recommended)" and says it recommends JSON-LD "if your site's setup allows it" — while noting the other supported formats are "equally fine" if valid. The word "recommended", not "required", is now the claim. |
-| `llms.txt` | our judgement | [llmstxt.org](https://llmstxt.org/), [Google's AI-optimization guidance](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide) | supported as a judgement | Proposed by Jeremy Howard in September 2024; no IETF draft, no W3C document, no ISO standard. Google's guidance says you do not need such files for Search and that they "neither harm nor help" visibility because Search ignores them. The proposer claims wide adoption and platform generation; three large vendors publish the file, live. What consumes it is tooling that looks for it — a code-editor extension and a Lighthouse audit — not a major search engine or AI vendor. The text now says that instead of "no consumer is confirmed". |
+| `llms.txt` | our judgement | [llmstxt.org](https://llmstxt.org/), [Google's AI-optimization guidance](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide), [Ahrefs llms.txt study](https://ahrefs.com/blog/llmstxt-study/) | supported as a judgement, with new evidence against the benefit | Proposed by Jeremy Howard in September 2024; no IETF draft, no W3C document, no ISO standard. Google's guidance says such files are not needed for Search and "neither harm nor help" visibility. **A server-log study across 137,000 domains reports that 97% of llms.txt files received no requests at all in May 2026, that AI retrieval bots accounted for about 1.1% of the requests that did occur (GPTBot 4.5%, ClaudeBot 0.8%), and that SEO audit tooling was the largest requester at 21.7%.** The label stays `our judgement` deliberately: the evidence does not support requiring the file, so the requirement is a one-file bet on agents that navigate a site, and the catalogue text now says exactly that rather than claiming a reader. |
 | `rss.xml` | published practice | [RSS 2.0](https://www.rssboard.org/rss-specification), [RFC 4287](https://www.rfc-editor.org/rfc/rfc4287) | supported, qualified | RSS 2.0 version 2.0.11, published by the RSS Advisory Board in 2009 — a self-published board specification, not an IETF, W3C or ISO standard, and frozen in practice. Atom is RFC 4287, a Proposed Standard (December 2005). Both are published specifications for a dated feed. |
+
+## The limit of any mechanical check here
+
+**The label check catches borrowed authority; only reading catches a wrong fact.** Three of the four
+wrong claims the first check found were wrong *facts* inside judgement-labelled prose — the
+local-business note that said the vendor guidance "asks for" `telephone`, and the `llms.txt` note
+that said no consumer exists — and no label check can see either of them, because in both cases the
+label was honest and the sentence was not.
+
+`tests/test_catalogue_evidence.py` enforces that a `published practice` claim names a source, and
+that is the right enforcement precisely because it does not pretend to enforce agreement. A test
+that claimed to check agreement would be a check that cannot fail. What enforces agreement is a
+person reading the source, which is why this file exists, why it names its readers, and why it
+carries a date on every row.
 
 ## The practice claims, by kind
 
@@ -93,6 +108,21 @@ naming the fact it rests on:
 | Identity types (4): `content-site`, `saas`, `directory`, `personal` | Schema.org defines the types; Google recommends placing organization markup on the home page or on one page describing the organization, and documents a profile page built on `Person` | The types are documented; pairing them as the identity for these kinds of site is our reading, and the texts now say so. |
 | Offering types and fields (5): `local-business` types and fields, `directory` types, `personal` types and fields | Schema.org's definitions; Google's carousel documentation (an `ItemList` of at least two `ListItem`s of one type, each with a `position` and a `url`) | The documented features do not cover these cases — the carousel's host types are narrow, and a service or a person is not a product listing — so the reading is ours. |
 | Surface `llms.txt` | The proposal at llmstxt.org, and Google's statement that Search ignores such files | Recommending the file is a bet on tooling that reads it. |
+
+## A source added after the first pass, and what could be read of it
+
+The principal supplied the `llms.txt` lead on 2026-09-21 and asked that the study be read before it
+was cited. It was attempted, and the limit is worth recording: **the Ahrefs page returns only its
+title to a text reader** — "We Analyzed 137K Sites: 97% of llms.txt Files Never Get Read", HTTP 200,
+body not extractable — so the methodology could not be read at first hand. The figures used above
+come from two secondary reports of it ([Search Engine Journal](https://www.searchenginejournal.com/97-of-llms-txt-files-got-no-requests-ahrefs-data-shows/579478/), [PPC Land](https://ppc.land/llms-txt-adoption-rises-8-8x-but-97-of-files-get-zero-ai-requests/)),
+which describe it as server-log data from 137,000 domains for May 2026, reported alongside
+Originality.ai's adoption tracker (36,120 files, an 8.8x rise in a year).
+
+That is enough to state the finding as *reported evidence* and not enough to call it verified: the
+sample's selection, the log's coverage and the treatment of bots that never request the file are all
+unread. Under this project's own rule, a claim whose source was not read does not get a `published
+practice` label, which is one more reason the `llms.txt` requirement stays a judgement.
 
 ## What this audit did not establish
 
