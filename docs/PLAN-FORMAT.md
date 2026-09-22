@@ -145,7 +145,7 @@ site **must** publish; the plan is what a consumer checks them against.
 | Value | The surface |
 | --- | --- |
 | `json-ld` | Schema.org JSON-LD in the HTML of the pages it describes. |
-| `llms.txt` | A plain-text map of the site at `/llms.txt`, as proposed at llmstxt.org. Not a standard, and no consumer is guaranteed. |
+| `llms.txt` | A plain-text map of the site at `/llms.txt`, as proposed at llmstxt.org. Not a standard, and no major search engine or AI vendor states that it reads one; Google's guidance says Search ignores such files. |
 | `robots.txt` | Crawler access rules at `/robots.txt`, per RFC 9309. |
 | `rss.xml` | A dated feed, RSS 2.0 or Atom. |
 | `sitemap.xml` | An XML sitemap per the sitemaps.org protocol. |

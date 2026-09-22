@@ -16,6 +16,11 @@ describes. A flag that changed nothing appends no sentence: the brief says "noth
 instead of claiming a change it did not make.
 
 Nothing here is fetched at run time. The tool has no network and the citations are text.
+
+Every label in this file was checked against the source it names on 2026-09-21; the audit, its
+method and its limits are in `docs/CITATIONS.md`. A claim that cannot name a source it was read
+against belongs in `our judgement`, and `tests/test_catalogue_evidence.py` fails a `published
+practice` claim that names none.
 """
 
 from __future__ import annotations
@@ -31,28 +36,37 @@ BASIS_JUDGEMENT = "our judgement"
 SURFACE_BASIS: dict[str, tuple[str, str]] = {
     "robots.txt": (
         BASIS_PRACTICE,
-        "RFC 9309 (2022) defines the file and its rules, and /robots.txt is the location it "
-        "documents.",
+        "RFC 9309 (2022), a Proposed Standard, requires the rules at /robots.txt in the "
+        "top-level path. It is not an Internet Standard, and it binds nothing by itself: the RFC "
+        "asks crawlers to honour the rules, says they are not a form of access authorization, and "
+        "calls itself no substitute for content security measures.",
     ),
     "sitemap.xml": (
         BASIS_PRACTICE,
-        "The sitemaps.org protocol defines the XML sitemap and its conventions.",
+        "The sitemaps.org protocol (version 0.9, published jointly by the search engines under "
+        "CC BY-SA rather than by a standards body) defines the XML sitemap and its conventions, "
+        "and /sitemap.xml is the location it strongly recommends rather than one it mandates.",
     ),
     "json-ld": (
         BASIS_PRACTICE,
-        "Schema.org defines the vocabulary, JSON-LD 1.1 is a W3C Recommendation, and the search "
-        "engines' structured-data documentation recommends JSON-LD.",
+        "Schema.org defines the vocabulary, JSON-LD 1.1 is a W3C Recommendation (16 July 2020), "
+        "and Google's structured data documentation recommends JSON-LD and lists it as the "
+        "recommended format.",
     ),
     "llms.txt": (
         BASIS_JUDGEMENT,
-        "llms.txt is a published proposal (llmstxt.org), not a standard, and no consumer is "
-        "confirmed. We recommend it because it costs one text file and states the site's map in "
-        "the form a language model reads most easily.",
+        "llms.txt is a published proposal (llmstxt.org, 2024) with no standards status: no IETF "
+        "draft, no W3C document. Google's documentation says such files are not needed for "
+        "Search and neither help nor harm visibility, and what consumes the file today is tooling "
+        "that looks for it rather than a major search engine or AI vendor. Its adoption figures "
+        "are the proposer's own. We recommend it as a cheap bet, not as a surface with a "
+        "confirmed reader.",
     ),
     "rss.xml": (
         BASIS_PRACTICE,
-        "RSS 2.0 has a published specification and Atom is RFC 4287; a feed is the long-standing "
-        "machine-readable surface for dated content.",
+        "RSS 2.0 has a published specification - from the RSS Advisory Board, not an IETF, W3C "
+        "or ISO standard - and Atom is RFC 4287, a Proposed Standard. A feed is the "
+        "long-standing machine-readable surface for dated content.",
     ),
 }
 
@@ -68,15 +82,17 @@ SOURCES: tuple[tuple[str, str], ...] = (
     ("RFC 3986", "URI syntax, https://www.rfc-editor.org/rfc/rfc3986"),
     (
         "Google's structured data documentation",
-        "Local Business, Merchant listings, Article and structured-data general guidelines, "
-        "https://developers.google.com/search/docs/appearance/structured-data",
+        "the feature guides for Local business, Organization, Merchant listing, Article, "
+        "Software app, Carousel and Profile page, with the structured-data general guidelines: "
+        "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data",
     ),
 )
 
 URL_WHY = (
-    "URL shape is chosen now because changing it later means redirects. Host names are "
-    "case-insensitive under RFC 3986, so lowercase hosts are published practice; lowercase paths, "
-    "one trailing-slash convention and a depth limit are our judgement. The point is to pick one "
+    "URL shape is chosen now because changing it later means redirects. RFC 3986 makes the scheme "
+    "and host case-insensitive and says they should be normalized to lowercase, so lowercase "
+    "hosts are published practice. It makes path segments case-sensitive, so lowercase paths, one "
+    "trailing-slash convention and a depth limit are our judgement. The point is to pick one "
     "shape and keep it."
 )
 
@@ -141,6 +157,9 @@ class Profile:
     offering_fields_note_selling: str
     crawler_note: str
     pages_note: str
+    #: The basis of the identity-type choice. It is a judgement for the kinds where a source
+    #: documents the vocabulary but recommends nothing for that kind of site.
+    identity_types_basis: str = BASIS_PRACTICE
     #: Set when a note is only true without the location properties, e.g. after --not-local.
     identity_fields_note_without_location: str = ""
     #: The answers the principal stated, as (flag, value), so a reason can cite the answer.
@@ -274,27 +293,30 @@ LOCAL_BUSINESS = Profile(
         ("/contact", "Address, hours, telephone and a map link, in one place."),
     ),
     identity_types_note=(
-        "If Schema.org defines a closer subtype for this business - `Bakery`, `Restaurant`, "
+        "Google's structured data documentation for local businesses asks for the most specific "
+        "sub-type possible, so if Schema.org defines a closer subtype - `Bakery`, `Restaurant`, "
         "`Plumber` and hundreds more - use it: a subtype carries everything `LocalBusiness` does."
     ),
     identity_fields_note=(
-        "It includes the three a search engine's local-business guidance asks for: `name`, "
-        "`address` and `telephone`."
+        "Google's structured data documentation for local businesses requires `name` and "
+        "`address`, and recommends `telephone`, `geo`, `openingHoursSpecification` and `url`; the "
+        "rest is our judgement."
     ),
     identity_fields_note_without_location=(
-        "The three a search engine's local-business guidance asks for are `name`, `address` and "
-        "`telephone`; `address` and `telephone` are not required here."
+        "Google's structured data documentation for local businesses requires `name` and "
+        "`address`; `address` is not required here."
     ),
     offering_types_basis=BASIS_JUDGEMENT,
     offering_types_note=(
         "`Service` is the neutral type for a business that offers work rather than goods. If it "
-        "sells goods, `Product` with `Offer` is the published pattern; if it serves food, `Menu` "
-        "with `MenuItem` is."
+        "sells goods, `Product` with `Offer` is what Google's structured data documentation for "
+        "merchant listings describes; if it serves food, Schema.org describes the offerings with "
+        "`Menu` and `MenuItem`, which `hasMenuItem` links."
     ),
     offering_types_note_selling=(
-        "`Product` with `Offer` is the published pattern for a product page, and the search "
-        "engines' merchant-listing guidance is written against it. That this business's goods are "
-        "described this way rather than as a `Service` is our judgement."
+        "`Product` with `Offer` is the published pattern for a product page, and Google's "
+        "structured data documentation for merchant listings is written against it. That this "
+        "business's goods are described this way rather than as a `Service` is our judgement."
     ),
     offering_fields_basis=BASIS_JUDGEMENT,
     offering_fields_note=(
@@ -379,8 +401,10 @@ ONLINE_STORE = Profile(
         ("/policies", "Shipping, returns and privacy, where a buyer looks before paying."),
     ),
     identity_types_note=(
-        "`OnlineStore` is a subtype of `Store`, so it carries the organization and place "
-        "properties without a second block."
+        "`OnlineStore` sits under `Organization` in Schema.org's hierarchy - `Organization` > "
+        "`OnlineBusiness` > `OnlineStore` - so it carries the organization properties without a "
+        "second block, and Google's structured data documentation recommends the subtype for an "
+        "ecommerce site."
     ),
     identity_fields_note=(
         "A buyer deciding whether to trust a store needs to know who runs it and how to reach "
@@ -393,8 +417,8 @@ ONLINE_STORE = Profile(
         "settling before the build."
     ),
     offering_types_note_selling=(
-        "`Product` with an `Offer` is the published pattern for a product page, and the search "
-        "engines' merchant-listing guidance is written against it."
+        "`Product` with an `Offer` is the published pattern for a product page, and Google's "
+        "structured data documentation for merchant listings is written against it."
     ),
     offering_fields_basis=BASIS_PRACTICE,
     offering_fields_note=(
@@ -402,9 +426,10 @@ ONLINE_STORE = Profile(
         "judgement adds `description`, `image` and `url` to the required set."
     ),
     offering_fields_note_selling=(
-        "`price`, `priceCurrency` and `availability` are what the merchant-listing guidance "
-        "requires on an `Offer`, and `sku` and `brand` are what make two listings the same "
-        "product. Our judgement adds `description`, `image` and `url` to the required set."
+        "Google's structured data documentation for merchant listings requires `name` and "
+        "`image` on the `Product` and `price` and `priceCurrency` on its `Offer`, and recommends "
+        "`availability`; `sku` and `brand` are what make two listings the same product, and our "
+        "judgement adds `description`, `image` and `url` to the required set."
     ),
     crawler_note=(
         "the catalogue should be readable by anything that might recommend it, while the cart, "
@@ -472,9 +497,12 @@ CONTENT_SITE = Profile(
         ("/about", "Who writes here, and what the site is for."),
         ("/contact", "How to reach the people who write it, including corrections."),
     ),
+    identity_types_basis=BASIS_JUDGEMENT,
     identity_types_note=(
-        "If one person writes the site, `Person` in place of `Organization` is the honest "
-        "identity; `WebSite` stays either way, because it is the site itself."
+        "Google's structured data documentation for organizations recommends placing the "
+        "organization's markup on the home page or on a single page that describes it. That "
+        "`Organization` and `WebSite` together are the identity for a publication - and that a "
+        "one-person publication is better described by `Person` - is our judgement."
     ),
     identity_fields_note=(
         "`sameAs` is the one that matters most here: it is how a machine ties the site to the "
@@ -482,17 +510,19 @@ CONTENT_SITE = Profile(
     ),
     offering_types_basis=BASIS_PRACTICE,
     offering_types_note=(
-        "`Article` and `BlogPosting` are the documented types for published writing, and the "
-        "search engines' article guidance is written against them."
+        "Schema.org defines `Article` and `BlogPosting` for published writing, and Google's "
+        "structured data documentation for articles is written against them."
     ),
     offering_types_note_selling=(
         "`Article` and `BlogPosting` describe the writing; `Offer` is the published way to state "
         "the price of access to it. That both belong on the same page is our judgement."
     ),
-    offering_fields_basis=BASIS_JUDGEMENT,
+    offering_fields_basis=BASIS_PRACTICE,
     offering_fields_note=(
-        "`author`, `datePublished` and `dateModified` are what make a piece attributable and "
-        "datable, which is the whole of its value to a citation."
+        "Google's structured data documentation for articles has no required properties and "
+        "recommends `headline`, `image`, `author`, `datePublished` and `dateModified`; those make "
+        "a piece attributable and datable, which is the whole of its value to a citation. "
+        "`description` and `url` are our additions."
     ),
     offering_fields_note_selling=(
         "`price` and `priceCurrency` state what access costs, and `availability` is meaningful "
@@ -564,10 +594,12 @@ SAAS = Profile(
         ("/about", "Who builds it, and what the company is."),
         ("/contact", "How to reach the people who build it: sales, support or security."),
     ),
+    identity_types_basis=BASIS_JUDGEMENT,
     identity_types_note=(
-        "The organization is the vendor and the site is the website; the product itself is the "
-        "offering below, and keeping the two apart is what stops a machine from treating a "
-        "company page as a product page."
+        "Google's structured data documentation for organizations recommends placing the "
+        "organization's markup on the home page or on a single page that describes it. That the "
+        "vendor is `Organization` and the site is `WebSite`, and that keeping the two apart stops "
+        "a machine from treating a company page as a product page, is our judgement."
     ),
     identity_fields_note=(
         "A buyer of business software checks who the vendor is, so `sameAs` and a reachable "
@@ -575,17 +607,21 @@ SAAS = Profile(
     ),
     offering_types_basis=BASIS_PRACTICE,
     offering_types_note=(
-        "`SoftwareApplication` is the documented type for a software product, with "
-        "`WebApplication` for one that runs only in a browser."
+        "Schema.org defines `SoftwareApplication` for a software product, with "
+        "`WebApplication` for one that runs only in a browser, and Google's structured data "
+        "documentation documents a software app feature built on it."
     ),
     offering_types_note_selling=(
         "`SoftwareApplication` describes the product and `Offer` states what a plan costs. That "
         "the two belong in one block is our judgement."
     ),
-    offering_fields_basis=BASIS_JUDGEMENT,
+    offering_fields_basis=BASIS_PRACTICE,
     offering_fields_note=(
-        "`applicationCategory` and `operatingSystem` are the two properties that make a software "
-        "listing comparable with another one; `featureList` is what a reader skims."
+        "Google's structured data documentation for software apps requires `name` and a price on "
+        "an `Offer`, and one of `aggregateRating` or `review`, and recommends `applicationCategory` "
+        "and `operatingSystem`. This plan requires the two recommended properties and leaves the "
+        "price to what you state about selling and the rating to whether the site wants that "
+        "feature; `description`, `featureList` and `url` are our additions."
     ),
     offering_fields_note_selling=(
         "`price` and `priceCurrency` are what make a plan comparable with another plan; "
@@ -615,7 +651,14 @@ DIRECTORY = Profile(
     identity_types=("WebSite", "Organization"),
     identity_fields=("name", "url", "logo", "description", "contactPoint", "sameAs"),
     offering_types=("ItemList", "ListItem"),
-    offering_fields=("name", "description", "url", "itemListElement", "numberOfItems"),
+    offering_fields=(
+        "name",
+        "description",
+        "url",
+        "itemListElement",
+        "position",
+        "numberOfItems",
+    ),
     surfaces=(
         Surface(
             "robots.txt",
@@ -654,19 +697,24 @@ DIRECTORY = Profile(
         ("/about", "Who runs the directory and how entries are chosen."),
         ("/submit", "How to add or correct an entry."),
     ),
+    identity_types_basis=BASIS_JUDGEMENT,
     identity_types_note=(
-        "A directory is a website run by someone, which is what these two types say. The entries "
-        "themselves are not the site's identity, and marking each entry as an `Organization` is "
-        "the entry's business, not the directory's."
+        "Google's structured data documentation for organizations recommends placing the "
+        "organization's markup on the home page or on a single page that describes it. That a "
+        "directory's identity is the site plus the person or organisation running it, and that "
+        "the entries are not the site's identity, is our judgement."
     ),
     identity_fields_note=(
         "The selection procedure is the product here, so who runs the directory has to be stated "
         "rather than implied."
     ),
-    offering_types_basis=BASIS_PRACTICE,
+    offering_types_basis=BASIS_JUDGEMENT,
     offering_types_note=(
-        "`ItemList` and `ListItem` are the documented types for an ordered set of things, and "
-        "they are what the list guidance is written against."
+        "Schema.org defines `ItemList` and `ListItem` for an ordered set of things, and Google's "
+        "structured data documentation documents a carousel built on an `ItemList` of at least "
+        "two `ListItem`s. Its documented host types are narrow - course list, movie, recipe and "
+        "restaurant - so for a general directory the list markup is our reading of those types, "
+        "not a documented feature for it."
     ),
     offering_types_note_selling=(
         "`ItemList` and `ListItem` describe the list; `Offer` states what a paid placement costs. "
@@ -674,9 +722,10 @@ DIRECTORY = Profile(
     ),
     offering_fields_basis=BASIS_JUDGEMENT,
     offering_fields_note=(
-        "`numberOfItems` and the order of `itemListElement` are what let a consumer tell a "
-        "complete list from its first page - the failure mode that otherwise makes a directory "
-        "look smaller than it is."
+        "Google's carousel documentation requires an `ItemList` of at least two `ListItem`s of "
+        "the same type, each carrying a `position` and the item's `url` - which is why `position` "
+        "is in the list. `numberOfItems`, and using it so a consumer can tell a complete list "
+        "from its first page, is our judgement."
     ),
     offering_fields_note_selling=(
         "`price` and `priceCurrency` state what a placement costs, and `numberOfItems` still "
@@ -733,9 +782,11 @@ PERSONAL = Profile(
         ("/about", "The longer version: what they do and what they have done."),
         ("/contact", "How to reach them, and what they are reachable about."),
     ),
+    identity_types_basis=BASIS_JUDGEMENT,
     identity_types_note=(
-        "`Person` describes the human and `WebSite` the site; both are needed, because 'the site "
-        "about this person' and 'this person' are different questions."
+        "Google's structured data documentation documents a profile page built on `Person`. That "
+        "a personal site should carry both types, because 'the site about this person' and 'this "
+        "person' are different questions, is our judgement."
     ),
     identity_fields_note=(
         "`sameAs` is the load-bearing property on a personal site: it is how a machine confirms "
@@ -890,9 +941,8 @@ def advice_for(profile: Profile) -> tuple[Advice, ...]:
     entries = (
         Advice(
             "identity_types",
-            BASIS_PRACTICE,
-            f"Schema.org defines {_joined(profile.identity_types)}, and the convention is to use "
-            f"the most specific type that fits. {profile.identity_types_note}",
+            profile.identity_types_basis,
+            f"Schema.org defines {_joined(profile.identity_types)}. {profile.identity_types_note}",
         ),
         Advice(
             "identity_fields",
