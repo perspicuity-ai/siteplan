@@ -1,11 +1,11 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 12
+revision: 13
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-21T22:00:00-06:00"
+updated_at: "2026-09-21T22:01:01-06:00"
 record_status: open
 work_status: submitted
 ---
@@ -53,10 +53,11 @@ the repository's own surfaces written. No benefit is observed: no project has us
 consumer has read one, nothing has been published, and R5–R7 stay open with triggers rather than
 dates.
 
-Next: David accepts or returns U2 (as amended), U3 and U4. Nothing further is granted, so the next
-increment needs a new unit: the two candidates the Review already names are a read of the frozen
-format by Moss as the actual consumer (R6) and the first project gated on a plan (R5). A rejected
-part of the audit changes the catalogue and requires U3's and U4's tests to be re-run.
+Next: David accepts or returns U2 (as amended), U3 and U4; nothing further is granted and this
+worker holds until his answer arrives. The next increment needs a new unit, and after R6's closure
+the candidate the Review names is R5 — the first project whose build is gated on a plan, which is
+also where the end-to-end run of a generated plan through `sitewalk --plan` belongs. A rejected part
+of the audit changes the catalogue and requires U3's and U4's tests to be re-run.
 
 Blocked: nothing. The increment's units are all delivered.
 
@@ -552,7 +553,9 @@ the fixture set pins that too.
 
 **Not established by this unit.** That the format's readings are the ones Moss needs to implement
 against — nobody from `sitewalk` has read the document, and the freeze notice has not been
-delivered. That a consumer can in fact be written from it: the assessment is a reading, not an
+delivered. *Superseded at revision 13: both have since happened, and Moss built sitewalk's U7 and U8
+against this document and its fixtures — see R6. The sentence stands as what was true at this
+return; what its closure still does not establish is recorded there.* That a consumer can in fact be written from it: the assessment is a reading, not an
 implementation. That the choices the document settles (a path never carrying a trailing slash, the
 ASCII path charset, punycode host names) are the right ones; they were mine to make, they are
 recorded, and rule 3 makes them costly to change. That the catalogue's recommendations rest on
@@ -897,7 +900,7 @@ format's own obligation.
 | R3 | Delivery: `new` and `check` behave as the format document says, for every kind and flag combination, offline | The test suite, and a run from a clean checkout | Heron, at the U3 return; `make ci` exits 0 through real checks | **Delivered, awaiting acceptance.** `check` conforms to the format document and `new` now conforms to the ratified CLI contract: three exit codes, no `--force`, an existing output refused. 101 tests pass offline at `952892f`; `make ci` exits 0 | Awaiting David's acceptance |
 | R4 | Delivery: unstated intent is never filled in, and the unstated table matches what the catalogue would change | Generated output checked against the catalogue by test | Heron, at the U3 return | **Delivered, awaiting acceptance.** `tests/test_unstated.py` asserts that each unstated input appears as unstated, that a missing site or name is never invented, that an unstated flag changes nothing in the plan, and that the "what changes if you state it" table equals what the catalogue would change | Awaiting David's acceptance |
 | R5 | Benefit: a new project's build is gated on a plan file committed before the build | That project's git history | David, trigger: the first project started after ratification (OQ7); no date | Not observable: no project has started from a plan | — |
-| R6 | Benefit: `sitewalk --plan` consumes a siteplan-produced file unchanged, with no shared code | The first `sitewalk` run against a plan file | Moss, owner of `sitewalk` (OQ6) | **Partly settled, and not by a run.** `sitewalk --plan` already exists and is ratified; reading its `plan.py` is what found that two of this document's rules contradicted its behaviour, now reconciled at `f19dbdf`. No plan has been passed between the two tools end to end, and Moss has not read the frozen document | Deliver the freeze notice (text in the return). The remaining check is a siteplan-produced plan through `sitewalk --plan` |
+| R6 | Benefit: `sitewalk --plan` consumes a siteplan-produced file unchanged, with no shared code | The consumer's own units, built against this repository's artifacts | Moss, owner of `sitewalk` (OQ6) | **Closed 2026-09-21, and the evidence arrived after this record's U1 note said it did not exist.** Moss built `sitewalk`'s **U7** (`d0131d0`: the version gate — a known or older `plan_version` reads unqualified, an unknown or newer one is conditional in default mode and non-zero under `--strict`, an absent or mistyped one an error, and a surface the consumer cannot check reported as *unverified* rather than absent) and **U8** (`9dfb88e`: `json-ld` and `rss.xml` checked, with four distinguishable states in the JSON) against [`docs/PLAN-FORMAT.md`](docs/PLAN-FORMAT.md) at `fe8433b` **read-only**, with U7's tests loading the seven valid plans from [`docs/fixtures/plan-conformance.json`](docs/fixtures/plan-conformance.json). The interface worked: a separate repository implemented the consumer from the document and the fixtures, with no shared code | Closed. **What the closure does not establish:** that the document is *clear* rather than merely implementable — one successful implementation by one reader can absorb ambiguity in silence, and no one has asked Moss what he had to infer; and that a plan produced by `siteplan new` has been through `sitewalk --plan` end to end, since what was consumed is the published fixture, not a generated plan. That end-to-end run stays worth doing when a project first gates a build on a plan (R5) |
 | R7 | Disconfirming: the brief is written once and never read, or the built site contradicts its plan | The first gated project's history, and its `sitewalk` run | David, trigger: that project's first deploy | Pending; no project has used a brief | If it holds, reconsider the tool's existence rather than maintain the document (`CONTEXT.md` §Success, and what would stop us) |
 | R8 | The format does not break its consumer without a version bump | The change log in `docs/PLAN-FORMAT.md`, against `plan_version` and the consumer's releases | Heron at each format change; David for a breaking change | Satisfied so far, trivially: `plan_version` 1 is the first freeze, with one change-log entry and no later change | — |
 
@@ -935,6 +938,19 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 13, 2026-09-21T22:01:01-06:00. Changed: **R6 is closed**, on evidence that arrived after the U1 return said it
+did not exist — Moss built `sitewalk`'s U7 (`d0131d0`) and U8 (`9dfb88e`) against
+`docs/PLAN-FORMAT.md` at `fe8433b` and the conformance fixture, read-only and with no shared code, so
+the consumer side of the interface has now been implemented from this repository's artifacts. The
+closure records what it does not establish: that the document is clear rather than merely
+implementable, and that a `siteplan new`-generated plan has been through `sitewalk --plan` end to
+end. The U1 return's "not established" paragraph is annotated as superseded rather than rewritten.
+The current position now names R5 as the next candidate and records that this worker holds until the
+principal's acceptance of U2, U3 and U4 arrives. Source: the principal's message of 2026-09-21, and
+the consumer's record and commits, read to verify the claim before recording it. Reason: a criterion
+is closed on evidence, and the evidence belongs beside the finding rather than in a message. Affects:
+R6 (closed), the next increment's candidates, and the U1 return's annotation.
 
 Revision 12, 2026-09-21T22:00:00-06:00. Changed: the record carries the U4 return — the delivered
 surfaces with the evidence for each acceptance criterion, the two guards, the deleted template
