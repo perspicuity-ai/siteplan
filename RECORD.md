@@ -1,11 +1,11 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 6
+revision: 7
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-21T13:34:00-06:00"
+updated_at: "2026-09-21T21:48:00-06:00"
 record_status: open
 work_status: submitted
 ---
@@ -36,8 +36,10 @@ record. Selected by David on 2026-09-21; the selection, the answers he gave with
 he registered are in "Selection" and "Answers to the open questions". Recommendation and selection
 are separate entries below, as the method requires.
 
-Work scope: U1 — delivered at `757eef3` and `7db7c03`, and now awaiting the principal's acceptance.
-The scope for the next run is U2, the citation audit, which is not granted.
+Work scope: U2 — the citation audit of every labelled recommendation in the catalogue, granted
+2026-09-21 and picked up under the plan registered below. U1 was accepted by the principal against
+`d1f7098` and is closed; its benefit criteria (R5–R7) remain unobserved and are not part of this
+scope.
 
 Work: revision 3 registered the grant at 13:23:14. U1 was carried out between then and 13:28:49,
 when the return was committed: `docs/PLAN-FORMAT.md` frozen as `plan_version` 1; 45 conformance
@@ -46,33 +48,37 @@ fixtures published;
 `scripts/check-project.sh` replaced with the real checks. The return, with its evidence and the gaps
 it leaves, is in Act.
 
-Outcome: U1's delivery is complete — `make ci` exits 0 through real checks at the delivered
-revision — and no benefit is observed. No project has used a plan; no consumer has read one; the
-format's implementability is an assessor's reading, not an implementation.
+Outcome: U1 was accepted as delivered; no benefit is observed. No project has used a plan, no
+consumer has read one, and the format's implementability remains an assessor's reading rather than
+an implementation. U2 has not started at this revision.
 
-Next: David accepts U1 or returns it with findings, and separately grants or refuses U2. A pending
-move outside this run: the freeze notice goes to Moss, who owns `sitewalk`, and it must travel
-through the principal, because a worker here cannot message another repository's session.
+Next: Heron carries U2 — enumerate every labelled claim in the catalogue, read each named source,
+correct or demote what the source does not support, and publish the audit — then returns it for
+acceptance. The freeze notice to Moss, who owns `sitewalk`, remains with the principal to relay; a
+worker here cannot message another repository's session.
 
-Blocked: nothing in the U1 return. U2 cannot start until its grant is registered.
+Blocked: nothing. U1 is closed and U2's grant, inputs and acceptance criteria are registered.
 
-Waiting on: David — acceptance of U1, and the grant of U2.
+Waiting on: no one for U2. The principal's acceptance of U2 is the move after its return.
 
-Dependency: David's acceptance of U1, and his grant for U2. Owner David; resolving step: his reply
-to this record.
+Dependency: none blocking. The one input U2 needs that this repository cannot supply — reading
+published sources on the network — was granted on 2026-09-21 as OQ2, and the tool itself stays
+offline.
 
 Review due: no timed obligation. R5–R7 are trigger-based and are stated in Review.
 
-Authority: U1's grant, registered at revision 3 and now complete. No authority is held for U2, U3 or
-U4; for any change to the format (versioning rule 5 makes a consumer-breaking change the principal's
-decision); or for contacting another repository. The principal retains spending, outbound messages,
-external agreements, the release word, and the selection of courses and units.
+Authority: the grant registered beside U2 in Act, from the principal's acceptance and grant of
+2026-09-21 — U2 only, inside the fences the Statement of Work registered. No authority is held for
+U3 or U4; for any change to the format (versioning rule 5 makes a consumer-breaking change the
+principal's decision); or for contacting another repository. Nothing is published: publication is
+the principal's release word, and he has not given it. The principal retains spending, outbound
+messages, external agreements, the release word, and the selection of courses and units.
 
 | Stage | began_at | registered_at / exact basis revision | finished_at |
 | --- | --- | --- | --- |
 | Frame and Decide | 2026-09-21T11:52:23-06:00 | [`CONTEXT.md`](CONTEXT.md) as supplied 2026-09-21; principal's instructions and answers of 2026-09-21 | 2026-09-21T13:23:14-06:00 |
-| Act | 2026-09-21T13:23:14-06:00 | revision 3 of this record: U1 granted, pickup immediately after | 2026-09-21T13:28:49-06:00 |
-| Review | 2026-09-21T13:28:49-06:00 | criteria R1–R8, registered at revision 2 before the work | pending — U1 awaits acceptance |
+| Act | 2026-09-21T13:23:14-06:00 | revision 3 granted U1; revision 7 grants U2 and registers its pickup plan | U1 finished 13:28:49; U2 in progress |
+| Review | 2026-09-21T13:28:49-06:00 | criteria R1–R8, registered at revision 2 before the work | U1 accepted; U2's review pending its return |
 
 ## Frame and Decide
 
@@ -318,8 +324,8 @@ a ratified design that differs discards them.
 
 | # | State | Result | Inputs / dependencies | Owner | Done when | Estimate |
 | --- | --- | --- | --- | --- | --- | --- |
-| U1 | **returned** — delivered `757eef3`, `7db7c03`; awaits acceptance | `docs/PLAN-FORMAT.md` and its conformance fixtures: the authoritative format and stability rules, a minimal valid plan, a malformed one, and `check` brought to the document | Selection at revision 3; OQ2–OQ5 answered; the draft validator as evidence only | Heron | Met, on the evidence in "U1 return" below | Actual: 1 session, as estimated |
-| U2 | planned — not granted | Citation audit of every labelled recommendation in the catalogue, corrections applied, unverifiable claims demoted to `our judgement`; v1 ships only the kinds and surfaces whose citations pass | OQ2 answered (network for sources, not for the tool); the fact-check method of 2026-09-21; the grant, at pickup | Heron | Every `published practice` label names a source that was read, with the date; the method and the unverified remainder are recorded; the shipped kind set is named | 1–2 sessions; wide |
+| U1 | **accepted** — delivered `757eef3`, `7db7c03`; accepted by David 2026-09-21 against `d1f7098` | `docs/PLAN-FORMAT.md` and its conformance fixtures: the authoritative format and stability rules, a minimal valid plan, a malformed one, and `check` brought to the document | Selection at revision 3; OQ2–OQ5 answered; the draft validator as evidence only | Heron | Met, on the evidence in "U1 return" below | Actual: 1 session, as estimated |
+| U2 | **granted** — pickup registered at revision 7 | Citation audit of every labelled recommendation in the catalogue, corrections applied, unverifiable claims demoted to `our judgement`; the shipped kind and surface set named | OQ2 answered (network for sources, not for the tool); the fact-check of 2026-09-21; the grant at revision 7 | Heron | The acceptance criteria in the U2 pickup plan below | 1–2 sessions; wide |
 | U3 | planned — not granted | `siteplan new` completed against the audited catalogue and the ratified CLI contract: the audited kinds, four flags and interactive mode, `BRIEF.md` and `site.json`, the unstated rule, and `--force` removed | U1, U2 | Heron | R3 and R4 pass; tests run offline; `make ci` exits 0 through real checks | 1 session |
 | U4 | planned — not granted | Project surfaces: `README.md` (what it does, how to run it, what it does not do), coherent local commits | U1–U3 | Heron | `make ci` and `make records` exit 0 at the delivered commit, and the record carries the evidence | 0.5 session |
 
@@ -333,11 +339,31 @@ network use by the tool, publishing, deploying, spending or outbound messages, a
 `CONTEXT.md` or to another repository. Stop condition: U1 is returned for acceptance, or it needs
 something outside this grant.
 
-**Two items the grant excludes, recorded so they are not lost.** The ratified CLI contract (OQ5)
+**Two items the U1 grant excluded, recorded so they are not lost.** The ratified CLI contract (OQ5)
 contradicts the draft in `new`: it still offers `--force` and still exits 3 on an internal defect.
 Bringing `new` to the contract is U3's work, and this record carries both as proposals rather than
 fixing them inside U1. The draft's overwrite behaviour also has to be decided at U3 — the
 recommendation there will be to refuse and exit 2, since with no `--force` there is no way to force.
+
+**Grant, registered at revision 7 and before any U2 work.** Decider: David, 2026-09-21; basis
+revision 6 (`d1f7098`), the revision he accepted U1 against. **Heron** is granted **U2 only**.
+Included: enumerating every labelled recommendation in the catalogue; reading the published sources
+at each `published practice` label, over the network, with the URLs and dates recorded; correcting
+the catalogue's text, or moving a claim to `our judgement` where the source does not settle it;
+publishing the audit; naming the kind and surface set that ships; the tests that enforce the label
+discipline; and local commits. Excluded: any change to `siteplan new`'s behaviour or flags (U3),
+which is where the shipped set is enforced; `README.md` (U4); any new dependency; any network use by
+the tool itself; publishing, deploying, spending or outbound messages; and changes to `CONTEXT.md`,
+to the frozen format, or to another repository. Stop condition: U2 is returned for acceptance, or it
+needs something outside this grant.
+
+**What the principal added to the grant, in his words in substance.** Every `published practice`
+label is a claim under audit, including the ones that currently look well-sourced, and he expects
+labels to move to `our judgement` where the evidence warrants it: "a catalogue that ends with more
+honest judgements and fewer borrowed authorities is a better v1, not a weaker one." A defect rate
+that comes back from the audit is the finding, not an embarrassment. And the sample's limits must be
+stated, so that no rate is read as a property of the whole catalogue when it is a property of the
+sample.
 
 **Estimates and their basis.** One "session" is a focused worker session, not a working day. The
 basis is weak, and stated so it can be discounted: the draft's 3,158 lines and 80 tests were
@@ -549,6 +575,35 @@ repository's session:
    in sitewalk's record and comes back here, because a change that breaks his consumer is the
    principal's decision under rule 5.
 
+### Pickup plan, U2 (registered before implementation)
+
+Route: (1) enumerate every labelled recommendation mechanically from `siteplan/kinds.py` — the advice
+for all six kinds, the five surface bases, and the shared claims in `URL_WHY`, `CRAWLER_MECHANISM`
+and `PAGES_WHY` — so the audit's scope is complete rather than a convenience sample; (2) for each
+`published practice` claim, read the named source and record the URL, the date read, what it actually
+says, and the verdict; (3) apply what the reading requires: correct the text, or move the claim to
+`our judgement`, and check that no judgement-labelled text borrows authority it does not have;
+(4) publish the audit, its method and its limits; (5) name the kinds and surfaces that ship, and any
+that fail, for U3; (6) put the label discipline under test so a new `published practice` claim
+without a named source fails `make ci`.
+
+Acceptance criteria, registered before the work:
+
+1. Every `published practice` label in the catalogue names a source that was read, with its URL and
+   the date read in `docs/CITATIONS.md`, and the claim's wording says what that source says.
+2. The four claims the earlier fact-check found materially wrong are corrected or demoted, and the
+   two it found overstated are qualified in the text.
+3. Every claim moved to `our judgement` says in its own words which part is a judgement; the counts
+   of practice and judgement labels before and after are reported.
+4. The shipped set is named: each kind either passes — every claim honest, whether sourced or
+   labelled a judgement — or is named as failing, with what U3 must remove and why.
+5. `docs/CITATIONS.md` states how the cases were chosen, how deeply each was checked, and what that
+   means for any rate it reports.
+6. A test enforces the label discipline, and it fails when a `published practice` claim names no
+   source; `make ci` exits 0 with it in place.
+
+`picked_up_at` 2026-09-21T21:48:00-06:00, actor Heron, immediately after the grant was registered.
+
 ### Provisional notes for U2–U4
 
 Confirmed at their own pickup, per the 0.5.0 rule that a later pickup plan depends on what the
@@ -614,7 +669,7 @@ format's own obligation.
 
 | # | Criterion | Evidence source | Owner, window or trigger | Finding | Response |
 | --- | --- | --- | --- | --- | --- |
-| R1 | Delivery: the format document is complete enough for an implementer who cannot read our code | An assessor who did not write it, against acceptance criterion 2 | David or a named independent assessor, at the U1 return | **Independent finding (Tern, 2026-09-21, four readings, code unseen): `SIGN-OFF: yes` on the delivered revision `fe8433b`**, with one residual tension it recorded. The first two readings found thirteen gaps and five residual items, all now stated in the document; the third refused sign-off on three faults, all fixed; the fourth is on the revision that was delivered | Awaiting David's acceptance. A read by Moss as the actual consumer is the check left; a fifth by Tern would add little, since it has now read the delivered text |
+| R1 | Delivery: the format document is complete enough for an implementer who cannot read our code | An assessor who did not write it, against acceptance criterion 2 | David or a named independent assessor, at the U1 return | **Accepted by David, 2026-09-21, against basis revision `d1f7098` (record revision 6): the format document and the conformance fixtures are accepted as delivered.** The evidence he accepted was Tern's four readings, ending `SIGN-OFF: yes` on the delivered revision, with one residual tension recorded; Tern's sign-off is evidence of legibility, not of implementability, and David recorded that distinction. Assessor: David, the principal | Closed. The one check left is a read by Moss as the actual consumer, and it does not hold up the acceptance |
 | R2 | Delivery: every `published practice` label cites a source that was read, with the date; nothing unverified is labelled as practice | The audit record, and a sample re-read of the sources | Heron returns; the assessor samples at the U2 return | Not started: U2 is not granted | — |
 | R3 | Delivery: `new` and `check` behave as the format document says, for every kind and flag combination, offline | The test suite, and a run from a clean checkout | Heron, at the U3 return; `make ci` exits 0 through real checks | Partly settled at U1: `check` conforms and `make ci` now exits 0 through real checks. `new` is unchanged and still contradicts the ratified contract (`--force`, exit 3) | Carry to U3, where `new` is brought to the contract |
 | R4 | Delivery: unstated intent is never filled in, and the unstated table matches what the catalogue would change | Generated output checked against the catalogue by test | Heron, at the U3 return | Not started; the draft's implementation is unratified | — |
@@ -657,6 +712,20 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 7, 2026-09-21T21:48:00-06:00. Changed: David accepted U1 and granted U2. The Review records
+the acceptance — assessor David, 2026-09-21, basis revision `d1f7098` (record revision 6), finding
+that the format document and the conformance fixtures are accepted as delivered — and U1 is closed
+in the unit table. U2 becomes the delivery this record names: granted, picked up, and carrying its
+pickup plan and six acceptance criteria, registered before the work. The grant text records what the
+principal added to it: every `published practice` label is a claim under audit, labels are expected
+to move to `our judgement` where the evidence warrants it, a defect rate is a finding rather than an
+embarrassment, and the sample's limits must be stated so no rate is read as a property of the whole
+catalogue. Source: the principal's acceptance and grant of 2026-09-21. Reason: register the choice,
+the acceptance and the pickup plan before the work that depends on them. Preserved: revisions 6 and
+earlier stand as written; U1's delivery acceptance is recorded separately from its benefit criteria,
+which remain unobserved. Affects: U1 (accepted), U2 (granted), R1 (closed), the shipped kind and
+surface set, and the catalogue's labels.
 
 Revision 6, 2026-09-21T13:34:00-06:00. Changed: the format, at the principal's direction, to separate
 an unknown key from an unknown version — keys grow, versions announce. Rule 4 now reads a known or
