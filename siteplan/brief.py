@@ -162,7 +162,11 @@ def render(intent: SiteIntent, base: Profile, profile: Profile, notes: tuple[str
         "",
         "### 3. Machine-readable surfaces",
         "",
-        "The plan requires these. `required_surfaces` in `site.json` carries exactly these names.",
+        "The plan requires these. `required_surfaces` in `site.json` carries exactly these names, and "
+        "the plan is the record of what this site decided to require: a recommendation here is "
+        "disagreed with by editing the plan, not by reading this brief differently. Where the "
+        "evidence for a surface's benefit is weak, its reason gives the numbers and says so, and the "
+        "surface stays required until the plan changes.",
         "",
         "| Surface | Basis | Why this site needs it |",
         "| --- | --- | --- |",

@@ -1,25 +1,41 @@
 # To do
 
-Open items, newest first. Anything with a timed obligation also lives in a record and shows up
-in `make records`; this file is the human-readable list.
-
-<!-- Keep the headings. They are the four honest states an item can be in, and the difference
-     between "not yet" and "blocked on a person" is the difference between a plan and an excuse. -->
+Open items, newest first. The record holds the basis and the evidence; this is the human-readable
+list. Updated 2026-09-21, at the U4 return.
 
 ## Waiting on the principal
 
-TODO — things only the principal can unblock: a decision, a name, a domain, a credential, a
-word. Say what it blocks, so the cost of the wait is visible.
+- **Accept or return U2** (`9ad893f`, amended at `bea4e3f`) — the citation audit and its one directed
+  amendment. A rejected part of it changes the catalogue, which requires U3's and U4's tests to be
+  re-run against it.
+- **Accept or return U3** (`952892f`) — the generator and the ratified CLI contract.
+- **Accept or return U4** — `README.md` and the remaining project surfaces.
+- **A decision on `llms.txt` if you want the stronger response.** The claim stays `our judgement` by
+  your ruling; the alternative you named is dropping it from `required_surfaces` for some or all
+  kinds, which is a recommendation change rather than a format one.
 
 ## Blocked on the release word
 
-TODO — things that are ready and waiting for authorisation to publish, deploy, spend or send.
+Nothing. Nothing in this repository is published, deployed or sent: publication is the principal's
+release word and he has not given it. The freeze notice for `sitewalk` is already with Moss as his
+unit U7, so no outbound message is pending here.
 
 ## Next by the plan
 
-TODO — the next units from the project record's plan, in order.
+- **U1, U2 and U3 are delivered**; U1 is accepted, U2 and U3 await acceptance. U4 is in this return.
+- **After U4**: nothing is granted. The next increment would come from a new unit — the obvious
+  candidates are recorded under Review in `RECORD.md`: a read of the frozen format by Moss as the
+  actual consumer (R6), and the first project gated on a plan (R5).
+- **R5–R7 stay open with triggers, not dates**: a project's build gated on a plan, a `sitewalk` run
+  against one, and the disconfirming case — a brief written once and never read.
 
 ## Deliberately not doing yet
 
-TODO — the scope fences, restated as work. The things that will be proposed and should be
-declined for now, with a line on what would change that.
+- **Site generation, scaffolding or templates.** `CONTEXT.md` fences it; it would make the tool a
+  framework and responsible for the drift it exists to detect.
+- **Crawling or measuring a live site**, and any network use by the tool. That is `sitewalk`'s job.
+- **More kinds.** Six ship because their claims passed the audit; a seventh arrives when a project
+  needs one, and arrives with its own audit.
+- **A configuration file.** The scope cap: cut questions rather than add configuration.
+- **Publishing anything.** The corpus is written to be read by strangers, and publication is the
+  principal's decision.

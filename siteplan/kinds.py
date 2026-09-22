@@ -59,9 +59,10 @@ SURFACE_BASIS: dict[str, tuple[str, str]] = {
         "draft, no W3C document. Server-log data across 137,000 domains reports that 97% "
         "of the files received no requests at all, that AI retrieval bots accounted for about 1% "
         "of the requests that did occur, and that audit tooling was the largest requester; Google "
-        "says Search ignores the file and that it neither helps nor harms visibility. We require "
-        "it as a one-file bet on agents that navigate a site - not because anything measurably "
-        "reads it today - and a site owner who would rather not pay that cost can drop it.",
+        "says Search ignores the file and that it neither helps nor harms visibility. This plan "
+        "requires it as a one-file bet on agents that navigate a site, not because anything "
+        "measurably reads it today. The plan is the record of what this site requires: disagree "
+        "with the recommendation by editing the plan, not by reading this brief differently.",
     ),
     "rss.xml": (
         BASIS_PRACTICE,

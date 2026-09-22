@@ -1,13 +1,13 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 11
+revision: 12
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
 updated_at: "2026-09-21T22:00:00-06:00"
 record_status: open
-work_status: active
+work_status: submitted
 ---
 
 # Siteplan
@@ -36,11 +36,9 @@ record. Selected by David on 2026-09-21; the selection, the answers he gave with
 he registered are in "Selection" and "Answers to the open questions". Recommendation and selection
 are separate entries below, as the method requires.
 
-Work scope: U4 — the project's remaining surfaces: `README.md`, a decision recorded for each
-template artifact the repository still carries, and the timestamp guard the record's own errors
-earned. Granted 2026-09-21 and picked up under the plan registered below. U1 was accepted against
-`d1f7098`; U2 (`9ad893f`, amended at `bea4e3f`) and U3 (`952892f`) are delivered and await the
-principal's acceptance.
+Work scope: U4 — delivered and awaiting the principal's acceptance. The increment's four units are
+now all delivered: U1 accepted, U2 (`9ad893f`, amended at `bea4e3f`), U3 (`952892f`) and U4, with
+nothing granted beyond them.
 
 Work: revision 3 registered U1's grant at 13:23:14. U1 was carried out between then and 13:28:49,
 when the return was committed: `docs/PLAN-FORMAT.md` frozen as `plan_version` 1; 45 conformance
@@ -49,38 +47,38 @@ fixtures published;
 `scripts/check-project.sh` replaced with the real checks. The return, with its evidence and the gaps
 it leaves, is in Act.
 
-Outcome: U2 and U3 are delivered and awaiting acceptance. The catalogue's labels are honest on the
-evidence read on 2026-09-21, all six kinds ship, and the generator now holds the ratified CLI
-contract — three exit codes, no `--force`, an existing output refused. 101 tests pass offline. No
-benefit is observed: no project has used a plan, no consumer has read one, and nothing has been
-published.
+Outcome: the increment is delivered — four units, 107 tests passing offline, `make ci` exiting 0,
+every labelled claim in the catalogue tied to a source that was read or to an explicit judgement, and
+the repository's own surfaces written. No benefit is observed: no project has used a plan, no
+consumer has read one, nothing has been published, and R5–R7 stay open with triggers rather than
+dates.
 
-Next: Heron carries U4 to its return through the pickup plan registered below. Pending moves for
-others: David accepts or returns U2 (as amended) and U3, and a rejected part of the audit changes the
-catalogue and requires U3's and U4's tests to be re-run. The freeze notice to Moss is already with
-him as his unit U7.
+Next: David accepts or returns U2 (as amended), U3 and U4. Nothing further is granted, so the next
+increment needs a new unit: the two candidates the Review already names are a read of the frozen
+format by Moss as the actual consumer (R6) and the first project gated on a plan (R5). A rejected
+part of the audit changes the catalogue and requires U3's and U4's tests to be re-run.
 
-Blocked: nothing. Every input the U4 pickup needs exists.
+Blocked: nothing. The increment's units are all delivered.
 
-Waiting on: no one for U4. The principal's acceptance of U2 and U3 is the move after these returns.
+Waiting on: David — acceptance of U2 (as amended), U3 and U4.
 
-Dependency: none blocking U4, with the condition carried from U2's grant: **if David rejects any part
-of the audit, the catalogue changes and both U3's and U4's tests must be re-run against it.** Owner
-David; resolving step: his acceptance of U2, stated again in the U4 pickup plan.
+Dependency: none blocking, with the condition carried from U2's grant: **if David rejects any part of
+the audit, the catalogue changes and both U3's and U4's tests must be re-run against it.** Owner
+David; resolving step: his acceptance of U2.
 
 Review due: no timed obligation. R5–R7 are trigger-based and are stated in Review.
 
-Authority: the grant registered beside U4 in Act, at revision 11 — U4 only. No authority is held
-beyond it; for any change to the format (versioning rule 5 makes a consumer-breaking change the
-principal's decision); or for contacting another repository. Nothing is published: publication is
+Authority: U4's grant, registered at revision 11 and now complete. No authority is held for
+anything further; for any change to the format (versioning rule 5 makes a consumer-breaking change
+the principal's decision); or for contacting another repository. Nothing is published: publication is
 the principal's release word, and he has not given it. The principal retains spending, outbound
 messages, external agreements, the release word, and the selection of courses and units.
 
 | Stage | began_at | registered_at / exact basis revision | finished_at |
 | --- | --- | --- | --- |
 | Frame and Decide | 2026-09-21T11:52:23-06:00 | [`CONTEXT.md`](CONTEXT.md) as supplied 2026-09-21; principal's instructions and answers of 2026-09-21 | 2026-09-21T13:23:14-06:00 |
-| Act | 2026-09-21T13:23:14-06:00 | revision 3 granted U1; revision 7 U2; revision 9 U3; revision 11 grants U4 and registers its pickup plan | U1 finished 13:28:49; U2 21:53:44; U3 21:57:23; U4 in progress |
-| Review | 2026-09-21T13:28:49-06:00 | criteria R1–R8, registered at revision 2 before the work | U1 accepted; U2 and U3 awaiting acceptance; U4 pending its return |
+| Act | 2026-09-21T13:23:14-06:00 | revision 3 granted U1; revision 7 U2; revision 9 U3; revision 11 U4 | U1 finished 13:28:49; U2 21:53:44; U3 21:57:23; U4 finished 2026-09-21T22:00:00-06:00 |
+| Review | 2026-09-21T13:28:49-06:00 | criteria R1–R8, registered at revision 2 before the work | U1 accepted; U2, U3 and U4 awaiting acceptance |
 
 ## Frame and Decide
 
@@ -329,7 +327,7 @@ a ratified design that differs discards them.
 | U1 | **accepted** — delivered `757eef3`, `7db7c03`; accepted by David 2026-09-21 against `d1f7098` | `docs/PLAN-FORMAT.md` and its conformance fixtures: the authoritative format and stability rules, a minimal valid plan, a malformed one, and `check` brought to the document | Selection at revision 3; OQ2–OQ5 answered; the draft validator as evidence only | Heron | Met, on the evidence in "U1 return" below | Actual: 1 session, as estimated |
 | U2 | **returned** — delivered `9ad893f`; awaits acceptance | Citation audit of every labelled recommendation in the catalogue, corrections applied, unsupported claims demoted to `our judgement`; the shipped kind and surface set named | OQ2 answered (network for sources, not for the tool); the first fact-check of 2026-09-21; the grant at revision 7 | Heron | Met, on the evidence in the U2 return below | Actual: about one session, inside the estimate |
 | U3 | **returned** — delivered `952892f`; awaits acceptance | `siteplan new` completed against the audited catalogue and the ratified CLI contract: all six audited kinds, four answer pairs and interactive mode, `BRIEF.md` and `site.json`, the unstated rule, `--force` removed and an existing output refused | U1, U2 | Heron | Met, on the evidence in the U3 return below | Actual: about half a session, under the estimate |
-| U4 | **granted** — pickup registered at revision 11 | The project's remaining surfaces: `README.md` (what it does, how to run it, what it does not do), a decision recorded for each template artifact still carried, and a guard against the record claiming a future time | U1–U3 | Heron | The acceptance criteria in the U4 pickup plan below | Actual so far: in progress |
+| U4 | **returned** — awaits acceptance | The project's remaining surfaces: `README.md`, `docs/ARCHITECTURE.md` and `TODO.md` written, `docs/KICKOFF.md` deleted, and two guards added — the record's time claims, and the required/optional contradiction | U1–U3 | Heron | Met, on the evidence in the U4 return below | Actual: about half a session, as estimated |
 
 **Grant, registered at revision 3 and before any U1 work.** Decider: David, 2026-09-21; basis
 revision 2. **Heron** is granted **U1 only**. Included: `docs/PLAN-FORMAT.md`; the conformance
@@ -796,6 +794,39 @@ Acceptance criteria, registered before the work:
 
 `picked_up_at` 2026-09-21T22:00:00-06:00, actor Heron, immediately after the grant was registered.
 
+### U4 return, 2026-09-21T22:00:00-06:00
+
+**Delivered.** `README.md`, `docs/ARCHITECTURE.md` and `TODO.md` written;
+`docs/KICKOFF.md` deleted; two guards added; and the directed `llms.txt` wording fix, which is U2's
+and is recorded below. Revision: this record's revision 12.
+
+**Evidence, per acceptance criterion.**
+
+| # | Criterion | Evidence |
+| --- | --- | --- |
+| 1 | `README.md` states what it does, how to run it, and what it does not do | `README.md`, with "What it does not do" naming no code generation, no crawling or network, no accounts or dependencies, no measurement of a live site, and no prediction that an agent will find, understand or recommend one |
+| 2 | Every command in it is one the tool accepts | The README's commands were run literally before this return: `new --interactive`, the flag example with `--out plans/`, and `check plans/site.json` all behave as written; the flags and exit codes it names are the ratified ones |
+| 3 | Each template artifact is resolved by a recorded decision | `docs/ARCHITECTURE.md` is filled with the runtime shape, five decisions with their rejected alternatives, and the fences; `TODO.md` is filled with the real open items under its four headings; `docs/KICKOFF.md` is **deleted** — it carried the template's process-first instructions and a stale skill path, both superseded by `AGENTS.md`, and a second, wrong entry point is the contradiction class this workspace keeps finding |
+| 4 | The record-time guard exists and fails on a future time | `tests/test_record_hygiene.py`: three checks over the front matter and every ISO timestamp in the record, plus a test that the guard's own comparison can fail. It is the guard the two timestamp errors earned, and it passes at this revision |
+| 5 | Nothing calls the same plan key required and optional | `siteplan/kinds.py` and `siteplan/brief.py`; `tests/test_catalogue_evidence.py::ARequiredKeyIsNotCalledOptional` fails if a required surface's basis or reason says "optional", "not required", "drop it", "may drop" or "can drop", and asserts the brief states that the plan is the record the owner edits |
+| 6 | `make ci` and `make records` exit 0, and the return names what a rejected U2 would require re-running | `make ci` at this revision: records clean, byte-compile, 45 fixtures, **107 tests**, entry point, exit 0. A rejected part of U2 changes `siteplan/kinds.py`, which is what U3's brief and CLI tests and U4's contradiction guard both read: all 107 tests re-run, and the surfaces table in every generated brief changes |
+
+### U2 amendment (second), 2026-09-21T22:00:00-06:00: the plan is a choice, not a claim
+
+**Directed by the principal**, and it fixed a real defect. The catalogue said `llms.txt` was required
+while its reason said a site owner "can drop it" — **the same key called required and optional in one
+document**, which is the contradiction class this workspace keeps finding and the one a reader stops
+trusting a document over.
+
+The distinction is now stated where it belongs. The **plan** records what this site decided to
+require; a surface in `required_surfaces` is a recommendation with its evidence attached, and
+disagreement is expressed by editing the plan. The **brief** says so in its own words above the
+surface table, and the `llms.txt` reason carries the numbers, calls the requirement a one-file bet on
+agents that navigate a site, and points at the plan as the thing to edit. The principal's ruling also
+settled the direction of the label: the evidence is against the benefit, so the requirement stays
+`our judgement` and the surface stays in the vocabulary — silence would leave a site owner needing to
+know the convention already in order to decide about it.
+
 ### Provisional notes for U2–U4
 
 Confirmed at their own pickup, per the 0.5.0 rule that a later pickup plan depends on what the
@@ -904,6 +935,18 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 12, 2026-09-21T22:00:00-06:00. Changed: the record carries the U4 return — the delivered
+surfaces with the evidence for each acceptance criterion, the two guards, the deleted template
+artifact and its reason, and what a rejected U2 would require re-running; the second U2 amendment,
+which removed the required-and-optional contradiction the principal named; the unit table (U4
+returned, and the increment complete); and the current position (four units delivered, nothing
+granted beyond them, the next increment needing a new unit). Source: the principal's message of
+2026-09-21, confirming the `llms.txt` label call and directing the wording fix, and granting U4.
+Reason: a return records what was delivered against the criteria registered before it. Preserved:
+revision 11 and earlier stand as written, including the correction entries. Affects: U4 (returned),
+the `llms.txt` wording, the repository's entry surfaces, and the guards that now hold two of this
+increment's error classes shut.
 
 Revision 11, 2026-09-21T22:00:00-06:00. Changed: U4 is granted and picked up, with its grant and six
 acceptance criteria registered before the work; the current position names U4 as the delivery, U2 and

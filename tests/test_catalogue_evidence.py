@@ -74,6 +74,47 @@ class PracticeClaimsNameTheirSource(unittest.TestCase):
                     )
 
 
+class ARequiredKeyIsNotCalledOptional(unittest.TestCase):
+    """The contradiction class this workspace keeps finding: one key, two answers.
+
+    A surface in `required_surfaces` is required by the plan. Saying in the same breath that the
+    owner may drop it is the contradiction a reader stops trusting the document over. The escape is
+    the one the brief now states: the *plan* is what decides, and the owner edits the plan.
+
+    What it catches: a required surface's reason that calls itself optional or droppable, and a
+    brief that fails to say the plan is the record the owner edits. What it does not catch: a
+    subtler contradiction phrased in words this list does not hold.
+    """
+
+    FORBIDDEN = ("optional", "not required", "drop it", "may drop", "can drop")
+
+    def test_no_required_surface_reason_calls_itself_optional(self) -> None:
+        for kind, profile in kinds.PROFILES.items():
+            for surface in profile.surfaces:
+                _, published = kinds.SURFACE_BASIS[surface.name]
+                for text in (published, surface.reason):
+                    lowered = text.lower()
+                    for phrase in self.FORBIDDEN:
+                        with self.subTest(kind=kind, surface=surface.name, phrase=phrase):
+                            self.assertNotIn(
+                                phrase,
+                                lowered,
+                                f"{kind}/{surface.name}: a required surface says {phrase!r}: "
+                                f"{text[:90]}...",
+                            )
+
+    def test_the_brief_says_the_plan_is_the_record_the_owner_edits(self) -> None:
+        from tests.support import make_site, read_brief, temp_dir
+        from pathlib import Path as _Path
+
+        with temp_dir() as name:
+            self.assertEqual(0, make_site(name, "--kind", "personal", "--site", "example.com")[0])
+            brief = read_brief(_Path(name))
+        self.assertIn("the plan is the record of what this site decided to require", brief)
+        self.assertIn("editing the plan", brief)
+        self.assertIn("stays required until the plan changes", brief)
+
+
 class TheCatalogueIsFullyLabelled(unittest.TestCase):
     """Every rendered recommendation group has exactly one advice item: the briefs depend on it."""
 
