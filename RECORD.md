@@ -1,13 +1,13 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 8
+revision: 9
 skill_version: 0.5.0
 updated: 2026-09-21
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-21T21:54:00-06:00"
+updated_at: "2026-09-21T22:02:00-06:00"
 record_status: open
-work_status: submitted
+work_status: active
 ---
 
 # Siteplan
@@ -36,38 +36,40 @@ record. Selected by David on 2026-09-21; the selection, the answers he gave with
 he registered are in "Selection" and "Answers to the open questions". Recommendation and selection
 are separate entries below, as the method requires.
 
-Work scope: U2 — delivered at `9ad893f` and now awaiting the principal's acceptance. U1 was
-accepted against `d1f7098` and is closed; its benefit criteria (R5–R7) remain unobserved. U3 and U4
-are not granted, and the shipped kind set is now named for U3 to enforce.
+Work scope: U3 — the generator brought to the audited catalogue and the ratified CLI contract,
+granted 2026-09-21 and picked up under the plan registered below. U2 was delivered at `9ad893f` and
+still awaits the principal's acceptance; U1 was accepted against `d1f7098` and is closed. U4 is not
+granted.
 
-Work: revision 3 registered the grant at 13:23:14. U1 was carried out between then and 13:28:49,
+Work: revision 3 registered U1's grant at 13:23:14. U1 was carried out between then and 13:28:49,
 when the return was committed: `docs/PLAN-FORMAT.md` frozen as `plan_version` 1; 45 conformance
 fixtures published;
 `siteplan check` and its tests brought to the document, which exposed six defects in the draft;
 `scripts/check-project.sh` replaced with the real checks. The return, with its evidence and the gaps
 it leaves, is in Act.
 
-Outcome: U2 is delivered — every labelled claim in the catalogue is now either supported by a
-source that was read on 2026-09-21 or labelled a judgement naming the fact it rests on, and all six
-kinds ship on that basis. No benefit is observed: no project has used a plan, no consumer has read
-one, and nothing has been published.
+Outcome: U2 is delivered and awaiting acceptance; U3 is in progress. The catalogue's labels are
+honest on the evidence read on 2026-09-21, and all six kinds ship — the principal confirmed that the
+rule is "no kind ships with a dishonest claim", not "no kind ships a judgement". No benefit is
+observed: no project has used a plan, no consumer has read one, and nothing has been published.
 
-Next: David accepts U2 or returns it with findings, and separately grants or refuses U3 — the
-generator, which now also enforces the shipped kind set and the ratified CLI contract. The freeze
-notice to Moss, who owns `sitewalk`, remains with the principal to relay; a worker here cannot
-message another repository's session.
+Next: Heron carries U3 — the CLI contract and the generator against the audited catalogue — to its
+return through the pickup plan registered below. Two pending moves for others: David accepts or
+returns U2, and a rejected part of the audit would change U3's basis; the freeze notice to Moss is
+already with him as his unit U7, so nothing further is needed here.
 
 Blocked: nothing in the U2 return. U3 cannot start until its grant is registered.
 
 Waiting on: David — acceptance of U2, and the grant of U3.
 
-Dependency: David's acceptance of U2 and his grant for U3. Owner David; resolving step: his reply to
-this record.
+Dependency: none blocking U3 — its grant, inputs and acceptance criteria are registered. One live
+condition: **if David rejects any part of U2's audit, the catalogue edits U3 builds on change, and
+U3's return must say which of them it re-did.** Owner David; resolving step: his acceptance of U2.
 
 Review due: no timed obligation. R5–R7 are trigger-based and are stated in Review.
 
-Authority: U2's grant, registered at revision 7 and now complete. No authority is held for U3 or
-U4; for any change to the format (versioning rule 5 makes a consumer-breaking change the principal's
+Authority: the grant registered beside U3 in Act, at revision 9 — U3 only, inside the fences the
+Statement of Work registered. No authority is held for U4; for any change to the format (versioning rule 5 makes a consumer-breaking change the principal's
 decision); or for contacting another repository. Nothing is published: publication is the
 principal's release word, and he has not given it. The principal retains spending, outbound
 messages, external agreements, the release word, and the selection of courses and units.
@@ -75,8 +77,8 @@ messages, external agreements, the release word, and the selection of courses an
 | Stage | began_at | registered_at / exact basis revision | finished_at |
 | --- | --- | --- | --- |
 | Frame and Decide | 2026-09-21T11:52:23-06:00 | [`CONTEXT.md`](CONTEXT.md) as supplied 2026-09-21; principal's instructions and answers of 2026-09-21 | 2026-09-21T13:23:14-06:00 |
-| Act | 2026-09-21T13:23:14-06:00 | revision 3 granted U1; revision 7 granted U2 and registered its pickup plan | U1 finished 13:28:49; U2 finished 21:53:00 |
-| Review | 2026-09-21T13:28:49-06:00 | criteria R1–R8, registered at revision 2 before the work | U1 accepted; U2's review pending its acceptance |
+| Act | 2026-09-21T13:23:14-06:00 | revision 3 granted U1; revision 7 granted U2; revision 9 grants U3 and registers its pickup plan | U1 finished 13:28:49; U2 finished 21:53:00; U3 in progress |
+| Review | 2026-09-21T13:28:49-06:00 | criteria R1–R8, registered at revision 2 before the work | U1 accepted; U2 awaiting acceptance; U3 pending its return |
 
 ## Frame and Decide
 
@@ -324,7 +326,7 @@ a ratified design that differs discards them.
 | --- | --- | --- | --- | --- | --- | --- |
 | U1 | **accepted** — delivered `757eef3`, `7db7c03`; accepted by David 2026-09-21 against `d1f7098` | `docs/PLAN-FORMAT.md` and its conformance fixtures: the authoritative format and stability rules, a minimal valid plan, a malformed one, and `check` brought to the document | Selection at revision 3; OQ2–OQ5 answered; the draft validator as evidence only | Heron | Met, on the evidence in "U1 return" below | Actual: 1 session, as estimated |
 | U2 | **returned** — delivered `9ad893f`; awaits acceptance | Citation audit of every labelled recommendation in the catalogue, corrections applied, unsupported claims demoted to `our judgement`; the shipped kind and surface set named | OQ2 answered (network for sources, not for the tool); the first fact-check of 2026-09-21; the grant at revision 7 | Heron | Met, on the evidence in the U2 return below | Actual: about one session, inside the estimate |
-| U3 | planned — not granted | `siteplan new` completed against the audited catalogue and the ratified CLI contract: the audited kinds, four flags and interactive mode, `BRIEF.md` and `site.json`, the unstated rule, and `--force` removed | U1, U2 | Heron | R3 and R4 pass; tests run offline; `make ci` exits 0 through real checks | 1 session |
+| U3 | **granted** — pickup registered at revision 9 | `siteplan new` completed against the audited catalogue and the ratified CLI contract: all six audited kinds, four answer pairs and interactive mode, `BRIEF.md` and `site.json`, the unstated rule, `--force` removed and an existing output refused | U1, U2 | Heron | The acceptance criteria in the U3 pickup plan below | Actual so far: in progress |
 | U4 | planned — not granted | Project surfaces: `README.md` (what it does, how to run it, what it does not do), coherent local commits | U1–U3 | Heron | `make ci` and `make records` exit 0 at the delivered commit, and the record carries the evidence | 0.5 session |
 
 **Grant, registered at revision 3 and before any U1 work.** Decider: David, 2026-09-21; basis
@@ -354,6 +356,22 @@ which is where the shipped set is enforced; `README.md` (U4); any new dependency
 the tool itself; publishing, deploying, spending or outbound messages; and changes to `CONTEXT.md`,
 to the frozen format, or to another repository. Stop condition: U2 is returned for acceptance, or it
 needs something outside this grant.
+
+**Grant, registered at revision 9 and before any U3 work.** Decider: David, 2026-09-21; basis
+revision 8, and behind it the audited catalogue at `9ad893f`. **Heron** is granted **U3 only**.
+Included: bringing `siteplan new` to the ratified CLI contract — removing `--force` and the exit code
+3, and refusing an existing output; confirming and enforcing the shipped kind set, which the
+principal confirmed is all six; the tests for both, including the unstated rule against the audited
+catalogue; and local commits. Excluded: `README.md` (U4); any change to the catalogue's *claims*
+(that is U2's, and its audit awaits acceptance — a directed amendment from the principal is recorded
+with U2, not here); any change to the frozen format; any new dependency; any network use by the tool;
+publishing, deploying, spending or outbound messages; and changes to `CONTEXT.md` or to another
+repository. Stop condition: U3 is returned for acceptance, or it needs something outside this grant.
+
+A live condition on this grant, registered with it: **if David rejects any part of U2's audit, the
+catalogue this unit is built against changes.** U3 would then re-do the affected edits or wait, and
+its return must say which. Treating the audit as settled by the principal's confirmation would be
+treating a recommendation as an acceptance.
 
 **What the principal added to the grant, in his words in substance.** Every `published practice`
 label is a claim under audit, including the ones that currently look well-sourced, and he expects
@@ -651,6 +669,35 @@ than each property's page. That a future claim is honest: the new test enforces 
 label names a source, not that the source agrees. And nothing about the free-text prose of the
 *format* document beyond the claims it makes about the same sources, which the audit did cover.
 
+### Pickup plan, U3 (registered before implementation)
+
+Route: (1) bring the command line to the ratified contract: remove `--force`, refuse an existing
+output with a usage error, and make every exit code one of 0, 1 or 2; (2) confirm the shipped set is
+the audited set — all six kinds — and that each generates a brief and a plan `check` accepts;
+(3) re-verify the unstated rule against the audited catalogue's texts, since the audit rewrote
+several of the reasons the brief renders; (4) update and extend the tests: the overwrite refusal,
+`--force` rejected as an unknown argument, each exit code, every kind, and the unstated table
+matching what the catalogue would change; (5) run `make ci` and return with the evidence.
+
+Acceptance criteria, registered before the work:
+
+1. `new` accepts exactly the flags the contract names — `--site`, `--name`, `--kind`, `--out`,
+   `--interactive`, and the four answer pairs — and `--force` is not one of them: passing it is a
+   usage error with exit 2.
+2. An existing `BRIEF.md` or `site.json` in the output directory is refused: exit 2, a message
+   naming the files, and both files byte-identical afterwards.
+3. Every exit code is one of the three: 0 on success, 1 when the command produces a plan that fails
+   its own check (an invalid plan is a finding, not a crash), 2 for a usage error — each asserted by
+   a test, and the exit code 3 is gone.
+4. Every kind in the shipped set generates a brief and a plan that `check` accepts, and every
+   `published practice` claim rendered in the brief still names its source.
+5. The unstated rule holds on the audited catalogue: no input is invented, and the "what changes if
+   you state it" table equals what the catalogue would change (R4).
+6. `make ci` exits 0 with these tests in place, and the return names anything U2's acceptance would
+   change.
+
+`picked_up_at` 2026-09-21T22:02:00-06:00, actor Heron, immediately after the grant was registered.
+
 ### Provisional notes for U2–U4
 
 Confirmed at their own pickup, per the 0.5.0 rule that a later pickup plan depends on what the
@@ -759,6 +806,17 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 9, 2026-09-21T22:02:00-06:00. Changed: U3 is granted and picked up, with its grant and its
+six acceptance criteria registered before the work; the current position names U3 as the delivery,
+U2 as delivered and awaiting acceptance, and U4 as ungranted; and the principal confirmed the
+reading of OQ8 that this record had flagged for him — the rule is **no kind ships with a dishonest
+claim**, not no kind ships a judgement, so all six kinds ship. Source: the principal's message of
+2026-09-21, accepting U2's account of the audit, confirming the OQ8 reading, granting U3, and
+supplying a lead for the `llms.txt` claim to verify before citing. Reason: register the grant and the
+pickup plan before the work that depends on them, and record a live condition — a rejected part of
+U2's audit changes U3's basis. Preserved: revision 8 and earlier stand as written. Affects: U3
+(granted), U4 (ungranted), the shipped set, and the `llms.txt` claim if the lead holds.
 
 Revision 8, 2026-09-21T21:54:00-06:00. Changed: the record carries the U2 return — the delivered
 artifacts with their revision (`9ad893f`), the audit's counts, the six findings, the shipped set,
