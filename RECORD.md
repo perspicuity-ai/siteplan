@@ -1,11 +1,11 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 22
+revision: 23
 skill_version: 0.6.0
 updated: 2026-09-22
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-22T21:32:13-06:00"
+updated_at: "2026-09-22T23:52:39-06:00"
 record_status: open
 work_status: accepted
 ---
@@ -1270,7 +1270,21 @@ touched no record of mine. Three things in it change this project's conditions:
   process-record requirement in `docs/records/README.md` are all gone. The report of them stands as
   the finding that prompted the propagation; nothing here needs fixing now.
 
+## Publication, 2026-09-22
+
+David selected option B of [the tools decision](https://github.com/perspicuity-ai/perspicuity) on 2026-09-22: this repository becomes public under the Apache License 2.0. His words: "public for the tools, Apache".
+
+Disclosure pass, run before the visibility change over every commit on every branch, by Claude in the website-review session. It searched added lines for private keys, access tokens, assigned secrets, IP addresses, home-directory paths, email addresses and server paths, and searched file names for `.env` files and key files.
+
+- No private key, token, assigned secret, server path or key file was found.
+- Local home-directory paths appear in notes (13 lines, naming skill and project folders). One agent author identity, `Heron <heron@siteplan.local>`, appears on 31 commits.
+- Commit author email: `david.nelson.elske@gmail.com`, which is already public in the commits of `perspicuity-ai/decision-toolkit`.
+
+None of these was judged a reason to hold publication or rewrite history. The scan is a pattern search, not a guarantee.
+
 ## Changes
+
+Revision 23, 2026-09-22T23:52:39-06:00. Changed: the repository gains the Apache License 2.0 (`LICENSE`, and a Licence section in the README), and this record gains "Publication, 2026-09-22" with the disclosure pass that preceded making the repository public. Source: David's selection of option B in the tools decision, 2026-09-22. Reason: the tools decision requires a licence and a recorded disclosure pass before the visibility change. Preserved: revision 22 and earlier stand as written.
 
 Revision 22, 2026-09-22T21:32:13-06:00. Changed: David waived U5's one condition at 2026-09-23T03:31:56Z, in his words
 "waive the DeepSeek check", held in the tools-as-skills record at `fe05f32c` under "U1 review". Act

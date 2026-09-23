@@ -74,3 +74,7 @@ or move the files first.
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | The settled technical shape and the alternatives that were rejected. |
 | [`RECORD.md`](RECORD.md) | The project record: the basis, the units, the evidence, and what is not established. |
 | `make ci` | The checks: the records, byte-compilation, the fixtures, the offline test suite, and the entry point. |
+
+## Licence
+
+Apache License 2.0. See [LICENSE](LICENSE).
