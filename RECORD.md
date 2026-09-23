@@ -1,11 +1,11 @@
 ---
 format: perspicuity-work/1
 id: sp-project
-revision: 21
+revision: 22
 skill_version: 0.6.0
 updated: 2026-09-22
 created_at: "2026-09-21T11:56:00-06:00"
-updated_at: "2026-09-22T20:48:04-06:00"
+updated_at: "2026-09-22T21:32:13-06:00"
 record_status: open
 work_status: accepted
 ---
@@ -16,10 +16,10 @@ The project record: the parent of every record in this repository, and the conti
 the basis, the plan and the result. Revision 2 is the Statement of Work; revision 3 records the
 principal's selection and the grant of U1; revision 18 closes increment 1 with U1–U4 accepted;
 revision 19 opens increment 2, unit U5, under a grant from another record; revision 20 returns U5;
-revision 21 records its acceptance.
+revision 21 records its acceptance; revision 22 records David's waiver of its condition.
 
-**Increment 1 (U1–U4) is accepted. Increment 2 (U5, the `siteplan` skill) is accepted with one
-condition, which David owns.** U5 is unit U1
+**Increment 1 (U1–U4) is accepted. Increment 2 (U5, the `siteplan` skill) is accepted; David
+waived its one condition.** U5 is unit U1
 of the tools-as-skills record in the perspicuity repository, carried here under that record's Grant
 U1; the card is copied beside U5 in Act.
 
@@ -54,8 +54,8 @@ decision's alternatives; U5 applies it to this repository.
 
 Work scope: increment 2, **U5 only** — `SKILL.md` at this repository's root, one check in
 `scripts/check-project.sh`, links to this repository in three skill roots, and this record's entry,
-as the grant card beside U5 in Act states. U5 is accepted with one condition; the condition is held
-in the tools-as-skills record with David as its owner, so nothing of U5 remains open here. Increment 1 (U1–U4) is closed with delivery accepted; its
+as the grant card beside U5 in Act states. U5 is accepted: Primary accepted it with one condition, and
+David waived the condition at 2026-09-23T03:31:56Z (21:31:56 -06:00 on 2026-09-22). Nothing of U5 remains open here. Increment 1 (U1–U4) is closed with delivery accepted; its
 two promised observations, R5 and R7, stay open on triggers in Review.
 
 Done when: as Grant U1, beside U5 in Act.
@@ -75,8 +75,8 @@ fixtures published;
 `scripts/check-project.sh` replaced with the real checks. The return, with its evidence and the gaps
 it leaves, is in Act.
 
-Outcome: U5 is accepted with one condition by Primary, at 2026-09-23T02:47:07Z (see "U5 acceptance"
-in Act). `make ci` and `make records` exit 0, the new check fails
+Outcome: U5 is accepted. Primary accepted it with one condition at 2026-09-23T02:47:07Z, and David
+waived the condition at 2026-09-23T03:31:56Z (see "U5 acceptance" and "U5 condition waived" in Act). `make ci` and `make records` exit 0, the new check fails
 on each of its three mutations, and a fresh Claude Code session lists the skill. No use of the skill
 in a real project is observed. Increment 1: delivery accepted, `make ci` exits 0
 at the delivered revision, and **no benefit is
@@ -89,9 +89,6 @@ Next: David, at the R5 trigger — the first project whose build is gated on a p
 where the end-to-end run of a generated plan through `sitewalk --plan` belongs.
 
 Also pending: David, R7 at that project's first deploy, which is the disconfirming check.
-
-Also pending: David, U5's condition — supply `DEEPSEEK_API_KEY` for a DeepSeek Harness session check
-of the skill, or waive it. It is held in the tools-as-skills record, not here.
 
 Blocked: nothing.
 
@@ -125,7 +122,7 @@ messages, external agreements, the release word, and the selection of courses an
 | Act | 2026-09-21T13:23:14-06:00 | revision 3 granted U1; revision 7 U2; revision 9 U3; revision 11 U4 | U1 finished 13:28:49; U2 21:53:44; U3 21:57:23; U4 finished 2026-09-21T22:00:00-06:00 |
 | Review | 2026-09-21T13:28:49-06:00 | criteria R1–R8, registered at revision 2 before the work | U1–U4 accepted by David; the last acceptance recorded at revision 18, 2026-09-21T23:28:20-06:00 |
 | Act, increment 2 (U5) | 2026-09-22T20:36:27-06:00 | revision 19: Grant U1 and the pickup plan; grant basis the tools-as-skills record at revision 4, `16ab54ff` | U5 submitted 2026-09-22T20:44:21-06:00, at revision 20 |
-| Review, increment 2 (U5) | 2026-09-22T20:44:21-06:00 | the tools-as-skills record's R1, R2, R4 and R5, registered there before the work | accepted with one condition by Primary, 2026-09-23T02:47:07Z (20:47:07 -06:00) |
+| Review, increment 2 (U5) | 2026-09-22T20:44:21-06:00 | the tools-as-skills record's R1, R2, R4 and R5, registered there before the work | accepted with one condition by Primary, 2026-09-23T02:47:07Z (20:47:07 -06:00); condition waived by David, 2026-09-23T03:31:56Z; accepted |
 
 ## Frame and Decide
 
@@ -375,7 +372,7 @@ a ratified design that differs discards them.
 | U2 | **accepted** — delivered `9ad893f`, amended; accepted by David 2026-09-21 | Citation audit of every labelled recommendation in the catalogue, corrections applied, unsupported claims demoted to `our judgement`; the shipped kind and surface set named | OQ2 answered (network for sources, not for the tool); the first fact-check of 2026-09-21; the grant at revision 7 | Heron | Met, on the evidence in the U2 return below | Actual: about one session, inside the estimate | David |
 | U3 | **accepted** — delivered `952892f`; accepted by David 2026-09-21 | `siteplan new` completed against the audited catalogue and the ratified CLI contract: all six audited kinds, four answer pairs and interactive mode, `BRIEF.md` and `site.json`, the unstated rule, `--force` removed and an existing output refused | U1, U2 | Heron | Met, on the evidence in the U3 return below | Actual: about half a session, under the estimate | David |
 | U4 | **accepted** — delivered `cf91b16`; accepted by David 2026-09-21 | The project's remaining surfaces: `README.md`, `docs/ARCHITECTURE.md` and `TODO.md` written, `docs/KICKOFF.md` deleted, and two guards added — the record's time claims, and the required/optional contradiction | U1–U3 | Heron | Met, on the evidence in the U4 return below | Actual: about half a session, as estimated | David |
-| U5 | **accepted with one condition** — accepted by Primary 2026-09-23T02:47:07Z, in the tools-as-skills record at `61fdae85`; the condition is David's; delivered `75bbfc8` (with the three links, which live outside the repository); returned at revision 20; claimed by Heron from 2026-09-22T20:36:27-06:00; basis: course D of the tools-as-skills record (`7d60cdef`), inherited; grant: Grant U1 of that record, registered at its revision 4 (`16ab54ff`), copied in "Increment 2" below | `siteplan` as a skill: `SKILL.md` at this repository's root, one check in `scripts/check-project.sh` that fails when the skill's invocation or boundary quotation breaks, and links in three skill roots. It is unit U1 of the tools-as-skills record | The grant; the harness discovery rule; increment 1's delivered tool at `17ffdb0` | Heron | As Grant U1 | Tolerance: 4 hours from pickup, 3 failed attempts at any one check | Primary |
+| U5 | **accepted** — accepted with one condition by Primary 2026-09-23T02:47:07Z, in the tools-as-skills record at `61fdae85`; condition waived by David 2026-09-23T03:31:56Z, held there at `fe05f32c`; delivered `75bbfc8` (with the three links, which live outside the repository); returned at revision 20; claimed by Heron from 2026-09-22T20:36:27-06:00; basis: course D of the tools-as-skills record (`7d60cdef`), inherited; grant: Grant U1 of that record, registered at its revision 4 (`16ab54ff`), copied in "Increment 2" below | `siteplan` as a skill: `SKILL.md` at this repository's root, one check in `scripts/check-project.sh` that fails when the skill's invocation or boundary quotation breaks, and links in three skill roots. It is unit U1 of the tools-as-skills record | The grant; the harness discovery rule; increment 1's delivered tool at `17ffdb0` | Heron | As Grant U1 | Tolerance: 4 hours from pickup, 3 failed attempts at any one check | Primary |
 
 **Grant, registered at revision 3 and before any U1 work.** Decider: David, 2026-09-21; basis
 revision 2. **Heron** is granted **U1 only**. Included: `docs/PLAN-FORMAT.md`; the conformance
@@ -1168,6 +1165,14 @@ Heron as owner at the next touch of this repository. None is acted on under Gran
 
 Heron released the U5 claim at this acceptance. Grant U1 is complete in this repository.
 
+#### U5 condition waived, recorded 2026-09-22T21:32:13-06:00
+
+David waived U5's one condition at 2026-09-23T03:31:56Z (21:31:56 -06:00 on 2026-09-22), in his words: *"waive the DeepSeek check"*.
+Source: Primary's message of 2026-09-23 relaying them; the parent record holds the waiver under
+"U1 review" at `fe05f32c` in the perspicuity repository. **U5 is accepted without condition.** No
+DeepSeek Harness session has listed the skill; that harness's own loader lists it, and the waiver
+accepts that evidence in place of a session. The acceptance section above stands as written.
+
 ## Out of scope
 
 - **Site generation, scaffolding or templates of any kind.** `CONTEXT.md` fences it: the moment it
@@ -1266,6 +1271,14 @@ touched no record of mine. Three things in it change this project's conditions:
   the finding that prompted the propagation; nothing here needs fixing now.
 
 ## Changes
+
+Revision 22, 2026-09-22T21:32:13-06:00. Changed: David waived U5's one condition at 2026-09-23T03:31:56Z, in his words
+"waive the DeepSeek check", held in the tools-as-skills record at `fe05f32c` under "U1 review". Act
+gains "U5 condition waived"; the lead, Work scope, Outcome, the unit table and the stage table record
+U5 as accepted; the DeepSeek Harness item leaves "Also pending". Source: Primary's message of
+2026-09-23 relaying David's words. Reason: a waived condition leaves nothing of U5 open, and the
+waiver belongs beside the acceptance it completes. Preserved: revision 21 and earlier stand as
+written, including the acceptance with its condition. Affects: U5 (accepted) and Current position.
 
 Revision 21, 2026-09-22T20:48:04-06:00. Changed: U5 is recorded as accepted with one condition by Primary at
 2026-09-23T02:47:07Z, against Grant U1, with the acceptance held in the tools-as-skills record at
